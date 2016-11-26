@@ -25,21 +25,26 @@ export class PostService extends RequestBase {
       .map((posts: Post[]) => { return {
         posts,
         complete: posts.length < this.PAGE_SIZE
-      }});
+      }; } );
   }
 
   private buildUrl(url: string, filters: PostFilters): string {
     // return url if no filters
-    if(!filters || !Object.keys(filters).length) return url;
+    if (!filters || !Object.keys(filters).length) return url;
 
-    if(!url.includes('per_page')) url = this.pagerize(url);
+    if (!url.includes('per_page')) url = this.pagerize(url);
 
-    for(let name in filters) {
-      const value: any = filters[name];
-      if(value) {
-        const isArray: boolean = Array.isArray(value);
-        if(isArray && value.length) url += `&${name}=${value.join(',')}`;
-        else if(!isArray) url += `&${name}=${value}`;
+    for (let name in filters) {
+      if (filters.hasOwnProperty(name)) {
+        const value: any = filters[name];
+        if (value) {
+          const isArray: boolean = Array.isArray(value);
+          if (isArray && value.length) {
+            url += `&${name}=${value.join(',')}`;
+          } else if (!isArray) {
+            url += `&${name}=${value}`;
+          }
+        }
       }
     }
     return url;

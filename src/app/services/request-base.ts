@@ -13,12 +13,13 @@ export class RequestBase {
     headers: this.noPreFlightHeaders,
     withCredentials: true
   });
-  constructor(public http: Http) {
-    this.headers.append('Content-Type', 'application/json');
-    this.noPreFlightHeaders.append('Content-Type', 'text/plain');
-  }
 
   static toJson(res: Response): any {
     return res.json();
+  }
+
+  constructor(public http: Http) {
+    this.headers.append('Content-Type', 'application/json');
+    this.noPreFlightHeaders.append('Content-Type', 'text/plain');
   }
 }

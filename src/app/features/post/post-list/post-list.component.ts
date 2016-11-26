@@ -58,11 +58,11 @@ export class PostListComponent implements OnDestroy {
     this.store.select((state: AppState) => state.post.complete)
       .takeUntil(this.destroyed$)
       .subscribe((complete: boolean) => {
-        if(this.timeout) {
+        if (this.timeout) {
           clearTimeout(this.timeout);
           this.timeout = null;
         }
-        this.pauser$.next(complete)
+        this.pauser$.next(complete);
       });
     // first load
     this.load();
@@ -95,7 +95,7 @@ export class PostListComponent implements OnDestroy {
   }
 
   private canLoad(requesting: boolean, scroll: Event): boolean {
-    if(requesting) return false;
+    if (requesting) return false;
     const offset: number = 300;
     const rect: ClientRect = this.trigger.nativeElement.getBoundingClientRect();
     return (
