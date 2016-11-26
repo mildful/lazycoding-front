@@ -13,16 +13,24 @@ import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 
 const STORE_DEV_TOOLS_IMPORTS = [];
-if (ENV === 'development' && !AOT &&
-  ['monitor', 'both'].includes(STORE_DEV_TOOLS) // set in constants.js file in project root
-) STORE_DEV_TOOLS_IMPORTS.push(...[
-  StoreDevtoolsModule.instrumentStore({
-    monitor: useLogMonitor({
-      visible: true,
-      position: 'right'
-    })
-  })
-]);
+//if (ENV === 'development' && !AOT &&
+if (ENV === 'development' && !AOT) {
+  // set in constants.js file in project root
+  if (['monitor', 'both'].includes(STORE_DEV_TOOLS)) {
+    STORE_DEV_TOOLS_IMPORTS.push(...[
+      StoreDevtoolsModule.instrumentStore({
+        monitor: useLogMonitor({
+          visible: true,
+          position: 'right'
+        })
+      })
+    ]);
+  } else if (['extension'].includes(STORE_DEV_TOOLS)) {
+    STORE_DEV_TOOLS_IMPORTS.push(...[
+      StoreDevtoolsModule.instrumentOnlyWithExtension()
+    ]);
+  }
+}
 
 export const APP_IMPORTS = [
   ReactiveFormsModule,

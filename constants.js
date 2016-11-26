@@ -40,9 +40,9 @@ exports.DEV_SERVER_WATCH_OPTIONS = {
 
 /**
  * specifies which @ngrx dev tools will be available when you build and load
- * your app in dev mode. Options are: monitor | logger | both | none
+ * your app in dev mode. Options are: monitor | logger | both | none | extension
  */
-exports.STORE_DEV_TOOLS = 'monitor'
+exports.STORE_DEV_TOOLS = 'extension'
 
 exports.EXCLUDE_SOURCE_MAPS = [
   // these packages have problems with their sourcemaps
