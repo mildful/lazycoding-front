@@ -1,0 +1,112 @@
+@import '../../../_variables';
+
+$timing: .2s;
+$h: 325px;
+$hoverWidth: 15px;
+
+article {
+   overflow: hidden;
+   box-shadow: $bs-light;
+   border-radius: 2px;
+   font-family: 'Open Sans', sans-serif;
+   transition: transform $timing, box-shadow $timing;
+   //margin: 7px;
+   display: inline-block;
+   position: relative;
+   background: white;
+   height: $h;
+
+   .categories {
+      list-style-type: none;
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+      margin: 0;
+      padding: 0;
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      z-index: 1;
+
+      width: auto;
+
+      li {
+         flex: 1;
+         border-left: 3px solid grey;
+         color: white;
+         font-family: 'Montserrat', sans-serif;
+         box-sizing: content-box;
+         width: auto;
+         max-width: 0;
+         position: relative;
+         transition: max-width .3s, padding .3s;
+         display: flex;
+         align-items: center;
+
+         .content {
+            overflow: hidden;
+         }
+
+         &:after {
+            content: '';
+            width: $hoverWidth;
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+         }
+
+         &.angular { border-left-color: $angular; background: $angular }
+         &.typescript { border-left-color: $typescript; background: $typescript }
+         &.react { border-left-color: $react; background: $react }
+         &.susy { border-left-color: $susy; background: $susy }
+         &.node { border-left-color: $node; background: $node }
+
+         &:hover{
+            max-width: 100%;
+            padding: 0 20px 0 10px;
+         }
+      }
+   }
+
+   .details {
+      padding: 16px;
+      height: $h;
+      display: flex;
+      flex-direction: column;
+
+      img {
+         flex-grow: 1;
+         width: 100%;
+         height: auto;
+         object-fit: cover;
+         display: block;
+         transition: transform $timing;
+      }
+
+      .date {
+         font-size: .8em;
+         color: $txt-grey;
+         margin-top: 14px;
+         display: block;
+         font-family: 'Montserrat', sans-serif;
+      }
+
+      h3 {
+         color: $txt-dark;
+         margin: 7px 0;
+      }
+   }
+
+   &:hover {
+      transform: translateY(-7px);
+      box-shadow: $bs-medium;
+
+      .details {
+         h3 {
+            color: $txt-dark-hover;
+         }
+      }
+   }
+
+   &:active {
+      transform: scale(.97);
+   }
+}

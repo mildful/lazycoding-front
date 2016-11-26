@@ -1,0 +1,24 @@
+@import '../../../_variables';
+
+$itemsPerLine: 3;
+$offset: 15px;
+
+.posts {
+   padding-top: $offset * 4;
+
+   post-card article {
+      width: ($container / $itemsPerLine) - $offset;
+      margin-right: $offset;
+      margin-bottom: $offset;
+   }
+   post-card:nth-child(#{$itemsPerLine}n) article {
+      width: ($container / $itemsPerLine);
+      margin-right: 0;
+   }
+}
+
+.pl-trigger{
+   background: none;
+   width: 1px;
+   height: 1px;
+}

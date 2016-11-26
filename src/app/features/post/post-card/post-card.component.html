@@ -1,0 +1,14 @@
+<article>
+  <a [routerLink]="'/posts/' + post.slug">
+    <ul class="categories">
+      <li *ngFor="let category of categories" class="{{category.slug}}">
+        <span class="content">{{ category.name }}</span>
+      </li>
+    </ul>
+    <div class="details">
+      <img [src]="post.custom_cover" [alt]="post.slug" />
+      <div class="date">{{ post.date | date:"dd MMMM y" }}</div>
+      <h3>{{ post.title.rendered }}</h3>
+    </div>
+  </a>
+</article>

@@ -4,12 +4,11 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
+import { AppState } from '../../reducers';
 import { UserActions } from './user.actions';
-import { AppState } from '../reducers';
 import { UserService } from './user.service';
 
 @Injectable()
-
 export class UserEffects {
   constructor(
     private actions$: Actions,

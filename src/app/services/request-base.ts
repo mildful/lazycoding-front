@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
 @Injectable()
 export class RequestBase {
@@ -16,5 +16,9 @@ export class RequestBase {
   constructor(public http: Http) {
     this.headers.append('Content-Type', 'application/json');
     this.noPreFlightHeaders.append('Content-Type', 'text/plain');
+  }
+
+  static toJson(res: Response): any {
+    return res.json();
   }
 }

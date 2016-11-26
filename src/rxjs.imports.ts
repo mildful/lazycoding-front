@@ -2,7 +2,10 @@
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/observable/throw';
+import 'rxjs/add/observable/never';
 import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/throttleTime';
+import 'rxjs/add/operator/retry';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/observable/from';

@@ -1,4 +1,19 @@
-$primary-font: "Roboto", "Helvetica", "Arial", sans-serif;
-$break-small: 320px;
-$break-mobile: 800px;
-$break-large: 1200px;
+$primary-font: "lc-font", "Helvetica", "Arial", sans-serif;
+
+$angular: #DD0330;
+$typescript: #0074C1;
+$react: #61DAFB;
+$susy: #FF007F;
+$node: #7fbd42;
+
+$bs-light: -1px 0 2px 0 rgba(0,0,0,0.12) , 1px 0 2px 0 rgba(0,0,0,0.12) , 0 1px 1px 0 rgba(0,0,0,0.24);
+$bs-medium: -2px 0 2px 0 rgba(0,0,0,0.16) , 2px 0 2px 0 rgba(0,0,0,0.16) , 0 2px 2px 0 rgba(0,0,0,0.23);
+
+$lc-logo-height: 44px;
+$container: 950px;
+
+$txt-dark: black;
+$txt-dark-hover: rgba(0, 0, 0, .7);;
+$txt-grey: rgba(0,0,0,0.6);
+$txt-grey-hover: #bbb;
+$text-light: white;

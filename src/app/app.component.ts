@@ -5,7 +5,7 @@ import { views } from './app-nav-views';
 import { MOBILE } from './services/constants';
 
 @Component({
-  selector: 'my-app',
+  selector: 'lc-app',
   styleUrls: ['./app.component.css'],
   templateUrl: './app.component.html'
 })
@@ -13,8 +13,8 @@ export class AppComponent {
   showMonitor = (ENV === 'development' && !AOT &&
     ['monitor', 'both'].includes(STORE_DEV_TOOLS) // set in constants.js file in project root
   );
+  contentWidth: string = this.showMonitor ? '70%' : '';
   mobile = MOBILE;
-  sideNavMode = MOBILE ? 'over' : 'side';
   views = views;
 
   constructor(
