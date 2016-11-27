@@ -6,6 +6,7 @@ import 'rxjs/add/observable/never';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/throttleTime';
 import 'rxjs/add/operator/retry';
+import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/observable/from';

@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
+import { AppState } from './reducers/index';
+import { CategoryActions } from './features/category';
 import { views } from './app-nav-views';
 import { MOBILE } from './services/constants';
 
@@ -19,8 +22,12 @@ export class AppComponent {
 
   constructor(
     public route: ActivatedRoute,
-    public router: Router
-  ) { }
+    public router: Router,
+    private store: Store<AppState>,
+    private categoryActions: CategoryActions
+  ) {
+    this.load();
+  }
 
   activateEvent(event) {
     if (ENV === 'development') {
@@ -32,5 +39,9 @@ export class AppComponent {
     if (ENV === 'development') {
       console.log('Deactivate Event', event);
     }
+  }
+
+  private load(): void {
+    this.store.dispatch(this.categoryActions.reqCategories());
   }
 }

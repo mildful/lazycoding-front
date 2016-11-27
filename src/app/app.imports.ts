@@ -8,12 +8,13 @@ import { useLogMonitor } from '@ngrx/store-log-monitor';
 
 import { routes } from './app.routing';
 import { rootReducer } from './reducers';
+/* Features Modules */
 import { StoreDevToolsModule } from './features/store-devtools/store-devtools.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { CategoryModule } from './features/category/category.module';
 
 const STORE_DEV_TOOLS_IMPORTS = [];
-//if (ENV === 'development' && !AOT &&
 if (ENV === 'development' && !AOT) {
   // set in constants.js file in project root
   if (['monitor', 'both'].includes(STORE_DEV_TOOLS)) {
@@ -41,5 +42,6 @@ export const APP_IMPORTS = [
   StoreDevToolsModule,
   CoreModule,
   SharedModule,
+  CategoryModule,
 ];
 

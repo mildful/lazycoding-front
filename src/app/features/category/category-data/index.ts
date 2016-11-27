@@ -1,0 +1,6 @@
+export * from './category-data.module'
+export * from './category.actions'
+export * from './category.effects'
+export * from './category.model'
+export * from './category.reducer'
+export * from './category.service'
