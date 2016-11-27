@@ -23,11 +23,36 @@ import { Post, PostActions, PostFilters } from '../post-data';
 export class PostListComponent implements OnDestroy {
 
   filters$: Observable<PostFilters>;
+  /**
+   * Used to pause other observables.
+   * @type {Subject<boolean>}
+   */
   pauser$: Subject<boolean> = new Subject<boolean>();
+  /**
+   * Posts to display in the list.
+   * @type {Observable<Post[]>}
+   */
   posts$: Observable<Post[]>;
+  /**
+   * Track if service is requesting posts or not.
+   * @type {Observable<boolean>}
+   */
   requesting$: Observable<boolean>;
+  /**
+   * Listen to scroll, used to lazyload posts.
+   * @type {Observable<Event>}
+   */
   scroll$: Observable<Event>;
+  /**
+   * Reference to a DOM node located at the end of the posts list.
+   * It triggers the load of more posts.
+   * @type {ElementRef}
+   */
   @ViewChild('trigger') trigger: ElementRef;
+  /**
+   * Design pattern used to unsubscribe to all observables when component is being destroyed.
+   * @type {Subject<any>}
+   */
   private destroyed$: Subject<any> = new Subject<any>();
   private page: number = 0;
   private timeout: Timer = null;
@@ -59,8 +84,7 @@ export class PostListComponent implements OnDestroy {
       .takeUntil(this.destroyed$)
       .subscribe((complete: boolean) => {
         if (this.timeout) {
-          clearTimeout(this.timeout);
-          this.timeout = null;
+          this.clearPause();
         }
         this.pauser$.next(complete);
       });
@@ -70,28 +94,6 @@ export class PostListComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.destroyed$.next();
-  }
-
-  private load(initialLoad: boolean = false): void {
-    /*if(initialLoad) {
-      // listen to this.source$
-      this.pauser$.next(false);
-    } else {
-      // disable loading for 600ms
-      this.pauser$.next(true);
-      setTimeout(() => this.pauser$.next(false), 600);
-    }*/
-    // disable loading for 600ms
-    this.pauser$.next(true);
-    this.timeout = setTimeout(() => {
-      this.pauser$.next(false);
-      this.timeout = null;
-    }, 600);
-    // dispatch action
-    const filters: PostFilters = {
-      page: ++this.page
-    };
-    this.store.dispatch(this.postActions.reqPosts(filters));
   }
 
   private canLoad(requesting: boolean, scroll: Event): boolean {
@@ -104,5 +106,34 @@ export class PostListComponent implements OnDestroy {
       rect.bottom <= (this.windowRef.nativeWindow.innerHeight || document.documentElement.clientHeight) + offset &&
       rect.right <= (this.windowRef.nativeWindow.innerWidth || document.documentElement.clientWidth)
     );
+  }
+
+  private clearPause(): void {
+    clearTimeout(this.timeout);
+    this.timeout = null;
+  }
+
+  private load(initialLoad: boolean = false): void {
+    // disable loading for 600ms. Used to prevent to load the same data twice while Angular is still displaying
+    // the result of the first request.
+    this.pause(600);
+    // dispatch action
+    const filters: PostFilters = {
+      // TODO store that.
+      page: ++this.page
+    };
+    this.store.dispatch(this.postActions.reqPosts(filters));
+  }
+
+  /**
+   * Prevent for loading data during an amount of time.
+   * @param duration
+   */
+  private pause(duration: number): void {
+    this.pauser$.next(true);
+    this.timeout = setTimeout(() => {
+      this.pauser$.next(false);
+      this.timeout = null;
+    }, duration);
   }
 }

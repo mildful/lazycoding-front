@@ -6,9 +6,6 @@ import { ServerError } from '../../../services/server-error.model';
 import { PostActions } from './post.actions';
 import { Post } from './post.model';
 
-// TODO: handle cache
-
-
 export interface PostState {
   cache: Post[];
   posts: Post[];

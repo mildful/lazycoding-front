@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { NotFound404Component } from './not-found404.component';
 import { routes } from './app.routing';
 import { StoreDevToolsModule } from './features/store-devtools/store-devtools.module';
-import { CategoryModule } from './features/category/category.module';
 
 import 'rxjs/add/operator/takeUntil';
 
@@ -17,8 +16,7 @@ describe('App Component', () => {
       imports: [
         ReactiveFormsModule,
         RouterTestingModule.withRoutes(routes),
-        StoreDevToolsModule,
-        CategoryModule,
+        StoreDevToolsModule
         ],
       providers: [],
       declarations: [AppComponent, NotFound404Component]
