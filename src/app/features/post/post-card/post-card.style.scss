@@ -82,6 +82,7 @@ article {
       }
 
       .date {
+         line-height: 15px;
          font-size: .8em;
          color: $txt-grey;
          margin-top: 14px;
@@ -92,6 +93,7 @@ article {
       h3 {
          color: $txt-dark;
          margin: 7px 0;
+         font-weight: bold;
       }
    }
 
