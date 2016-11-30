@@ -34,10 +34,10 @@ export class PostListComponent implements OnDestroy {
    */
   posts$: Observable<Post[]>;
   /**
-   * Track if service is requesting posts or not.
+   * Track if posts are loading.
    * @type {Observable<boolean>}
    */
-  requesting$: Observable<boolean>;
+  loading$: Observable<boolean>;
   /**
    * Listen to scroll, used to lazyload posts.
    * @type {Observable<Event>}
@@ -54,7 +54,6 @@ export class PostListComponent implements OnDestroy {
    * @type {Subject<any>}
    */
   private destroyed$: Subject<any> = new Subject<any>();
-  private page: number = 0;
   private timeout: Timer = null;
 
   constructor(
@@ -63,23 +62,19 @@ export class PostListComponent implements OnDestroy {
     private windowRef: WindowRef
   ) {
     // subscribe to post
-    this.posts$ = this.store.select((state: AppState) => state.post.posts)
-      .takeUntil(this.destroyed$);
+    this.posts$ = this.store.select((state: AppState) => state.post.posts);
     // listen scroll
-    this.requesting$ = this.store.select((state: AppState) => state.post.requesting)
-      .takeUntil(this.destroyed$);
+    this.loading$ = this.store.select((state: AppState) => state.post.loading);
     this.scroll$ = Observable.fromEvent(this.windowRef.nativeWindow, 'scroll')
-      .takeUntil(this.destroyed$)
       .throttleTime(300);
     // concat
     const loader$: Observable<[boolean, Event]> =
-      Observable.combineLatest(this.requesting$, this.scroll$, this.canLoad.bind(this))
-        .takeUntil(this.destroyed$);
+      Observable.combineLatest(this.loading$, this.scroll$, this.canLoad.bind(this));
     // delay
     this.pauser$.switchMap((paused: boolean) => paused ? Observable.never() : loader$)
       .takeUntil(this.destroyed$)
       .subscribe((canLoad: [boolean, Event]) => canLoad ? this.load() : null);
-    // used to prevent unnecessary request & first load
+    // used to stop requesting if all posts are loaded (complete)
     this.store.select((state: AppState) => state.post.complete)
       .takeUntil(this.destroyed$)
       .subscribe((complete: boolean) => {
@@ -96,8 +91,8 @@ export class PostListComponent implements OnDestroy {
     this.destroyed$.next();
   }
 
-  private canLoad(requesting: boolean, scroll: Event): boolean {
-    if (requesting) return false;
+  private canLoad(loading: boolean, scroll: Event): boolean {
+    if (loading) return false;
     const offset: number = 300;
     const rect: ClientRect = this.trigger.nativeElement.getBoundingClientRect();
     return (
@@ -113,16 +108,12 @@ export class PostListComponent implements OnDestroy {
     this.timeout = null;
   }
 
-  private load(initialLoad: boolean = false): void {
+  private load(): void {
     // disable loading for 600ms. Used to prevent to load the same data twice while Angular is still displaying
     // the result of the first request.
     this.pause(600);
     // dispatch action
-    const filters: PostFilters = {
-      // TODO store that.
-      page: ++this.page
-    };
-    this.store.dispatch(this.postActions.reqPosts(filters));
+    this.store.dispatch(this.postActions.loadPosts());
   }
 
   /**

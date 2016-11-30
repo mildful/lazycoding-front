@@ -8,23 +8,22 @@ import { RequestBase } from '../../../services/request-base';
 import { PostFilters } from './post-filters.model';
 import { PostResponse } from './post-response.model';
 import { Post } from './post.model';
+import { PAGE_SIZE } from './post.constant';
 
 @Injectable()
 export class PostService extends RequestBase {
-
-  private PAGE_SIZE: number = 12;
 
   constructor(public http: Http) {
     super(http);
   }
 
   getPosts(filters: PostFilters): Observable<PostResponse> {
-    const url: string = this.buildUrl(`${API_BASE_URL}/posts?per_page=${this.PAGE_SIZE}`, filters);
+    const url: string = this.buildUrl(`${API_BASE_URL}/posts?per_page=${filters.remaining}`, filters);
     return this.http.get(url)
       .map(RequestBase.toJson)
       .map((posts: Post[]) => { return {
         posts,
-        complete: posts.length < this.PAGE_SIZE
+        complete: posts.length < filters.remaining
       }; } );
   }
 
@@ -35,7 +34,7 @@ export class PostService extends RequestBase {
     if (!url.includes('per_page')) url = this.pagerize(url);
 
     for (let name in filters) {
-      if (filters.hasOwnProperty(name)) {
+      if (name != 'remaining' && filters.hasOwnProperty(name)) {
         const value: any = filters[name];
         if (value) {
           const isArray: boolean = Array.isArray(value);
@@ -50,9 +49,13 @@ export class PostService extends RequestBase {
     return url;
   }
 
+  private handleError(): void {
+
+  }
+
   private pagerize(url: string): string {
     return (url.includes('?'))
-      ? url + `&per_page=${this.PAGE_SIZE}`
-      : url + `?per_page=${this.PAGE_SIZE}`;
+      ? url + `&per_page=${PAGE_SIZE}`
+      : url + `?per_page=${PAGE_SIZE}`;
   }
 }

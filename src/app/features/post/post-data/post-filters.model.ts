@@ -1,5 +1,6 @@
 export interface PostFilters {
-  categories?: number[];
-  page?: number;
-  before?: string;
+  readonly categories?: number[];
+  readonly page?: number;
+  readonly before?: string;
+  readonly remaining?: number;
 }

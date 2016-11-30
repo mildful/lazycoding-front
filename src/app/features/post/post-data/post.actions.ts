@@ -6,9 +6,38 @@ import { ServerError } from '../../../services/server-error.model';
 
 import { PostResponse } from './post-response.model';
 import { PostFilters } from './post-filters.model';
+import { Post } from './post.model';
 
 @Injectable()
 export class PostActions {
+
+  static LOAD_POSTS = '[Post] Load Posts';
+  loadPosts(): Action {
+    return {
+      type: PostActions.LOAD_POSTS
+    };
+  }
+
+  static LOAD_POSTS_FROM_CACHE = '[Post] Load Posts From Cache';
+  loadPostsFromCache(): Action {
+    return {
+      type: PostActions.LOAD_POSTS_FROM_CACHE
+    };
+  }
+
+  static LOAD_POSTS_SUCCESS = '[Post] Load Posts Success';
+  loadPostsSuccess(): Action {
+    return {
+      type: PostActions.LOAD_POSTS_SUCCESS
+    };
+  }
+
+  static LOAD_POSTS_FAIL = '[Post] Load Posts Fail';
+  loadPostsFail(): Action {
+    return {
+      type: PostActions.LOAD_POSTS_FAIL
+    };
+  }
 
   static REQ_POSTS = '[Post] Request Posts';
   reqPosts(filters: PostFilters = {}): Action {
@@ -31,6 +60,14 @@ export class PostActions {
     return {
       type: PostActions.REQ_POSTS_SUCCESS,
       payload: response
+    };
+  }
+
+  static CACHE_POSTS = '[Post] Cache Posts';
+  cachePosts(posts: Post[]): Action {
+    return {
+      type: PostActions.CACHE_POSTS,
+      payload: posts
     };
   }
 
