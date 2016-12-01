@@ -71,11 +71,11 @@ export class PostActions {
     };
   }
 
-  // TODO: call this action as a side effect of category-data when checking a category
-  static RESET_COMPLETION = '[Post] Reset Completion';
-  resetCompletion(): Action {
+  static FILTERS_TOGGLE_CATEGORY = '[Post] Filters Toggle Category';
+  filtersToggleCategory(id: number): Action {
     return {
-      type: PostActions.RESET_COMPLETION
+      type: PostActions.FILTERS_TOGGLE_CATEGORY,
+      payload: id
     };
   }
 }

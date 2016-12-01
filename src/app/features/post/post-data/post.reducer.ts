@@ -25,7 +25,7 @@ const initialState: PostState = {
   requesting: false,
   error: null,
   complete: false,
-  filters: { remaining: 0 },
+  filters: { remaining: 0, categories: [] },
 };
 
 export function postReducer(state = initialState, action: Action): PostState {
@@ -62,6 +62,7 @@ export function postReducer(state = initialState, action: Action): PostState {
      */
     case PostActions.LOAD_POSTS_FROM_CACHE: {
       let remaining: number = state.filters.remaining;
+      let lastDate: string = state.filters.before;
       let newPosts: Post[] = [];
       if (state.cache.length) {
         // date
@@ -71,7 +72,7 @@ export function postReducer(state = initialState, action: Action): PostState {
           newPosts = state.cache.filter((post: Post) => new Date(post.date) < beforeDate);
         }
         // categories
-        if (state.filters.categories) {
+        if (state.filters.categories && state.filters.categories.length) {
           let filteredPosts: Post[] = [];
           for (let post of newPosts) {
             if (remaining === 0) break;
@@ -82,10 +83,26 @@ export function postReducer(state = initialState, action: Action): PostState {
             }
           }
           newPosts = filteredPosts;
+        } else {
+          // take 12 first posts
+          if (newPosts.length >= remaining) {
+            newPosts = newPosts.slice(0, remaining);
+            remaining = 0;
+          } else {
+            remaining -= newPosts.length;
+          }
+        }
+
+        // if some posts have been loaded from cache, update the date of the last post in filters
+        if (newPosts.length) {
+          lastDate = new Date(newPosts[newPosts.length - 1].date).toISOString();
         }
       }
       return Object.assign({}, state, {
-        filters: Object.assign({}, state.filters, { remaining }),
+        filters: Object.assign({}, state.filters, {
+          remaining: remaining,
+          before: lastDate
+        }),
         posts: [ ... state.posts, ...newPosts ]
       });
     }
@@ -136,11 +153,21 @@ export function postReducer(state = initialState, action: Action): PostState {
     }
 
     /**
-     * payload: undefined
+     * payload: number
      */
-    case PostActions.RESET_COMPLETION: {
+    case PostActions.FILTERS_TOGGLE_CATEGORY: {
+      let categories: number[] = [ ...state.filters.categories ];
+      if(categories.includes(action.payload)) {
+        categories.splice( categories.indexOf(action.payload), 1 );
+      } else {
+        categories.push(action.payload);
+      }
       return Object.assign({}, state, {
-        complete: false
+        // We reset complete because since we have change our filters, there may be more posts to request
+        // on the server.
+        complete: false,
+        filters: Object.assign({}, state.filters, { categories }),
+        posts: []
       });
     }
 

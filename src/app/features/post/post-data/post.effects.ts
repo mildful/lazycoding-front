@@ -21,17 +21,39 @@ export class PostEffects {
     private postActions: PostActions
   ) { }
 
-  @Effect() load$ = this.actions$
+  @Effect() toggleCategory$ = this.actions$
+    .ofType(PostActions.FILTERS_TOGGLE_CATEGORY)
+    //+reset completion
+    .switchMap(() => Observable.of(
+      this.postActions.loadPosts()
+    ));
+
+  @Effect({ dispatch: false }) load$ = this.actions$
     .ofType(PostActions.LOAD_POSTS)
-    .do(() => Observable.of(
-      this.postActions.loadPostsFromCache()
-    ))
-    .switchMap(() => this.store.select((state: AppState) => state.post.filters)
+    /*.switchMap(() => Observable.of( this.postActions.loadPostsFromCache() )
+      .mergeMap(() => this.store.select((state: AppState) => state.post.filters)
+        .take(1)
+        .mergeMap((filters: PostFilters) => {
+          if (filters.remaining > 0) return Observable.of( this.postActions.reqPosts(filters) );
+          return Observable.of( this.postActions.loadPostsSuccess() );
+        })
+      )
+    )*/
+    .do(() => this.store.dispatch( this.postActions.loadPostsFromCache() ))
+    .do(() => this.store.select((state: AppState) => state.post.filters)
       .take(1)
-      .mergeMap((filters: PostFilters) => Observable.of(
-        this.postActions.reqPosts(filters)
-      ))
+      .subscribe((filters: PostFilters) => {
+        if (filters.remaining > 0) this.store.dispatch( this.postActions.reqPosts(filters) );
+        else this.store.dispatch( this.postActions.loadPostsSuccess() );
+      })
     );
+    /*.switchMap(() => this.store.select((state: AppState) => state.post.filters)
+      .take(1)
+      .mergeMap((filters: PostFilters) => {
+        if (filters.remaining > 0) return Observable.of( this.postActions.reqPosts(filters) );
+        return Observable.of( this.postActions.loadPostsSuccess() );
+      })
+    );*/
 
   @Effect() loadEnd$ = this.actions$
     .ofType(...[
@@ -45,16 +67,17 @@ export class PostEffects {
           return action.type === PostActions.REQ_POSTS_SUCCESS
           ? Observable.of( this.postActions.loadPostsSuccess() )
           : Observable.of( this.postActions.loadPostsFail() );
-        }
+        } return Observable.never();
       })
     );
 
   @Effect() cachePosts$ = this.actions$
     .ofType(PostActions.REQ_POSTS_SUCCESS)
     .map(toPayload)
-    .mergeMap((res: PostResponse) => Observable.of(
-      this.postActions.cachePosts(res.posts)
-    ))
+    .mergeMap((res: PostResponse) => res.posts.length
+      ? Observable.of( this.postActions.cachePosts(res.posts) )
+      : Observable.never()
+    )
 
   @Effect() getPosts$ = this.actions$
     .ofType(PostActions.REQ_POSTS)

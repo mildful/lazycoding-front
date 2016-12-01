@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../reducers';
 import { Category } from '../../category';
 
-import { Post } from '../post-data';
+import { Post, PostActions } from '../post-data';
 
 @Component({
   selector: 'post-card',
@@ -17,7 +17,8 @@ export class PostCardComponent implements OnInit {
   @Input() post: Post;
 
   constructor(
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private postActions: PostActions
   ) {}
 
   ngOnInit(): void {
@@ -26,5 +27,9 @@ export class PostCardComponent implements OnInit {
       .subscribe((cats: Category[]) => {
         this.categories = cats.filter((cat: Category) => this.post.categories.indexOf(cat.id) > -1);
       });
+  }
+
+  onCategoryClick(id: number): void {
+    this.store.dispatch(this.postActions.filtersToggleCategory(id));
   }
 }
