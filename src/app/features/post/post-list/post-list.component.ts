@@ -1,4 +1,10 @@
 import { Component, OnDestroy, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
@@ -7,22 +13,36 @@ import Timer = NodeJS.Timer;
 import { WindowRef } from '../window-ref';
 import { AppState } from '../../../reducers';
 
-import { Post, PostActions, PostFilters } from '../post-data';
+import { Post, PostActions } from '../post-data';
 
 @Component({
   selector: 'post-list',
   styleUrls: [ './post-list.style.css' ],
   encapsulation: ViewEncapsulation.None,
+  animations: [
+    trigger('appear', [
+      state('in', style({
+        opacity: 1,
+        transform: 'translateY(0)'
+      })),
+      state('out', style({
+        opacity: 0,
+        transform: 'translateY(500px)'
+      })),
+      transition('out => in', animate('400ms ease-in-out'))
+    ])
+  ],
   template: `
     <section class="posts">
-      <post-card *ngFor="let post of posts$ | async" [post]="post"></post-card>
+      <post-card *ngFor="let post of posts$ | async" 
+        [post]="post" 
+        [@appear]="postsAnimationsState.get(post.id)"></post-card>
       <div #trigger class="pl-trigger"></div>
     </section>
   `
 })
 export class PostListComponent implements OnDestroy {
 
-  filters$: Observable<PostFilters>;
   /**
    * Used to pause other observables.
    * @type {Subject<boolean>}
@@ -33,6 +53,7 @@ export class PostListComponent implements OnDestroy {
    * @type {Observable<Post[]>}
    */
   posts$: Observable<Post[]>;
+  postsAnimationsState: Map<number, string> = new Map<number, string>();
   /**
    * Track if posts are loading.
    * @type {Observable<boolean>}
@@ -62,7 +83,28 @@ export class PostListComponent implements OnDestroy {
     private windowRef: WindowRef
   ) {
     // subscribe to post
-    this.posts$ = this.store.select((state: AppState) => state.post.posts);
+    this.posts$ = this.store.select((state: AppState) => state.post.posts)
+      .do((posts: Post[]) => {
+        // we need this because on editing filter category, posts can be blank
+        if(!posts.length) return;
+        // delete removed posts from animation management
+        let ids: number[] = posts.map((post: Post) => post.id);
+        const it: IterableIterator<number> = this.postsAnimationsState.keys();
+        let mapId: number = it.next().value;
+        while (mapId) {
+          if (!ids.includes(mapId)) this.postsAnimationsState.delete(mapId);
+          mapId = it.next().value;
+        }
+        // trigger animations
+        let i: number = 0;
+        posts.forEach((post: Post) => {
+          if (!this.postsAnimationsState.has(post.id)) {
+            i++;
+            this.postsAnimationsState.set(post.id,'out');
+            setTimeout(() =>this.postsAnimationsState.set(post.id,'in'), i * 200);
+          }
+        });
+      });
     // listen scroll
     this.loading$ = this.store.select((state: AppState) => state.post.loading);
     this.scroll$ = Observable.fromEvent(this.windowRef.nativeWindow, 'scroll')

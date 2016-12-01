@@ -30,15 +30,6 @@ export class PostEffects {
 
   @Effect({ dispatch: false }) load$ = this.actions$
     .ofType(PostActions.LOAD_POSTS)
-    /*.switchMap(() => Observable.of( this.postActions.loadPostsFromCache() )
-      .mergeMap(() => this.store.select((state: AppState) => state.post.filters)
-        .take(1)
-        .mergeMap((filters: PostFilters) => {
-          if (filters.remaining > 0) return Observable.of( this.postActions.reqPosts(filters) );
-          return Observable.of( this.postActions.loadPostsSuccess() );
-        })
-      )
-    )*/
     .do(() => this.store.dispatch( this.postActions.loadPostsFromCache() ))
     .do(() => this.store.select((state: AppState) => state.post.filters)
       .take(1)
@@ -47,13 +38,6 @@ export class PostEffects {
         else this.store.dispatch( this.postActions.loadPostsSuccess() );
       })
     );
-    /*.switchMap(() => this.store.select((state: AppState) => state.post.filters)
-      .take(1)
-      .mergeMap((filters: PostFilters) => {
-        if (filters.remaining > 0) return Observable.of( this.postActions.reqPosts(filters) );
-        return Observable.of( this.postActions.loadPostsSuccess() );
-      })
-    );*/
 
   @Effect() loadEnd$ = this.actions$
     .ofType(...[
