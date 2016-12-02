@@ -157,7 +157,7 @@ export function postReducer(state = initialState, action: Action): PostState {
      */
     case PostActions.FILTERS_TOGGLE_CATEGORY: {
       let categories: number[] = [ ...state.filters.categories ];
-      if(categories.includes(action.payload)) {
+      if (categories.includes(action.payload)) {
         categories.splice( categories.indexOf(action.payload), 1 );
       } else {
         categories.push(action.payload);

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
 import { API_BASE_URL } from '../../../services/constants';
 import { RequestBase } from '../../../services/request-base';
@@ -24,7 +25,8 @@ export class PostService extends RequestBase {
       .map((posts: Post[]) => { return {
         posts,
         complete: posts.length < filters.remaining
-      }; } );
+      }; } )
+      .catch(this.handleError);
   }
 
   private buildUrl(url: string, filters: PostFilters): string {
@@ -34,7 +36,7 @@ export class PostService extends RequestBase {
     if (!url.includes('per_page')) url = this.pagerize(url);
 
     for (let name in filters) {
-      if (name != 'remaining' && filters.hasOwnProperty(name)) {
+      if (!name.includes('remaining') && filters.hasOwnProperty(name)) {
         const value: any = filters[name];
         if (value) {
           const isArray: boolean = Array.isArray(value);
@@ -49,8 +51,13 @@ export class PostService extends RequestBase {
     return url;
   }
 
-  private handleError(): void {
-
+  private handleError(res: Response): ErrorObservable {
+    let msg: string;
+    let error: any = res.json();
+    if (error instanceof ProgressEvent) {
+      msg = 'Unable to connect server.';
+    }
+    return Observable.throw(msg);
   }
 
   private pagerize(url: string): string {

@@ -23,7 +23,7 @@ export class PostEffects {
 
   @Effect() toggleCategory$ = this.actions$
     .ofType(PostActions.FILTERS_TOGGLE_CATEGORY)
-    //+reset completion
+    // +reset completion
     .switchMap(() => Observable.of(
       this.postActions.loadPosts()
     ));
@@ -34,8 +34,11 @@ export class PostEffects {
     .do(() => this.store.select((state: AppState) => state.post.filters)
       .take(1)
       .subscribe((filters: PostFilters) => {
-        if (filters.remaining > 0) this.store.dispatch( this.postActions.reqPosts(filters) );
-        else this.store.dispatch( this.postActions.loadPostsSuccess() );
+        if (filters.remaining > 0) {
+          this.store.dispatch( this.postActions.reqPosts(filters) );
+        } else {
+          this.store.dispatch( this.postActions.loadPostsSuccess() );
+        }
       })
     );
 
@@ -61,7 +64,7 @@ export class PostEffects {
     .mergeMap((res: PostResponse) => res.posts.length
       ? Observable.of( this.postActions.cachePosts(res.posts) )
       : Observable.never()
-    )
+    );
 
   @Effect() getPosts$ = this.actions$
     .ofType(PostActions.REQ_POSTS)

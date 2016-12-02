@@ -87,7 +87,7 @@ export class PostListComponent implements OnDestroy {
     this.posts$ = this.store.select((state: AppState) => state.post.posts)
       .do((posts: Post[]) => {
         // we need this because on editing filter category, posts can be blank
-        if(!posts.length) return;
+        if (!posts.length) return;
         // delete removed posts from animation management
         let ids: number[] = posts.map((post: Post) => post.id);
         const it: IterableIterator<number> = this.postsAnimationsState.keys();
@@ -101,8 +101,8 @@ export class PostListComponent implements OnDestroy {
         posts.forEach((post: Post) => {
           if (!this.postsAnimationsState.has(post.id)) {
             i++;
-            this.postsAnimationsState.set(post.id,'out');
-            setTimeout(() =>this.postsAnimationsState.set(post.id,'in'), i * 200);
+            this.postsAnimationsState.set(post.id, 'out');
+            setTimeout(() => this.postsAnimationsState.set(post.id, 'in'), i * 200);
           }
         });
       });
