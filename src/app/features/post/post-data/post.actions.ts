@@ -11,6 +11,28 @@ import { Post } from './post.model';
 @Injectable()
 export class PostActions {
 
+  static LOAD_POST_BY_SLUG = '[Post] Load Post By Slug';
+  loadPostBySlug(slug: string): Action {
+    return {
+      type: PostActions.LOAD_POST_BY_SLUG,
+      payload: slug
+    };
+  }
+
+  static LOAD_POST_BY_SLUG_FAIL = '[Post] Load Post By Slug Fail';
+  loadPostBySlugFail(): Action {
+    return {
+      type: PostActions.LOAD_POST_BY_SLUG_FAIL
+    };
+  }
+
+  static LOAD_POST_BY_SLUG_SUCCESS = '[Post] Load Post By Slug Success';
+  loadPostBySlugSuccess(): Action {
+    return {
+      type: PostActions.LOAD_POST_BY_SLUG_SUCCESS
+    };
+  }
+
   static LOAD_POSTS = '[Post] Load Posts';
   loadPosts(): Action {
     return {

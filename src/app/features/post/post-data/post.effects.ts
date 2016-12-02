@@ -21,14 +21,16 @@ export class PostEffects {
     private postActions: PostActions
   ) { }
 
-  @Effect() toggleCategory$ = this.actions$
-    .ofType(PostActions.FILTERS_TOGGLE_CATEGORY)
-    // +reset completion
+  @Effect() load$ = this.actions$
+    .ofType(...[
+      PostActions.FILTERS_TOGGLE_CATEGORY,
+      PostActions.LOAD_POST_BY_SLUG,
+    ])
     .switchMap(() => Observable.of(
       this.postActions.loadPosts()
     ));
 
-  @Effect({ dispatch: false }) load$ = this.actions$
+  @Effect({ dispatch: false }) fetchPosts$ = this.actions$
     .ofType(PostActions.LOAD_POSTS)
     .do(() => this.store.dispatch( this.postActions.loadPostsFromCache() ))
     .do(() => this.store.select((state: AppState) => state.post.filters)

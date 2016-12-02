@@ -25,11 +25,38 @@ const initialState: PostState = {
   requesting: false,
   error: null,
   complete: false,
-  filters: { remaining: 0, categories: [] },
+  filters: { remaining: 0, categories: [], slug: null },
 };
 
 export function postReducer(state = initialState, action: Action): PostState {
   switch (action.type) {
+
+    /**
+     * payload: string
+     */
+    case PostActions.LOAD_POST_BY_SLUG: {
+      return Object.assign({}, state, {
+        loading: true,
+        remaining: 1,
+        filters: Object.assign({}, state.filters, {
+          slug: action.payload
+        })
+      });
+    }
+
+    /**
+     * payload: undefined
+     */
+    case PostActions.LOAD_POST_BY_SLUG_FAIL:
+    case PostActions.LOAD_POST_BY_SLUG_SUCCESS: {
+      return Object.assign({}, state, {
+        loading: false,
+        remaining: 0,
+        filters: Object.assign({}, state.filters, {
+          slug: null
+        })
+      });
+    }
 
     /**
      * payload: undefined
@@ -64,15 +91,34 @@ export function postReducer(state = initialState, action: Action): PostState {
       let remaining: number = state.filters.remaining;
       let lastDate: string = state.filters.before;
       let newPosts: Post[] = [];
+
       if (state.cache.length) {
+        //slug
+        if (state.filters.slug) {
+          const slugPost: Post = state.cache.find((post: Post) => post.slug.includes(state.filters.slug));
+          if(slugPost) {
+            newPosts.push(slugPost);
+            remaining = 0;
+          }
+        }
         // date
-        if (state.filters.before) {
+        if (remaining && state.filters.before) {
           // todo: dichotomy
           const beforeDate: Date = new Date(state.filters.before);
           newPosts = state.cache.filter((post: Post) => new Date(post.date) < beforeDate);
+          // if we don't need to filter newPost again, we make sure to have 12 max new posts.
+          if(!state.filters.categories.length) {
+            // take only 12 (remaining) firsts posts
+            if (newPosts.length >= remaining) {
+              newPosts = newPosts.slice(0, remaining);
+              remaining = 0;
+            } else {
+              remaining -= newPosts.length;
+            }
+          }
         }
         // categories
-        if (state.filters.categories && state.filters.categories.length) {
+        if (remaining && state.filters.categories && state.filters.categories.length) {
           let filteredPosts: Post[] = [];
           for (let post of newPosts) {
             if (remaining === 0) break;
@@ -83,14 +129,6 @@ export function postReducer(state = initialState, action: Action): PostState {
             }
           }
           newPosts = filteredPosts;
-        } else {
-          // take 12 first posts
-          if (newPosts.length >= remaining) {
-            newPosts = newPosts.slice(0, remaining);
-            remaining = 0;
-          } else {
-            remaining -= newPosts.length;
-          }
         }
 
         // if some posts have been loaded from cache, update the date of the last post in filters
