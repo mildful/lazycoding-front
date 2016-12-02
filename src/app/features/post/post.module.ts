@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../../shared/shared.module';
+import { CategoryModule } from '../category/category.module';
 
 import { WindowRef } from './window-ref';
 import { routedComponents, PostRoutingModule } from './post.routing';
@@ -11,7 +12,8 @@ import { PostDataModule } from './post-data';
   imports: [
     SharedModule,
     PostRoutingModule,
-    PostDataModule
+    PostDataModule,
+    CategoryModule
   ],
   declarations: [
     ...routedComponents,

@@ -1,0 +1,15 @@
+@import '../../../_variables';
+
+ul.categories {
+   position: fixed;
+   left: 15px;
+   top: $lc-logo-height + 10px;
+
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   list-style-type: none;
+
+   font-family: 'Montserrat', sans-serif;
+   color: rgba(255, 255, 255, 1);
+}

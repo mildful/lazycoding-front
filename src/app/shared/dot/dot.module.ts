@@ -8,5 +8,9 @@ import { DotContentComponent } from './dot-content.component';
     DotComponent,
     DotContentComponent
   ],
+  exports: [
+    DotComponent,
+    DotContentComponent
+  ],
 })
 export class DotModule { }

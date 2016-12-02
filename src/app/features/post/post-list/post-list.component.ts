@@ -33,6 +33,7 @@ import { Post, PostActions } from '../post-data';
     ])
   ],
   template: `
+    <category-list></category-list>
     <section class="posts">
       <post-card *ngFor="let post of posts$ | async" 
         [post]="post" 

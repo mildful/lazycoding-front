@@ -1,4 +1,11 @@
 /* main.css will be extracted to main dist folder and is imported in index.html */
 /* This file is for setting global styles  */
+@import '_variables';
 @import 'reset.scss';
 @import 'fonts.scss';
+
+.angular { background: $angular }
+.typescript { background: $typescript }
+.react { background: $react }
+.susy { background: $susy }
+.node { background: $node }
