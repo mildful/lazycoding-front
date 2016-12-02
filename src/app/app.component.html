@@ -1,7 +1,43 @@
 <img src="https://unsplash.it/g/1920/1080/?random=true&blur=true" alt="background" class="main-background" />
+
+<header>
+  <nav>
+    <ul>
+      <li><a [routerLink]=" ['./'] " class="lc-logo">
+        <img src="assets/img/logo.svg" alt="lazycoding">
+      </a></li>
+      <li>
+        <lc-dot [img]="'assets/img/icons/search.svg'"
+                [alt]="'rechercher'"
+                [wrapperClasses]="'dot-header'"
+                [selected]="false">
+          <lc-dot-content [position]="'bottom'">Rechercher</lc-dot-content>
+        </lc-dot>
+      </li>
+      <li><a [routerLink]=" ['./'] ">
+        <lc-dot [img]="'assets/img/icons/mail.svg'"
+                [alt]="'contact'"
+                [wrapperClasses]="'dot-header'"
+                [selected]="false">
+          <lc-dot-content [position]="'bottom'">Contact</lc-dot-content>
+        </lc-dot>
+      </a></li>
+      <li><a [routerLink]=" ['./'] ">
+        <lc-dot [img]="'assets/img/icons/donation.svg'"
+                [alt]="'soutient'"
+                [wrapperClasses]="'dot-header donation'"
+                [selected]="false">
+          <lc-dot-content [position]="'bottom'">Soutenez-moi</lc-dot-content>
+        </lc-dot>
+      </a></li>
+    </ul>
+  </nav>
+</header>
+
 <section [style.width]="contentWidth">
   <main class="container">
     <router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
   </main>
 </section>
+
 <my-store-devtools *ngIf="showMonitor"></my-store-devtools>

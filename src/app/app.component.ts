@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { AppState } from './reducers/index';
 import { CategoryActions } from './features/category';
-import { views } from './app-nav-views';
 import { MOBILE } from './services/constants';
 
 @Component({
   selector: 'lc-app',
   styleUrls: ['./app.component.css'],
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './app.component.html'
 })
 export class AppComponent {
@@ -18,7 +18,6 @@ export class AppComponent {
   );
   contentWidth: string = this.showMonitor ? '70%' : '';
   mobile = MOBILE;
-  views = views;
 
   constructor(
     public route: ActivatedRoute,
