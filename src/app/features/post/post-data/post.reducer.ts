@@ -67,7 +67,7 @@ export function postReducer(state = initialState, action: Action): PostState {
       if (state.cache.length) {
         // date
         if (state.filters.before) {
-          // dichotomy
+          // todo: dichotomy
           const beforeDate: Date = new Date(state.filters.before);
           newPosts = state.cache.filter((post: Post) => new Date(post.date) < beforeDate);
         }
@@ -76,7 +76,7 @@ export function postReducer(state = initialState, action: Action): PostState {
           let filteredPosts: Post[] = [];
           for (let post of newPosts) {
             if (remaining === 0) break;
-            const valid: boolean = new Set(post.categories).has(...state.filters.categories);
+            const valid: boolean = post.categories.some((cid: number) => state.filters.categories.includes(cid));
             if (valid) {
               remaining--;
               filteredPosts.push(post);
