@@ -4,8 +4,6 @@ $itemsPerLine: 3;
 $offset: 15px;
 
 .posts {
-   padding-top: $offset * 4;
-
    post-card article {
       width: ($container / $itemsPerLine) - $offset;
       margin-right: $offset;

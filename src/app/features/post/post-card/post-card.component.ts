@@ -9,7 +9,7 @@ import { Post, PostActions } from '../post-data';
 @Component({
   selector: 'post-card',
   templateUrl: 'post-card.component.html',
-  styleUrls: [ './post-card.style.css' ]
+  styleUrls: [ './post-card.component.css' ]
 })
 export class PostCardComponent implements OnInit {
 

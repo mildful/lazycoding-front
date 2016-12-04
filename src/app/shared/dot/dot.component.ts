@@ -11,7 +11,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
       <ng-content></ng-content>
     </div>
   `,
-  styleUrls: [ './dot.style.css' ]
+  styleUrls: [ './dot.component.css' ]
 })
 export class DotComponent {
   @Input() img: string;

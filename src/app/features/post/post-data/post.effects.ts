@@ -23,8 +23,7 @@ export class PostEffects {
 
   @Effect() load$ = this.actions$
     .ofType(...[
-      PostActions.FILTERS_TOGGLE_CATEGORY,
-      PostActions.LOAD_POST_BY_SLUG,
+      PostActions.FILTERS_TOGGLE_CATEGORY
     ])
     .switchMap(() => Observable.of(
       this.postActions.loadPosts()
@@ -68,7 +67,7 @@ export class PostEffects {
       : Observable.never()
     );
 
-  @Effect() getPosts$ = this.actions$
+  @Effect() reqPosts$ = this.actions$
     .ofType(PostActions.REQ_POSTS)
     .map(toPayload)
     .switchMap((filters: PostFilters) => this.postService.getPosts(filters)

@@ -1,0 +1,40 @@
+@import '../../../_variables';
+
+.anim-wrapper {
+   overflow: hidden;
+   border-radius: 5px 5px 0 0;
+   position: fixed;
+   height: 100%;
+   width: $container;
+
+   &.hidden { opacity: 0 }
+
+   .circle {
+      background: white;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+   }
+}
+
+.post {
+   background: white;
+   opacity: 0;
+   border-radius: 5px;
+   width: $container;
+   box-shadow: $bs-medium;
+
+   .cover {
+      border-radius: 5px 5px 0 0;
+      width: 100%;
+      height: auto;
+   }
+
+   .content {
+      padding: 20px;
+   }
+
+   &.visible { opacity: 1 }
+}

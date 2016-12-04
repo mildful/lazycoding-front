@@ -11,6 +11,7 @@
 .container {
    width: $container;
    margin: 0 auto;
+   padding-top: $offsetTop;
 }
 
 header {

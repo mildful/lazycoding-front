@@ -17,7 +17,7 @@ import { Post, PostActions } from '../post-data';
 
 @Component({
   selector: 'post-list',
-  styleUrls: [ './post-list.style.css' ],
+  styleUrls: [ './post-list.component.css' ],
   encapsulation: ViewEncapsulation.None,
   animations: [
     trigger('appear', [

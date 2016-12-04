@@ -21,7 +21,9 @@ $hRayon: 30px + ($strokeWidth * 2);
       box-shadow: $bs-light;
       //overflow: hidden;
       transform: scale($rayon/$hRayon);
-      border: 0 solid rgba(255, 255, 255, .5);
+      border-width: 0;
+      border-style: solid;
+      border-color: rgba(255, 255, 255, .5);
       transition: transform .2s, border-width .1s;
       //
 

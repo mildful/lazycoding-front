@@ -11,6 +11,7 @@ import { PAGE_SIZE } from './post.constant';
 export interface PostState {
   cache: Post[];
   posts: Post[];
+  currentPost: Post;
   loading: boolean;
   requesting: boolean;
   error: ServerError;
@@ -21,6 +22,7 @@ export interface PostState {
 const initialState: PostState = {
   cache: [],
   posts: [],
+  currentPost: null,
   loading: false,
   requesting: false,
   error: null,
@@ -30,33 +32,6 @@ const initialState: PostState = {
 
 export function postReducer(state = initialState, action: Action): PostState {
   switch (action.type) {
-
-    /**
-     * payload: string
-     */
-    case PostActions.LOAD_POST_BY_SLUG: {
-      return Object.assign({}, state, {
-        loading: true,
-        remaining: 1,
-        filters: Object.assign({}, state.filters, {
-          slug: action.payload
-        })
-      });
-    }
-
-    /**
-     * payload: undefined
-     */
-    case PostActions.LOAD_POST_BY_SLUG_FAIL:
-    case PostActions.LOAD_POST_BY_SLUG_SUCCESS: {
-      return Object.assign({}, state, {
-        loading: false,
-        remaining: 0,
-        filters: Object.assign({}, state.filters, {
-          slug: null
-        })
-      });
-    }
 
     /**
      * payload: undefined
@@ -93,14 +68,6 @@ export function postReducer(state = initialState, action: Action): PostState {
       let newPosts: Post[] = [];
 
       if (state.cache.length) {
-        //slug
-        if (state.filters.slug) {
-          const slugPost: Post = state.cache.find((post: Post) => post.slug.includes(state.filters.slug));
-          if(slugPost) {
-            newPosts.push(slugPost);
-            remaining = 0;
-          }
-        }
         // date
         if (remaining && state.filters.before) {
           // todo: dichotomy
@@ -132,6 +99,7 @@ export function postReducer(state = initialState, action: Action): PostState {
         }
 
         // if some posts have been loaded from cache, update the date of the last post in filters
+        // but only if a date is already set. If lastDate is null, the we don't care about this filter.
         if (newPosts.length) {
           lastDate = new Date(newPosts[newPosts.length - 1].date).toISOString();
         }
@@ -141,7 +109,7 @@ export function postReducer(state = initialState, action: Action): PostState {
           remaining: remaining,
           before: lastDate
         }),
-        posts: [ ... state.posts, ...newPosts ]
+        posts: [ ...state.posts, ...newPosts ]
       });
     }
 
