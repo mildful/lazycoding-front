@@ -19,5 +19,33 @@ export const ANIMATIONS: AnimationEntryMetadata[] = [
       }),
       animate('400ms ease-in-out')
     ])
+  ]),
+
+  trigger('cover', [
+    state('in', style({
+      transform: 'translateY(0)',
+      opacity: 1
+    })),
+    transition(':enter', [
+      style({
+        transform: 'translateY(-50px)',
+        opacity: 0
+      }),
+      animate('400ms 400ms ease-in-out')
+    ])
+  ]),
+
+  trigger('content', [
+    state('in', style({
+      transform: 'translateY(0)',
+      opacity: 1
+    })),
+    transition(':enter', [
+      style({
+        transform: 'translateY(50px)',
+        opacity: 0
+      }),
+      animate('400ms 400ms ease-in-out')
+    ])
   ])
 ];
