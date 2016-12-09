@@ -1,0 +1,202 @@
+[
+  {
+    "id": 5,
+    "count": 4,
+    "description": "",
+    "link": "http://localhost/lazycoding-back/category/angular/",
+    "name": "angular",
+    "slug": "angular",
+    "taxonomy": "category",
+    "parent": 0,
+    "custom_image": "http://localhost/lazycoding-back/wp-content/uploads/2016/08/angular.svg",
+    "_links": {
+      "self": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/categories/5"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/posts?categories=5"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "count": 4,
+    "description": "",
+    "link": "http://localhost/lazycoding-back/category/node/",
+    "name": "node",
+    "slug": "node",
+    "taxonomy": "category",
+    "parent": 0,
+    "custom_image": "http://localhost/lazycoding-back/wp-content/uploads/2016/08/nodejs.svg",
+    "_links": {
+      "self": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/categories/3"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/posts?categories=3"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "count": 7,
+    "description": "",
+    "link": "http://localhost/lazycoding-back/category/react/",
+    "name": "react",
+    "slug": "react",
+    "taxonomy": "category",
+    "parent": 0,
+    "custom_image": "http://localhost/lazycoding-back/wp-content/uploads/2016/08/react.svg",
+    "_links": {
+      "self": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/categories/2"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/posts?categories=2"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 6,
+    "count": 5,
+    "description": "",
+    "link": "http://localhost/lazycoding-back/category/susy/",
+    "name": "susy",
+    "slug": "susy",
+    "taxonomy": "category",
+    "parent": 0,
+    "custom_image": "http://localhost/lazycoding-back/wp-content/uploads/2016/08/susy.svg",
+    "_links": {
+      "self": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/categories/6"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/posts?categories=6"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 4,
+    "count": 5,
+    "description": "",
+    "link": "http://localhost/lazycoding-back/category/typescript/",
+    "name": "typescript",
+    "slug": "typescript",
+    "taxonomy": "category",
+    "parent": 0,
+    "custom_image": "http://localhost/lazycoding-back/wp-content/uploads/2016/08/ts.svg",
+    "_links": {
+      "self": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/categories/4"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/categories"
+        }
+      ],
+      "about": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/taxonomies/category"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/posts?categories=4"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  }
+]

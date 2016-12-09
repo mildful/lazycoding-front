@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../reducers';
 import { Category } from '../../category';
 
-import { Post, PostActions } from '../post-data';
+import { LitePost, LitePostActions } from '../post-data';
 
 @Component({
   selector: 'post-card',
@@ -14,11 +14,11 @@ import { Post, PostActions } from '../post-data';
 export class PostCardComponent implements OnInit {
 
   categories: Category[];
-  @Input() post: Post;
+  @Input() post: LitePost;
 
   constructor(
     private store: Store<AppState>,
-    private postActions: PostActions
+    private litePostActions: LitePostActions
   ) {}
 
   ngOnInit(): void {
@@ -30,6 +30,6 @@ export class PostCardComponent implements OnInit {
   }
 
   onCategoryClick(id: number): void {
-    this.store.dispatch(this.postActions.filtersToggleCategory(id));
+    this.store.dispatch(this.litePostActions.filtersToggleCategory(id));
   }
 }

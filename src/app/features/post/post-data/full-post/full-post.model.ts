@@ -1,33 +1,25 @@
-export interface Post {
-  readonly 'id': number;
-  readonly 'date': string;
+import { LitePost } from '../lite-post';
+
+export interface FullPost extends LitePost {
   readonly 'date_gmt': string;
   readonly 'guid': {
     'rendered': string;
   };
   readonly 'modified': string;
   readonly 'modified_gmt': string;
-  readonly 'slug': string;
   readonly 'type': string;
   readonly 'link': string;
-  readonly 'custom_cover': string;
-  readonly 'title': {
-    'rendered': string;
-  };
   readonly 'content': {
     'rendered': string;
   };
   readonly 'excerpt': {
     'rendered': string;
   };
-  readonly 'author': number;
   readonly 'featured_media': number;
   readonly 'comment_status': string;
   readonly 'ping_status': string;
   readonly 'sticky': boolean;
   readonly 'format': string;
-  readonly 'categories': number[];
-  readonly 'tags': number[];
   readonly '_links': {
     'self': [
       {

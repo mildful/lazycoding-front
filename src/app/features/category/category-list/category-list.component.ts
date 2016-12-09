@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 import { AppState } from '../../../reducers/index';
-import { PostActions } from '../../post/post-data/post.actions';
+import { LitePostActions } from '../../post/post-data/lite-post';
 
 import { Category } from '../category-data';
 
@@ -31,9 +31,9 @@ export class CategoryListComponent implements OnDestroy {
   currentFiltersCategory: number[];
   private destroyed$: Subject<any> = new Subject<any>();
 
-  constructor(private store: Store<AppState>, private postActions: PostActions) {
+  constructor(private store: Store<AppState>, private litePostActions: LitePostActions) {
     this.categories$ = this.store.select((state: AppState) => state.category.categories);
-    this.store.select((state: AppState) => state.post.filters.categories)
+    this.store.select((state: AppState) => state.post.lite.filters.categories)
       .takeUntil(this.destroyed$)
       .subscribe((categories: number[]) => this.currentFiltersCategory = categories);
   }
@@ -43,6 +43,6 @@ export class CategoryListComponent implements OnDestroy {
   }
 
   onClick(id: number): void {
-    this.store.dispatch(this.postActions.filtersToggleCategory(id));
+    this.store.dispatch(this.litePostActions.filtersToggleCategory(id));
   }
 }

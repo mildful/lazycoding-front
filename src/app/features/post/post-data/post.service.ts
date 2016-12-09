@@ -6,10 +6,13 @@ import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { API_BASE_URL } from '../../../services/constants';
 import { RequestBase } from '../../../services/request-base';
 
-import { PostFilters } from './post-filters.model';
-import { PostResponse } from './post-response.model';
-import { Post } from './post.model';
-import { PAGE_SIZE } from './post.constant';
+import {
+  LitePostFilters,
+  LitePostResponse,
+  LitePost,
+  PAGE_SIZE
+} from './lite-post';
+import { FullPost } from './full-post';
 
 @Injectable()
 export class PostService extends RequestBase {
@@ -18,18 +21,26 @@ export class PostService extends RequestBase {
     super(http);
   }
 
-  getPosts(filters: PostFilters): Observable<PostResponse> {
+  getFullPostBySlug(slug: string): Observable<FullPost> {
+    const url: string = `${API_BASE_URL}/posts?per_page=1&slug=${slug}`;
+    return this.http.get(url)
+      .map(RequestBase.toJson)
+      .map((posts: FullPost[]) => posts[0])
+      .catch(this.handleError);
+  }
+
+  getPosts(filters: LitePostFilters): Observable<LitePostResponse> {
     const url: string = this.buildUrl(`${API_BASE_URL}/posts?per_page=${filters.remaining}`, filters);
     return this.http.get(url)
       .map(RequestBase.toJson)
-      .map((posts: Post[]) => { return {
+      .map((posts: LitePost[]) => { return {
         posts,
         complete: posts.length < filters.remaining
       }; } )
       .catch(this.handleError);
   }
 
-  private buildUrl(url: string, filters: PostFilters): string {
+  private buildUrl(url: string, filters: LitePostFilters): string {
     // return url if no filters
     if (!filters || !Object.keys(filters).length) return url;
 
@@ -51,7 +62,7 @@ export class PostService extends RequestBase {
     return url;
   }
 
-  private handleError(res: Response): ErrorObservable {
+  private handleError(res: Response): ErrorObservable<string> {
     let msg: string;
     let error: any = res.json();
     if (error instanceof ProgressEvent) {

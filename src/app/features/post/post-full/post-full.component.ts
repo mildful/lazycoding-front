@@ -10,48 +10,37 @@ import { Store } from '@ngrx/store';
 
 import { AppState } from '../../../reducers';
 
-import { Post, PostActions } from '../post-data';
+import { FullPost, FullPostActions } from '../post-data';
+import { ANIMATIONS } from './post-full.animations';
 
 @Component({
   selector: 'post-full',
   templateUrl: 'post-full.component.html',
   styleUrls: [ './post-full.component.css' ],
-  animations: [
-    trigger('circle', [
-      state('in', style({
-        width: '142%',
-        height: '142%'
-      })),
-      transition(':enter', [
-        style({
-          width: '20px',
-          height: '20px'
-        }),
-        animate('400ms ease-in-out')
-      ])
-    ])
-  ]
+  animations: ANIMATIONS
 })
 export class PostFullComponent implements OnInit {
 
   circleAnimationEnd: boolean = false;
-  post: Post;
+  post: FullPost;
 
   constructor(
     private route: ActivatedRoute,
     private store: Store<AppState>,
-    private postActions: PostActions
+    private fullPostActions: FullPostActions
   ) { }
 
   ngOnInit(): void {
     this.route.params
       .switchMap((params: Params) => this.store.select((state: AppState) =>
-          //state.post.cache.find((post: Post) => post.slug.includes(params['slug'])) || params['slug']
-        state.post.currentPost || params['slug']
+        state.post.full.currentPost || params['slug']
       ))
-      .subscribe((postOrSlug: Post | string) => {
-        //if(typeof postOrSlug === 'string') this.store.dispatch(this.postActions.loadPostBySlug(postOrSlug));
-        //else this.post = postOrSlug;
+      .subscribe((postOrSlug: FullPost | string) => {
+        if (typeof postOrSlug === 'string') {
+          this.store.dispatch(this.fullPostActions.loadPostBySlug(postOrSlug));
+        } else {
+          this.post = postOrSlug as FullPost;
+        }
       });
   }
 

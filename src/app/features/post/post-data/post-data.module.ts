@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
-import { EffectsModule } from '@ngrx/effects';
 
-import { PostEffects } from './post.effects';
 import { PostService } from './post.service';
-import { PostActions } from './post.actions';
+import { FakePostService } from './fake-post.service';
+import { LitePostDataModule } from './lite-post';
+import { FullPostDataModule } from './full-post';
 
 @NgModule({
-  imports: [ EffectsModule.run(PostEffects) ],
-  providers: [
-    PostService,
-    PostActions
+  imports: [
+    LitePostDataModule,
+    FullPostDataModule
   ]
 })
 export class PostDataModule { }

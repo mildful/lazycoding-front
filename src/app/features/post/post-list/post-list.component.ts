@@ -13,7 +13,7 @@ import Timer = NodeJS.Timer;
 import { WindowRef } from '../window-ref';
 import { AppState } from '../../../reducers';
 
-import { Post, PostActions } from '../post-data';
+import { LitePost, LitePostActions } from '../post-data';
 
 @Component({
   selector: 'post-list',
@@ -38,7 +38,7 @@ import { Post, PostActions } from '../post-data';
       <post-card *ngFor="let post of posts$ | async" 
         [post]="post" 
         [@appear]="postsAnimationsState.get(post.id)"></post-card>
-      <div #trigger class="pl-trigger"></div>
+      <div #trigger class="load-trigger"></div>
     </section>
   `
 })
@@ -53,7 +53,7 @@ export class PostListComponent implements OnDestroy {
    * Posts to display in the list.
    * @type {Observable<Post[]>}
    */
-  posts$: Observable<Post[]>;
+  posts$: Observable<LitePost[]>;
   postsAnimationsState: Map<number, string> = new Map<number, string>();
   /**
    * Track if posts are loading.
@@ -80,16 +80,16 @@ export class PostListComponent implements OnDestroy {
 
   constructor(
     private store: Store<AppState>,
-    private postActions: PostActions,
+    private litePostActions: LitePostActions,
     private windowRef: WindowRef
   ) {
     // subscribe to post
-    this.posts$ = this.store.select((state: AppState) => state.post.posts)
-      .do((posts: Post[]) => {
+    this.posts$ = this.store.select((state: AppState) => state.post.lite.posts)
+      .do((posts: LitePost[]) => {
         // we need this because on editing filter category, posts can be blank
         if (!posts.length) return;
         // delete removed posts from animation management
-        let ids: number[] = posts.map((post: Post) => post.id);
+        let ids: number[] = posts.map((post: LitePost) => post.id);
         const it: IterableIterator<number> = this.postsAnimationsState.keys();
         let mapId: number = it.next().value;
         while (mapId) {
@@ -98,7 +98,7 @@ export class PostListComponent implements OnDestroy {
         }
         // trigger animations
         let i: number = 0;
-        posts.forEach((post: Post) => {
+        posts.forEach((post: LitePost) => {
           if (!this.postsAnimationsState.has(post.id)) {
             i++;
             this.postsAnimationsState.set(post.id, 'out');
@@ -107,7 +107,7 @@ export class PostListComponent implements OnDestroy {
         });
       });
     // listen scroll
-    this.loading$ = this.store.select((state: AppState) => state.post.loading);
+    this.loading$ = this.store.select((state: AppState) => state.post.lite.loading);
     this.scroll$ = Observable.fromEvent(this.windowRef.nativeWindow, 'scroll')
       .throttleTime(300);
     // concat
@@ -118,7 +118,7 @@ export class PostListComponent implements OnDestroy {
       .takeUntil(this.destroyed$)
       .subscribe((canLoad: [boolean, Event]) => canLoad ? this.load() : null);
     // used to stop requesting if all posts are loaded (complete)
-    this.store.select((state: AppState) => state.post.complete)
+    this.store.select((state: AppState) => state.post.lite.complete)
       .takeUntil(this.destroyed$)
       .subscribe((complete: boolean) => {
         if (this.timeout) {
@@ -156,7 +156,7 @@ export class PostListComponent implements OnDestroy {
     // the result of the first request.
     this.pause(600);
     // dispatch action
-    this.store.dispatch(this.postActions.loadPosts());
+    this.store.dispatch(this.litePostActions.loadPosts());
   }
 
   /**

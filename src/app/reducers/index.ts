@@ -6,12 +6,14 @@ import { routerReducer, RouterState } from '@ngrx/router-store';
 
 import { userReducer, UserState } from '../core/user/user.reducer';
 import { postReducer, PostState } from '../features/post';
+// import { litePostReducer, LitePostState } from '../features/post';
 import { categoryReducer, CategoryState } from '../features/category';
 
 export interface AppState {
   router: RouterState;
   user: UserState;
   post: PostState;
+  // litePost: LitePostState;
   category: CategoryState;
 }
 
@@ -19,6 +21,7 @@ export const reducers = {
   router: routerReducer,
   user: userReducer,
   post: postReducer,
+  // litePost: litePostReducer,
   category: categoryReducer,
 };
 
