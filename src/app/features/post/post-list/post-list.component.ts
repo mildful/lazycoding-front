@@ -85,27 +85,7 @@ export class PostListComponent implements OnDestroy {
   ) {
     // subscribe to post
     this.posts$ = this.store.select((state: AppState) => state.post.lite.posts)
-      .do((posts: LitePost[]) => {
-        // we need this because on editing filter category, posts can be blank
-        if (!posts.length) return;
-        // delete removed posts from animation management
-        let ids: number[] = posts.map((post: LitePost) => post.id);
-        const it: IterableIterator<number> = this.postsAnimationsState.keys();
-        let mapId: number = it.next().value;
-        while (mapId) {
-          if (!ids.includes(mapId)) this.postsAnimationsState.delete(mapId);
-          mapId = it.next().value;
-        }
-        // trigger animations
-        let i: number = 0;
-        posts.forEach((post: LitePost) => {
-          if (!this.postsAnimationsState.has(post.id)) {
-            i++;
-            this.postsAnimationsState.set(post.id, 'out');
-            setTimeout(() => this.postsAnimationsState.set(post.id, 'in'), i * 200);
-          }
-        });
-      });
+      .do(this.animatePosts.bind(this));
     // listen scroll
     this.loading$ = this.store.select((state: AppState) => state.post.lite.loading);
     this.scroll$ = Observable.fromEvent(this.windowRef.nativeWindow, 'scroll')
@@ -119,6 +99,8 @@ export class PostListComponent implements OnDestroy {
       .subscribe((canLoad: [boolean, Event]) => canLoad ? this.load() : null);
     // used to stop requesting if all posts are loaded (complete)
     this.store.select((state: AppState) => state.post.lite.complete)
+    // we want to apply a special behavior for the initial load (see before :))
+      .skip(1)
       .takeUntil(this.destroyed$)
       .subscribe((complete: boolean) => {
         if (this.timeout) {
@@ -127,11 +109,35 @@ export class PostListComponent implements OnDestroy {
         this.pauser$.next(complete);
       });
     // first load
-    this.load();
+    this.store.select((state: AppState) => state.post.lite.complete)
+      .take(1)
+      .subscribe((complete: boolean) => complete ? null : this.load());
   }
 
   ngOnDestroy(): void {
     this.destroyed$.next();
+  }
+
+  private animatePosts(posts: LitePost[]): void {
+    // we need this because on editing filter category, posts can be blank
+    if (!posts.length) return;
+    // delete removed posts from animation management
+    let ids: number[] = posts.map((post: LitePost) => post.id);
+    const it: IterableIterator<number> = this.postsAnimationsState.keys();
+    let mapId: number = it.next().value;
+    while (mapId) {
+      if (!ids.includes(mapId)) this.postsAnimationsState.delete(mapId);
+      mapId = it.next().value;
+    }
+    // trigger animations
+    let i: number = 0;
+    posts.forEach((post: LitePost) => {
+      if (!this.postsAnimationsState.has(post.id)) {
+        i++;
+        this.postsAnimationsState.set(post.id, 'out');
+        setTimeout(() => this.postsAnimationsState.set(post.id, 'in'), i * 200);
+      }
+    });
   }
 
   private canLoad(loading: boolean, scroll: Event): boolean {

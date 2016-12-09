@@ -34,7 +34,7 @@ export class FakePostService {
   }
 
   private filterPost(post: LitePost, filters: LitePostFilters): boolean {
-    if (filters.before && new Date(post.date) > new Date(filters.before)) {
+    if (filters.before && new Date(post.date) >= new Date(filters.before)) {
       return false;
     }
     if (filters.categories && filters.categories.length
