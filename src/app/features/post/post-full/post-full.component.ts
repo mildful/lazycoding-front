@@ -1,14 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  trigger,
-  state,
-  style,
-  transition,
-  animate } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { AppState } from '../../../reducers';
+import { Category } from '../../category';
 
 import { FullPost, FullPostActions } from '../post-data';
 import { ANIMATIONS } from './post-full.animations';
@@ -21,6 +16,7 @@ import { ANIMATIONS } from './post-full.animations';
 })
 export class PostFullComponent implements OnInit {
 
+  categories: Category[];
   circleAnimationEnd: boolean = false;
   post: FullPost;
 
@@ -29,6 +25,14 @@ export class PostFullComponent implements OnInit {
     private store: Store<AppState>,
     private fullPostActions: FullPostActions
   ) { }
+
+  getCategories(): void {
+    this.store.select((state: AppState) => state.category.categories)
+      .take(1)
+      .subscribe((cats: Category[]) => {
+        this.categories = cats.filter((cat: Category) => this.post.categories.indexOf(cat.id) > -1);
+      });
+  }
 
   ngOnInit(): void {
     this.route.params
@@ -40,6 +44,7 @@ export class PostFullComponent implements OnInit {
           this.store.dispatch(this.fullPostActions.loadPostBySlug(postOrSlug));
         } else {
           this.post = postOrSlug as FullPost;
+          this.getCategories();
         }
       });
   }

@@ -2,7 +2,10 @@
   <div [@circle]="'in'" (@circle.done)="onCircleEnd()" class="circle"></div>
 </div>
 <div class="post" [class.visible]="circleAnimationEnd">
-  <img src="assets/mock-data/geralt.jpg" alt="cover" class="cover" [@cover]="'in'">
+  <img [src]="post?.custom_cover" alt="cover" class="cover" [@cover]="'in'">
+  <ul class="categories">
+    <li *ngFor="let category of categories" class="category {{category.slug}}"></li>
+  </ul>
   <div class="content" [@content]="'in'">
     <h1>Coucou</h1>
     <p>Lorem  ipsum Lorem  ipsumLorem  ipsumLorem  ipsumLorem  ipsumLorem  ipsumLorem  ipsumLorem  ipsumLorem  ipsumLorem  ipsumLorem  ipsumLorem  ipsumLorem  ipsumLorem  ipsumLorem  ipsumLorem  ipsumLorem  ipsumLorem  ipsumLorem  ipsum</p>

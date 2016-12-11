@@ -28,9 +28,26 @@
    overflow: hidden;
 
    .cover {
-      border-radius: 5px 5px 0 0;
       width: 100%;
       height: auto;
+      display: block;
+   }
+
+   .categories {
+      display: flex;
+      flex-direction: row;
+      height: 5px;
+      list-style-type: none;
+
+      .category {
+         width: 100%;
+
+         &.angular { background: $angular }
+         &.typescript { background: $typescript }
+         &.react { background: $react }
+         &.susy { background: $susy }
+         &.node { background: $node }
+      }
    }
 
    .content {
