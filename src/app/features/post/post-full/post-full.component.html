@@ -4,7 +4,7 @@
 <div class="post" [class.visible]="circleAnimationEnd">
   <img [src]="post?.custom_cover" alt="cover" class="cover" [@cover]="'in'">
   <ul class="categories">
-    <li *ngFor="let category of categories" class="category {{category.slug}}"></li>
+    <li *ngFor="let category of categories" class="category {{category.slug}}" [@category]="'in'"></li>
   </ul>
   <div class="content" [@content]="'in'">
     <h1>Coucou</h1>

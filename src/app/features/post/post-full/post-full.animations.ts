@@ -47,5 +47,13 @@ export const ANIMATIONS: AnimationEntryMetadata[] = [
       }),
       animate('400ms 400ms ease-in-out')
     ])
+  ]),
+
+  trigger('category', [
+    state('in', style({ transform: 'scaleX(1)' })),
+    transition(':enter', [
+      style({ transform: 'scaleX(0)' }),
+      animate('400ms 400ms ease-in-out')
+    ])
   ])
 ];
