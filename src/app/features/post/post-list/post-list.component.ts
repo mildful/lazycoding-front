@@ -27,9 +27,9 @@ import { LitePost, LitePostActions } from '../post-data';
       })),
       state('out', style({
         opacity: 0,
-        transform: 'translateY(500px)'
+        transform: 'translateY(50px)'
       })),
-      transition('out => in', animate('400ms ease-in-out'))
+      transition('out => in', animate('500ms ease-in-out'))
     ])
   ],
   template: `

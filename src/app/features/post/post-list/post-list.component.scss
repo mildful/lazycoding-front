@@ -3,6 +3,8 @@
 $itemsPerLine: 3;
 $offset: 15px;
 
+post-card { display: inline-block }
+
 .posts {
    post-card article {
       width: ($container / $itemsPerLine) - $offset;
