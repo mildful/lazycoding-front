@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs/Subject';
 
 import { AppState } from '../../../reducers';
 import { Category } from '../../category';
@@ -14,11 +15,12 @@ import { ANIMATIONS } from './post-full.animations';
   styleUrls: [ './post-full.component.css' ],
   animations: ANIMATIONS
 })
-export class PostFullComponent implements OnInit {
+export class PostFullComponent implements OnInit, OnDestroy {
 
   categories: Category[];
   circleAnimationEnd: boolean = false;
   post: FullPost;
+  private destroyed$: Subject<any> = new Subject<any>();
 
   constructor(
     private route: ActivatedRoute,
@@ -34,19 +36,23 @@ export class PostFullComponent implements OnInit {
       });
   }
 
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+  }
+
   ngOnInit(): void {
     this.route.params
-      .switchMap((params: Params) => this.store.select((state: AppState) =>
-        state.post.full.currentPost || params['slug']
-      ))
-      .subscribe((postOrSlug: FullPost | string) => {
-        if (typeof postOrSlug === 'string') {
-          this.store.dispatch(this.fullPostActions.loadPostBySlug(postOrSlug));
-        } else {
-          this.post = postOrSlug as FullPost;
+      .takeUntil(this.destroyed$)
+      .subscribe((params: Params) => this.store.dispatch(this.fullPostActions.loadPostBySlug(params['slug'])));
+
+    this.store.select((state: AppState) => state.post.full.currentPost)
+      .takeUntil(this.destroyed$)
+      .subscribe((post: FullPost) => {
+        if (post) {
+          this.post = post;
           this.getCategories();
         }
-      });
+      })
   }
 
   onCircleEnd(): void {
