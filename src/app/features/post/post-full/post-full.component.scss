@@ -88,4 +88,8 @@ $delta: ($container - $content-width) / 2;
          }
       }
    }
+   // Lists
+   ul, ol {
+      padding-left: 20px;
+   }
 }
