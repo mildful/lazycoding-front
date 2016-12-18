@@ -1,5 +1,8 @@
 @import '../../../_variables';
 
+$content-width: 600px;
+$delta: ($container - $content-width) / 2;
+
 .anim-wrapper {
    overflow: hidden;
    border-radius: 5px 5px 0 0;
@@ -51,8 +54,38 @@
    }
 
    .content {
-      padding: 20px;
+      width: $content-width;
+      margin: auto;
    }
 
    &.visible { opacity: 1 }
+}
+
+:host >>> .post .content .body {
+   // Images
+   p img {
+      margin: auto;
+      display: block;
+      max-width: 100%;
+   }
+   // Code
+   pre {
+      width: $container + 1px;
+      background: black;
+      color: white;
+      transform: translateX(-$delta);
+      padding: 5px $delta;
+
+      code {
+         &.html {
+
+         }
+         &.css {
+
+         }
+         &.javascript {
+
+         }
+      }
+   }
 }
