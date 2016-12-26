@@ -1,0 +1,9 @@
+@import '../../_variables';
+
+#disqus_thread {
+   color:red;
+   background: white;
+   border-radius: 5px;
+   box-shadow: $bs-medium;
+   padding: 0 20px;
+}

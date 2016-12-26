@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from '../../shared/shared.module';
+import { DisqusModule } from '../disqus';
 import { CategoryModule } from '../category/category.module';
 
 import { WindowRef } from './window-ref';
@@ -13,7 +14,8 @@ import { PostDataModule } from './post-data';
     SharedModule,
     PostRoutingModule,
     PostDataModule,
-    CategoryModule
+    CategoryModule,
+    DisqusModule
   ],
   declarations: [
     ...routedComponents,

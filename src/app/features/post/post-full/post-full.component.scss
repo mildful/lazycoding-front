@@ -29,6 +29,8 @@ $delta: ($container - $content-width) / 2;
    width: $container;
    box-shadow: $bs-medium;
    overflow: hidden;
+   margin-bottom: 20px;
+   padding-bottom: 15px;
 
    .cover {
       width: 100%;
@@ -92,4 +94,9 @@ $delta: ($container - $content-width) / 2;
    ul, ol {
       padding-left: 20px;
    }
+}
+
+lazy-disqus {
+   margin-bottom: 20px;
+   display: block;
 }
