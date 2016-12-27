@@ -23,7 +23,6 @@ export class DisqusComponent implements OnChanges {
       : this.url;
 
     if (pageIdentifier || pageUrl) {
-      console.log(DISQUS)
       DISQUS.reset({
         reload: true,
         config: function() {

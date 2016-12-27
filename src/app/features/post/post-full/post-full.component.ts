@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewChecked } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
@@ -15,12 +15,14 @@ import { ANIMATIONS } from './post-full.animations';
   styleUrls: [ './post-full.component.css' ],
   animations: ANIMATIONS
 })
-export class PostFullComponent implements OnInit, OnDestroy {
+export class PostFullComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   categories: Category[];
   circleAnimationEnd: boolean = false;
+  html: string = '';
   post: FullPost;
   private destroyed$: Subject<any> = new Subject<any>();
+  private highlighted: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,6 +36,13 @@ export class PostFullComponent implements OnInit, OnDestroy {
       .subscribe((cats: Category[]) => {
         this.categories = cats.filter((cat: Category) => this.post.categories.indexOf(cat.id) > -1);
       });
+  }
+
+  ngAfterViewChecked(): void {
+    if (!this.highlighted) {
+      Prism.highlightAll(false);
+      this.highlighted = true;
+    }
   }
 
   ngOnDestroy(): void {
@@ -50,6 +59,7 @@ export class PostFullComponent implements OnInit, OnDestroy {
       .subscribe((post: FullPost) => {
         if (post) {
           this.post = post;
+          this.html = this.updateToPrismClasses(this.post.content.rendered);
           this.getCategories();
         }
       })
@@ -57,5 +67,21 @@ export class PostFullComponent implements OnInit, OnDestroy {
 
   onCircleEnd(): void {
     this.circleAnimationEnd = true;
+  }
+
+  private findTagsPos(str: string, tagName: string): number[] {
+    let indices: number[] = [];
+    for(let pos = str.indexOf(tagName); pos !== -1; pos = str.indexOf(tagName, pos + 1)) {
+      indices.push(pos);
+    }
+    return indices;
+  }
+
+  private updateToPrismClasses(html: string): string {
+    const langs: string[] = ['css', 'javascript', 'html'];
+    langs.forEach((lang: string) => {
+      html = html.replace(new RegExp(`class="${lang}"`, 'g'), `class="language-${lang}"`);
+    });
+    return html;
   }
 }

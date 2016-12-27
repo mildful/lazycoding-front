@@ -72,11 +72,11 @@ $delta: ($container - $content-width) / 2;
    }
    // Code
    pre {
-      width: $container + 1px;
-      background: black;
-      color: white;
-      transform: translateX(-$delta);
+      width: $container + 2px;
+      transform: translateX(-$delta - 1px);
       padding: 5px $delta;
+      border-radius: 0;
+      margin-bottom: 25px;
 
       code {
          &.html {

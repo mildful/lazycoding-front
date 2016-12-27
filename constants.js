@@ -54,6 +54,7 @@ exports.MY_COPY_FOLDERS = [
   // use this for folders you want to be copied in to Client dist
   // src/assets and index.html are already copied by default.
   // format is { from: 'folder_name', to: 'folder_name' }
+  { from: 'src/vendor', to: 'vendor' }
 ]
 
 exports.MY_POLYFILL_DLLS = [

@@ -8,7 +8,7 @@
   </ul>
   <div class="content" [@content]="'in'">
     <h1>{{ post?.title.rendered }}</h1>
-    <div class="body" [innerHTML]="post?.content.rendered"></div>
+    <div class="body" [innerHTML]="html"></div>
   </div>
 </div>
 <lazy-disqus [identifier]="post?.id" [url]="undefined"></lazy-disqus>
