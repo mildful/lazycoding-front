@@ -8,6 +8,7 @@ import { userReducer, UserState } from '../core/user/user.reducer';
 import { postReducer, PostState } from '../features/post';
 // import { litePostReducer, LitePostState } from '../features/post';
 import { categoryReducer, CategoryState } from '../features/category';
+import { overlayReducer, OverlayState } from '../shared/overlay';
 
 export interface AppState {
   router: RouterState;
@@ -15,6 +16,7 @@ export interface AppState {
   post: PostState;
   // litePost: LitePostState;
   category: CategoryState;
+  overlay: OverlayState;
 }
 
 export const reducers = {
@@ -23,6 +25,7 @@ export const reducers = {
   post: postReducer,
   // litePost: litePostReducer,
   category: categoryReducer,
+  overlay: overlayReducer,
 };
 
 // Generate a reducer to set the root state in dev mode for HMR

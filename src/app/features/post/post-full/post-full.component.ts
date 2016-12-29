@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewChecked, ElementRef } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
 
 import { AppState } from '../../../reducers';
+import { OverlayActions, OverlayConfig } from '../../../shared/overlay';
 import { Category } from '../../category';
 
 import { FullPost, FullPostActions } from '../post-data';
@@ -22,12 +23,14 @@ export class PostFullComponent implements OnInit, OnDestroy, AfterViewChecked {
   html: string = '';
   post: FullPost;
   private destroyed$: Subject<any> = new Subject<any>();
-  private highlighted: boolean = false;
+  private postprocessed: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private store: Store<AppState>,
-    private fullPostActions: FullPostActions
+    private fullPostActions: FullPostActions,
+    private overlayActions: OverlayActions,
+    private elementRef: ElementRef
   ) { }
 
   getCategories(): void {
@@ -39,9 +42,19 @@ export class PostFullComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
-    if (!this.highlighted) {
+    if (!this.postprocessed) {
       Prism.highlightAll(false);
-      this.highlighted = true;
+      const images: HTMLImageElement[] = this.elementRef.nativeElement.getElementsByTagName('img');
+      // squeeze the first image (cover)
+      for (let i = 1, length = images.length; i < length; i++) {
+        images[i].addEventListener('click', (e: MouseEvent) => {
+          const overlayConfig: OverlayConfig = {
+            easyClosing: true
+          };
+          this.store.dispatch(this.overlayActions.openOverlay(images[i].getAttribute('src'), overlayConfig));
+        });
+      }
+      this.postprocessed = true;
     }
   }
 
@@ -58,6 +71,7 @@ export class PostFullComponent implements OnInit, OnDestroy, AfterViewChecked {
       .takeUntil(this.destroyed$)
       .subscribe((post: FullPost) => {
         if (post) {
+          this.postprocessed = false;
           this.post = post;
           this.html = this.updateToPrismClasses(this.post.content.rendered);
           this.getCategories();
