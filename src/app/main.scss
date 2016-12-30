@@ -9,3 +9,9 @@
 .react { background: $react }
 .susy { background: $susy }
 .node { background: $node }
+
+// links
+a {
+   text-decoration: underline;
+   color: $link;
+}
