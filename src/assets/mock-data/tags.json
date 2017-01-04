@@ -1,0 +1,119 @@
+[
+  {
+    "id": 1,
+    "count": 0,
+    "description": "test desc",
+    "link": "http://localhost/lazycoding-back/tag/tag1/",
+    "name": "tag 1",
+    "slug": "tag1",
+    "taxonomy": "post_tag",
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/tags/7"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/tags"
+        }
+      ],
+      "about": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/taxonomies/post_tag"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/posts?tags=7"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "count": 0,
+    "description": "test desc",
+    "link": "http://localhost/lazycoding-back/tag/tag1/",
+    "name": "tag 2",
+    "slug": "tag2",
+    "taxonomy": "post_tag",
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/tags/7"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/tags"
+        }
+      ],
+      "about": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/taxonomies/post_tag"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/posts?tags=7"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "count": 0,
+    "description": "test desc",
+    "link": "http://localhost/lazycoding-back/tag/tag1/",
+    "name": "tag 3",
+    "slug": "tag3",
+    "taxonomy": "post_tag",
+    "meta": [],
+    "_links": {
+      "self": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/tags/7"
+        }
+      ],
+      "collection": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/tags"
+        }
+      ],
+      "about": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/taxonomies/post_tag"
+        }
+      ],
+      "wp:post_type": [
+        {
+          "href": "http://localhost/lazycoding-back/wp-json/wp/v2/posts?tags=7"
+        }
+      ],
+      "curies": [
+        {
+          "name": "wp",
+          "href": "https://api.w.org/{rel}",
+          "templated": true
+        }
+      ]
+    }
+  }
+]

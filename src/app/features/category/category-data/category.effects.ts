@@ -21,8 +21,8 @@ export class CategoryEffects {
   ) { }
 
   @Effect() getCategories$ = this.actions$
-    .ofType(CategoryActions.REQ_CATEGORIES)
-    .switchMap(() => this.categoryService.getCategories()
+    .ofType(CategoryActions.REQ_ALL_CATEGORIES)
+    .switchMap(() => this.categoryService.getAllCategories()
       .mergeMap((categories: Category[]) => Observable.of(
         this.categoryActions.reqCategoriesSuccess(categories)
         )

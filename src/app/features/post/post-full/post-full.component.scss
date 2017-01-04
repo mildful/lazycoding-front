@@ -55,6 +55,12 @@ $delta: ($container - $content-width) / 2;
       }
    }
 
+   .date {
+      text-align: right;
+      color: $txt-grey;
+      font-weight: normal;
+   }
+
    .content {
       width: $content-width;
       margin: auto;

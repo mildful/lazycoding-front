@@ -5,17 +5,17 @@ import { Observable } from 'rxjs/Observable';
 import { RequestBase } from '../../../services/request-base';
 import { API_BASE_URL } from '../../../services/constants';
 
-import { Category } from './category.model';
+import { Tag } from './tag.model';
 
 @Injectable()
-export class CategoryService extends RequestBase {
+export class TagService extends RequestBase {
 
   constructor(public http: Http) {
     super(http);
   }
 
-  getAllCategories(): Observable<Category[]> {
-    return this.http.get(`${API_BASE_URL}/categories?exclude=1`)
+  getAllTags(): Observable<Tag[]> {
+    return this.http.get(`${API_BASE_URL}/tags`)
       .map(RequestBase.toJson);
   }
 }

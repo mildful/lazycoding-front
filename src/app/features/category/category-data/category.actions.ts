@@ -9,10 +9,10 @@ import { Category } from './category.model';
 @Injectable()
 export class CategoryActions {
 
-  static REQ_CATEGORIES = '[Category] Request Categories';
+  static REQ_ALL_CATEGORIES = '[Category] Request All Categories';
   reqCategories(): Action {
     return {
-      type: CategoryActions.REQ_CATEGORIES
+      type: CategoryActions.REQ_ALL_CATEGORIES
     };
   }
 

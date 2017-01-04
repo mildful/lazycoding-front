@@ -6,6 +6,7 @@ import { Subject } from 'rxjs/Subject';
 import { AppState } from '../../../reducers';
 import { OverlayActions, OverlayConfig } from '../../../shared/overlay';
 import { Category } from '../../category';
+import { Tag } from '../../tag';
 
 import { FullPost, FullPostActions } from '../post-data';
 import { ANIMATIONS } from './post-full.animations';
@@ -20,8 +21,10 @@ export class PostFullComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   categories: Category[];
   circleAnimationEnd: boolean = false;
+  postDate: string;
   html: string = '';
   post: FullPost;
+  tags: Tag[];
   private destroyed$: Subject<any> = new Subject<any>();
   private postprocessed: boolean = false;
 
@@ -39,6 +42,10 @@ export class PostFullComponent implements OnInit, OnDestroy, AfterViewChecked {
       .subscribe((cats: Category[]) => {
         this.categories = cats.filter((cat: Category) => this.post.categories.indexOf(cat.id) > -1);
       });
+  }
+
+  getTags(): void {
+
   }
 
   ngAfterViewChecked(): void {
@@ -73,8 +80,11 @@ export class PostFullComponent implements OnInit, OnDestroy, AfterViewChecked {
         if (post) {
           this.postprocessed = false;
           this.post = post;
+          this.postDate = new Date(post.date).toLocaleDateString('fr-FR', {
+            weekday: "long", year: "numeric", month: "long", day: "numeric" });
           this.html = this.updateToPrismClasses(this.post.content.rendered);
           this.getCategories();
+          this.getTags();
         }
       })
   }

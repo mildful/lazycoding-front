@@ -8,6 +8,12 @@
   </ul>
   <div class="content" [@content]="'in'">
     <h1>{{ post?.title.rendered }}</h1>
+    <div class="data">
+      <ul class="tags">
+        <li *ngFor="let tag of tags">{{ tag.name }}</li>
+      </ul>
+      <div class="date">{{ postDate }}</div>
+    </div>
     <div class="body" [innerHTML]="html"></div>
   </div>
 </div>

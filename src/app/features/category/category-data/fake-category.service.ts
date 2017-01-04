@@ -9,7 +9,7 @@ const CATEGORIES: Category[] = require('../../../../assets/mock-data/categories.
 @Injectable()
 export class FakeCategoryService {
 
-  getCategories(): Observable<Category[]> {
+  getAllCategories(): Observable<Category[]> {
     return Observable.of(CATEGORIES);
   }
 }

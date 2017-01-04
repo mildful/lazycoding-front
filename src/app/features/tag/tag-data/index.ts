@@ -1,0 +1,6 @@
+export * from './tag-data.module'
+export * from './tag.actions'
+export * from './tag.effects'
+export * from './tag.model'
+export * from './tag.reducer'
+export * from './tag.service'
