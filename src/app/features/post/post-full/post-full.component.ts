@@ -45,7 +45,11 @@ export class PostFullComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   getTags(): void {
-
+    this.store.select((state: AppState) => state.tag.tags)
+      .take(1)
+      .subscribe((tags: Tag[]) => {
+        this.tags = tags.filter((tag: Tag) => this.post.tags.indexOf(tag.id) > -1);
+      });
   }
 
   ngAfterViewChecked(): void {

@@ -13,6 +13,7 @@ import { StoreDevToolsModule } from './features/store-devtools/store-devtools.mo
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { CategoryModule } from './features/category/category.module';
+import { TagModule } from './features/tag/tag.module';
 
 const STORE_DEV_TOOLS_IMPORTS = [];
 if (ENV === 'development' && !AOT) {
@@ -43,5 +44,6 @@ export const APP_IMPORTS = [
   CoreModule,
   SharedModule,
   CategoryModule,
+  TagModule,
 ];
 

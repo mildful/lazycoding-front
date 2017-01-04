@@ -46,7 +46,7 @@ export function tagReducer(state = initialState, action: Action): TagState {
     case TagActions.REQ_TAGS_SUCCESS: {
       return Object.assign({}, state, {
         requesting: false,
-        categories: action.payload,
+        tags: action.payload,
         error: null
       });
     }

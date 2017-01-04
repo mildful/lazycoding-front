@@ -9,6 +9,7 @@ import { postReducer, PostState } from '../features/post';
 // import { litePostReducer, LitePostState } from '../features/post';
 import { categoryReducer, CategoryState } from '../features/category';
 import { overlayReducer, OverlayState } from '../shared/overlay';
+import { tagReducer, TagState } from '../features/tag/tag-data/tag.reducer';
 
 export interface AppState {
   router: RouterState;
@@ -16,6 +17,7 @@ export interface AppState {
   post: PostState;
   // litePost: LitePostState;
   category: CategoryState;
+  tag: TagState;
   overlay: OverlayState;
 }
 
@@ -25,6 +27,7 @@ export const reducers = {
   post: postReducer,
   // litePost: litePostReducer,
   category: categoryReducer,
+  tag: tagReducer,
   overlay: overlayReducer,
 };
 

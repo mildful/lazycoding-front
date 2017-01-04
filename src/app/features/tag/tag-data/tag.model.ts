@@ -1,5 +1,5 @@
 export interface Tag {
-  readonly 'id': number | string;
+  readonly 'id': number;
   readonly 'count': number;
   readonly 'description': string;
   readonly 'link': string;

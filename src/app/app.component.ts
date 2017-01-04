@@ -12,6 +12,7 @@ import { Store } from '@ngrx/store';
 
 import { AppState } from './reducers/index';
 import { CategoryActions } from './features/category';
+import { TagActions } from './features/tag';
 import { MOBILE } from './services/constants';
 
 @Component({
@@ -46,6 +47,7 @@ export class AppComponent implements OnInit {
     public router: Router,
     private store: Store<AppState>,
     private categoryActions: CategoryActions,
+    private tagActions: TagActions,
     private http: Http,
     private sanitizer: DomSanitizer
   ) {
@@ -80,6 +82,7 @@ export class AppComponent implements OnInit {
   }
 
   private load(): void {
-    this.store.dispatch(this.categoryActions.reqCategories());
+    this.store.dispatch(this.categoryActions.reqAllCategories());
+    this.store.dispatch(this.tagActions.reqAllTags());
   }
 }

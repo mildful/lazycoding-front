@@ -9,7 +9,7 @@ const TAGS: Tag[] = require('../../../../assets/mock-data/tags.json');
 @Injectable()
 export class FakeTagService {
 
-  getAllCategories(): Observable<Tag[]> {
+  getAllTags(): Observable<Tag[]> {
     return Observable.of(TAGS);
   }
 }

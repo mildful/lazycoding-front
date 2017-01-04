@@ -10,7 +10,7 @@ import { Category } from './category.model';
 export class CategoryActions {
 
   static REQ_ALL_CATEGORIES = '[Category] Request All Categories';
-  reqCategories(): Action {
+  reqAllCategories(): Action {
     return {
       type: CategoryActions.REQ_ALL_CATEGORIES
     };
