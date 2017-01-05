@@ -4,12 +4,12 @@
 <div class="post" [class.visible]="circleAnimationEnd">
   <div class="header">
     <img [src]="post?.custom_cover" alt="cover" class="cover" [@cover]="'in'">
-    <h1>{{ post?.title.rendered }}</h1>
+    <h1 [@content]="'in'">{{ post?.title.rendered }}</h1>
   </div>
   <ul class="categories">
     <li *ngFor="let category of categories" class="category {{category.slug}}" [@category]="'in'"></li>
   </ul>
-  <div class="data">
+  <div class="data" [@content]="'in'">
     <ul class="tags">
       <li *ngFor="let tag of tags">{{ tag.name }}</li>
     </ul>
