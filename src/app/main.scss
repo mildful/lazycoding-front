@@ -2,6 +2,7 @@
 /* This file is for setting global styles  */
 @import '_variables';
 @import 'reset.scss';
+@import 'styles.scss';
 @import 'fonts.scss';
 
 .angular { background: $angular }
@@ -12,6 +13,8 @@
 
 // links
 a {
-   text-decoration: underline;
    color: $link;
+   text-decoration: none;
+   transition: color .2s ease-in-out;
+   &:hover { color: $link-hover }
 }

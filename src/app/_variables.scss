@@ -1,5 +1,7 @@
-$primary-font: 'Montserrat', sans-serif;
-$secondary-font: 'Open Sans', sans-serif;;
+$title-font: 'Montserrat', sans-serif;
+$subtitle-font: 'Noto Sans', sans-serif;
+$body-font: 'Open Sans', sans-serif;;
+$code-font: 'Consolas', sans-serif;;
 
 $angular: #DD0330;
 $typescript: #0074C1;
@@ -7,7 +9,8 @@ $react: #61DAFB;
 $susy: #FF007F;
 $node: #7fbd42;
 
-$link: #77a9f9;
+$link: #6399ef;
+$link-hover: #2d6def;
 
 $bs-light: -1px 0 2px 0 rgba(0,0,0,0.12) , 1px 0 2px 0 rgba(0,0,0,0.12) , 0 1px 1px 0 rgba(0,0,0,0.24);
 $bs-medium: -2px 0 2px 0 rgba(0,0,0,0.16) , 2px 0 2px 0 rgba(0,0,0,0.16) , 0 2px 2px 0 rgba(0,0,0,0.23);

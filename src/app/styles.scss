@@ -12,18 +12,18 @@ html, body {
   min-height: 100%;
   margin: 0;
   padding: 0;
-  font-family: $primary-font;
+  font-family: $body-font;
   font-size: 16px;
   font-weight: 400;
   line-height: 20px; 
 }
 
 pre {
-  font-family: $primary-font;
+  font-family: $code-font;
   font-size: 14px;
   white-space: pre-wrap;
   white-space: -moz-pre-wrap;
-  white-space: -pre-wrap;
+  white-space: pre-wrap;
   white-space: -o-pre-wrap;
   word-wrap: break-word;
 }
@@ -36,7 +36,7 @@ pre {
   padding: 0; }
 
 h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
-  font-family: $primary-font;
+  font-family: $title-font;
   font-size: 56px;
   font-weight: 400;
   line-height: 1.35;
@@ -45,7 +45,7 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
   font-size: 0.6em; }
 
 h1 {
-  font-family: $primary-font;
+  font-family: $title-font;
   font-size: 56px;
   font-weight: 400;
   line-height: 1.35;
@@ -54,23 +54,23 @@ h1 {
   margin-bottom: 24px; }
 
 h2 {
-  font-family: $primary-font;
-  font-size: 45px;
-  font-weight: 400;
+  font-family: $subtitle-font;
+  font-size: 42px;
+  font-weight: 700;
   line-height: 48px;
-  margin-top: 24px;
+  margin-top: 30px;
   margin-bottom: 24px; }
 
 h3 {
-  font-family: $secondary-font;
-  font-size: 1.17em;
+  font-family: $subtitle-font;
+  font-size: 26px;
   font-weight: 400;
   line-height: 25px;
   margin-top: 24px;
   margin-bottom: 24px; }
 
 h4 {
-  font-family: $primary-font;
+  font-family: $subtitle-font;
   font-size: 24px;
   font-weight: 400;
   line-height: 32px;
@@ -79,7 +79,7 @@ h4 {
   margin-bottom: 16px; }
 
 h5 {
-  font-family: $primary-font;
+  font-family: $subtitle-font;
   font-size: 20px;
   font-weight: 500;
   line-height: 1;
@@ -88,7 +88,7 @@ h5 {
   margin-bottom: 16px; }
 
 h6 {
-  font-family: $primary-font;
+  font-family: $subtitle-font;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
@@ -97,30 +97,31 @@ h6 {
   margin-bottom: 16px; }
 
 p {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.7;
   letter-spacing: 0;
-  margin-bottom: 16px; }
+  margin-bottom: 26px; }
 
 a {
   font-weight: 500; }
 
 blockquote {
-  font-family: $primary-font;
+  font-family: $body-font;
   position: relative;
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 300;
   font-style: italic;
-  line-height: 1.35;
-  letter-spacing: 0.08em; }
-  blockquote:before {
+  line-height: 1.8;
+  letter-spacing: 0.08em;
+  margin-bottom: 26px; }
+  /*blockquote:before {
     position: absolute;
     left: -0.5em;
     content: '“'; }
   blockquote:after {
     content: '”';
-    margin-left: -0.05em; }
+    margin-left: -0.05em; }*/
 
 mark {
   background-color: #f4ff81; }
@@ -136,7 +137,8 @@ address {
   font-style: normal; }
 
 ul, ol {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 400;
-  line-height: 24px;
-  letter-spacing: 0; }
+  line-height: 1.7;
+  letter-spacing: 0;
+  margin-bottom: 26px; }

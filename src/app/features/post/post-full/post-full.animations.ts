@@ -9,8 +9,8 @@ import {
 export const ANIMATIONS: AnimationEntryMetadata[] = [
   trigger('circle', [
     state('in', style({
-      width: '142%',
-      height: '142%'
+      width: '1350px',
+      height: '1350px'
     })),
     transition(':enter', [
       style({
