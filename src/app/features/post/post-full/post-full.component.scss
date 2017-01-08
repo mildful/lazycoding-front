@@ -70,6 +70,7 @@ anchor (to title), img not full size, code
       height: 5px;
       list-style-type: none;
       margin: 0;
+      padding: 0;
 
       .category {
          width: 100%;
@@ -96,6 +97,7 @@ anchor (to title), img not full size, code
          list-style-type: none;
          font-size: 15px;
          margin: 0;
+         padding: 0;
 
          li {
             margin-right: 17px;
@@ -132,11 +134,16 @@ anchor (to title), img not full size, code
    }
    // Code
    pre {
-      width: $post-width + 2px;
+      width: $content-width + 2px;
       transform: translateX(-$delta - 1px);
-      padding: 5px $delta;
+      padding: 30px $delta;
       border-radius: 0;
       margin-bottom: 25px;
+
+      code {
+         line-height: 1.7;
+         font-size: 17px;
+      }
    }
    // Lists
    ul, ol {
@@ -144,7 +151,7 @@ anchor (to title), img not full size, code
    }
    // Blockquote
    blockquote {
-      width: $post-width + 2px;
+      width: $content-width + 2px;
       transform: translateX(-$delta - 1px);
       padding: 50px $delta;
       margin-left: 0;
