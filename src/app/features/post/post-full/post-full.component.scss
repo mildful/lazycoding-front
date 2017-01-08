@@ -1,4 +1,5 @@
 @import '../../../_variables';
+@import '../../../_mixins';
 
 $post-width: 820px;
 $content-width: 665px;
@@ -6,7 +7,7 @@ $delta: ($post-width - $content-width) / 2;
 
 /*
 TODO :
-p, quote, code, title (all levels), anchor (to title), img not full size
+anchor (to title), img not full size, code
  */
 
 .anim-wrapper {
@@ -176,6 +177,7 @@ p, quote, code, title (all levels), anchor (to title), img not full size
 }
 
 lazy-disqus {
-   margin-bottom: 20px;
+   margin: 0 auto 20px auto;
    display: block;
+   width: $post-width;
 }
