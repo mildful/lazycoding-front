@@ -1,4 +1,5 @@
 @import './_variables';
+@import './_mixins';
 
 .main-background {
    position: fixed;
@@ -19,9 +20,12 @@
 }
 
 .container {
-   width: $container;
-   margin: 0 auto;
-   padding-top: $offsetTop;
+   width: 100%;
+   @include respond-to(small, medium, large) {
+      width: $container;
+      margin: 0 auto;
+      padding-top: $offsetTop;
+   }
 }
 
 header {

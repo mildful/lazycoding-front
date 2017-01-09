@@ -1,6 +1,7 @@
 /* styles.css will be extracted to main dist folder and is imported in index.html */
 /* This file is for importing 3rd party styles  */
 @import '_variables';
+@import '_mixins';
 
 * {
   -webkit-font-smoothing: antialiased;
@@ -37,7 +38,7 @@ pre {
 
 h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
   font-family: $title-font;
-  font-size: 56px;
+  //font-size: 56px;
   font-weight: 400;
   line-height: 1.35;
   letter-spacing: -0.02em;
@@ -55,11 +56,17 @@ h1 {
 
 h2 {
   font-family: $subtitle-font;
-  font-size: 42px;
   font-weight: 700;
-  line-height: 48px;
   margin-top: 30px;
-  margin-bottom: 24px; }
+  margin-bottom: 24px;
+
+  font-size: 33px;
+  line-height: 40px;
+  @include respond-to(small, medium, large) {
+    font-size: 42px;
+    line-height: 48px;
+  }
+}
 
 h3 {
   font-family: $subtitle-font;
@@ -97,11 +104,16 @@ h6 {
   margin-bottom: 16px; }
 
 p {
-  font-size: 18px;
   font-weight: 400;
   line-height: 1.7;
   letter-spacing: 0;
-  margin-bottom: 26px; }
+  margin-bottom: 26px;
+
+  font-size: 16px;
+  @include respond-to(small, medium, large) {
+    font-size: 18px;
+  }
+}
 
 a {
   font-weight: 500; }
@@ -109,12 +121,17 @@ a {
 blockquote {
   font-family: $body-font;
   position: relative;
-  font-size: 18px;
   font-weight: 300;
   font-style: italic;
   line-height: 1.8;
   letter-spacing: 0.08em;
-  margin-bottom: 26px; }
+  margin-bottom: 26px;
+
+  font-size: 16px;
+  @include respond-to(small, medium, large) {
+    font-size: 18px;
+  }
+}
   /*blockquote:before {
     position: absolute;
     left: -0.5em;
@@ -137,8 +154,13 @@ address {
   font-style: normal; }
 
 ul, ol {
-  font-size: 18px;
   font-weight: 400;
   line-height: 1.7;
   letter-spacing: 0;
-  margin-bottom: 26px; }
+  margin-bottom: 26px;
+
+  font-size: 16px;
+  @include respond-to(small, medium, large) {
+    font-size: 18px;
+  }
+}

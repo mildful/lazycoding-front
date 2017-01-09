@@ -1,19 +1,18 @@
 @import '_variables';
 
-@mixin respond-to($media) {
-   @if $media == iphone-retina {
-      @media only screen and (max-width: $bk-iphone-retina) { @content; }
-   }
-   @else if $media == x-small {
-      @media only screen and (min-width: $bk-x-small + 1) and (max-width: $bk-small - 1) { @content; }
-   }
-   @else if $media == small {
-      @media only screen and (min-width: $bk-small + 1) and (max-width: $bk-medium - 1) { @content; }
-   }
-   @else if $media == medium {
-      @media only screen and (min-width: $bk-medium + 1) and (max-width: $bk-large - 1) { @content; }
-   }
-   @else if $media == large {
-      @media only screen and (min-width: $bk-large) { @content; }
+@mixin respond-to($medias...) {
+   @each $media in $medias {
+      @if $media == x-small {
+         @media only screen and (min-width: $bk-x-small) { @content; }
+      }
+      @else if $media == small {
+         @media only screen and (min-width: $bk-small) { @content; }
+      }
+      @else if $media == medium {
+         @media only screen and (min-width: $bk-medium) { @content; }
+      }
+      @else if $media == large {
+         @media only screen and (min-width: $bk-large) { @content; }
+      }
    }
 }

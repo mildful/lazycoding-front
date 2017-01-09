@@ -5,6 +5,8 @@ $post-width: 820px;
 $content-width: 665px;
 $delta: ($post-width - $content-width) / 2;
 
+$x-small-device-margin: 20px;
+
 /*
 TODO :
 anchor (to title), img not full size, code
@@ -15,9 +17,11 @@ anchor (to title), img not full size, code
    border-radius: 5px 5px 0 0;
    position: fixed;
    height: 100%;
-   width: $post-width;
    left: 50%;
    transform: translateX(-50%);
+
+   width: 100%;
+   @include respond-to(small, medium, large) { width: $post-width }
 
    &.hidden { display: none }
 
@@ -34,21 +38,32 @@ anchor (to title), img not full size, code
 .post {
    background: white;
    opacity: 0;
-   border-radius: 5px;
-   width: $post-width;
-   box-shadow: $bs-medium;
    overflow: hidden;
    padding-bottom: 15px;
-   margin: 0 auto 20px auto;
    font-family: $body-font;
+
+   width: 100%;
+   @include respond-to(small, medium, large) {
+      width: $post-width;
+      border-radius: 5px;
+      box-shadow: $bs-medium;
+      margin: 0 auto 20px auto;
+   }
 
    .header {
       position: relative;
 
       .cover {
          width: 100%;
-         height: auto;
          display: block;
+
+         min-height: 340px;
+         object-fit: cover;
+         @include respond-to(small, medium, large) {
+            min-height: inherit;
+            object-fit: initial;
+            height: auto;
+         }
       }
 
       h1 { 
@@ -56,11 +71,13 @@ anchor (to title), img not full size, code
          position: absolute;
          bottom: 0;
          width: 100%;
-         font-size: 4.8rem;
          text-shadow: 3px 3px 0 rgba(0, 0, 0, .8);;
          color: white;
          text-align: center;
          font-family: $title-font;
+
+         font-size: 3.5rem;
+         @include respond-to(small, medium, large) { font-size: 1.8rem }
       }
    }
 
@@ -85,25 +102,31 @@ anchor (to title), img not full size, code
 
    .data {
       display: flex;
-      flex-direction: row;
-      justify-content: space-between;
       align-items: center;
       padding: 10px 30px;
       color: $txt-grey;
+
+      flex-direction: column;
+      @include respond-to(small, medium, large) {
+         flex-direction: row;
+         justify-content: space-between;
+      }
 
       ul.tags {
          display: flex;
          flex-direction: row;
          list-style-type: none;
          font-size: 15px;
-         margin: 0;
          padding: 0;
+
+         margin-bottom: 10px;
+         @include respond-to(small, medium, large) { margin: 0 }
 
          li {
             margin-right: 17px;
             transition: color .3s ease-in-out;
             cursor: pointer;
-
+            &:last-of-type { margin-right: 0 }
             &:hover { color: $txt-grey-hover }
          }
       }
@@ -116,8 +139,12 @@ anchor (to title), img not full size, code
    }
 
    .content {
-      width: $content-width;
-      margin: auto;
+      padding: 0 $x-small-device-margin;
+      @include respond-to(small, medium, large) {
+         padding: 0;
+         width: $content-width;
+         margin: auto;
+      }
    }
 
    &.visible { opacity: 1 }
@@ -134,11 +161,18 @@ anchor (to title), img not full size, code
    }
    // Code
    pre {
-      width: $content-width + 2px;
-      transform: translateX(-$delta - 1px);
-      padding: 30px $delta;
       border-radius: 0;
       margin-bottom: 25px;
+
+      display: inline-block;
+      padding: 30px $x-small-device-margin*2;
+      transform: translateX(-$x-small-device-margin);
+      @include respond-to(small, medium, large) {
+         display: block;
+         transform: translateX(-$delta - 1px);
+         padding: 30px $delta;
+         width: $content-width + 2px;
+      }
 
       code {
          line-height: 1.7;
@@ -151,12 +185,16 @@ anchor (to title), img not full size, code
    }
    // Blockquote
    blockquote {
-      width: $content-width + 2px;
-      transform: translateX(-$delta - 1px);
-      padding: 50px $delta;
       margin-left: 0;
       margin-right: 0;
       background: #ebebeb;
+
+      padding: 30px 35px;
+      @include respond-to(small, medium, large) {
+         padding: 50px $delta;
+         width: $content-width + 2px;
+         transform: translateX(-$delta - 1px);
+      }
 
       &:before {
          position: absolute;
@@ -178,6 +216,7 @@ anchor (to title), img not full size, code
          line-height: 2;
          font-size: 1.2em;
          margin: 0;
+         word-wrap: break-word;
 
          em { font-style: normal }
       }
@@ -185,7 +224,10 @@ anchor (to title), img not full size, code
 }
 
 lazy-disqus {
-   margin: 0 auto 20px auto;
    display: block;
-   width: $post-width;
+   width: 100%;
+   @include respond-to(small, medium, large) {
+      width: $post-width;
+      margin: 0 auto 20px auto;
+   }
 }
