@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'lc-dot-content',
   template: `
-    <span class="content {{position}}"><ng-content></ng-content></span>
+    <span class="dot-content {{position}}"><ng-content></ng-content></span>
   `
 })
 export class DotContentComponent {

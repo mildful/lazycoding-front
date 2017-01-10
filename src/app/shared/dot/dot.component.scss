@@ -35,7 +35,7 @@ $hRayon: 30px + ($strokeWidth * 2);
       }
    }
 
-   .content {
+   .dot-content {
       z-index: -1;
       color: white;
       mix-blend-mode: difference;
@@ -80,7 +80,7 @@ $hRayon: 30px + ($strokeWidth * 2);
          }
       }
 
-      .content {
+      .dot-content {
          transform: translate(0, -50%);
          opacity: 1;
          transition: transform .2s .2s, opacity .2s .2s ease-out;

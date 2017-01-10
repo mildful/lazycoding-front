@@ -77,7 +77,7 @@ anchor (to title), img not full size, code
          font-family: $title-font;
 
          font-size: 3.5rem;
-         @include respond-to(small, medium, large) { font-size: 1.8rem }
+         @include respond-to(small, medium, large) { font-size: 56px }
       }
    }
 
