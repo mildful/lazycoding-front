@@ -1,7 +1,7 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'lc-dot',
+  selector: 'lazy-dot',
   encapsulation: ViewEncapsulation.None,
   template: `
     <div class="dot" [class.selected]="selected">

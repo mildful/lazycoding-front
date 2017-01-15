@@ -1,6 +1,6 @@
 <div class="main-background-cover"></div>
-<!--<img [@bgImage]="bgImageAnimationState" [src]="imageData" alt="background" class="main-background" />-->
-<img [@bgImage]="bgImageAnimationState" src="https://unsplash.it/g/1920/1080/?random=true&blur=true" alt="background" class="main-background" />
+<img [@bgImage]="bgImageAnimationState" [src]="imageData" alt="background" class="main-background" />
+<!--<img [@bgImage]="bgImageAnimationState" src="https://unsplash.it/g/1920/1080/?random=true&blur=true" alt="background" class="main-background" />-->
 
 <header>
   <nav>
@@ -8,30 +8,25 @@
       <li><a [routerLink]=" ['./'] " class="lc-logo">
         <img src="assets/img/logo.svg" alt="lazycoding">
       </a></li>
-      <li>
-        <lc-dot [img]="'assets/img/icons/search.svg'"
-                [alt]="'rechercher'"
-                [wrapperClasses]="'dot-header'"
-                [selected]="false">
-          <lc-dot-content [position]="'bottom'">Rechercher</lc-dot-content>
-        </lc-dot>
-      </li>
       <li><a [routerLink]=" ['./'] ">
-        <lc-dot [img]="'assets/img/icons/mail.svg'"
+        <lazy-dot [img]="'assets/img/icons/mail.svg'"
                 [alt]="'contact'"
                 [wrapperClasses]="'dot-header'"
                 [selected]="false">
-          <lc-dot-content [position]="'bottom'">Contact</lc-dot-content>
-        </lc-dot>
+          <lazy-dot-content [position]="'bottom'">Contact</lazy-dot-content>
+        </lazy-dot>
       </a></li>
       <li><a [routerLink]=" ['./'] ">
-        <lc-dot [img]="'assets/img/icons/donation.svg'"
+        <lazy-dot [img]="'assets/img/icons/donation.svg'"
                 [alt]="'soutient'"
                 [wrapperClasses]="'dot-header donation'"
                 [selected]="false">
-          <lc-dot-content [position]="'bottom'">Soutenez-moi</lc-dot-content>
-        </lc-dot>
+          <lazy-dot-content [position]="'bottom'">Soutenez-moi</lazy-dot-content>
+        </lazy-dot>
       </a></li>
+      <li>
+        <i class="lc-font lc-font-search"></i>
+      </li>
     </ul>
   </nav>
 </header>

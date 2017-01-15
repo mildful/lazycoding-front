@@ -34,7 +34,11 @@ header {
    padding-left: 10px;
    font-family: 'Montserrat', sans-serif;
    font-size: .8em;
-   position: fixed;
+
+   position: static;
+   @include respond-to(small, medium, large) {
+      position: fixed;
+   }
 
    nav {
       ul {

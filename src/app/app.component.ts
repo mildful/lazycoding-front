@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Http, Response } from '@angular/http';
+import { Http, Response, ResponseContentType, Headers, RequestOptions } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   trigger,
@@ -16,7 +16,7 @@ import { TagActions } from './features/tag';
 import { MOBILE } from './services/constants';
 
 @Component({
-  selector: 'lc-app',
+  selector: 'lazy-app',
   styleUrls: ['./app.component.css'],
   encapsulation: ViewEncapsulation.None,
   templateUrl: './app.component.html',
@@ -67,18 +67,19 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /*this.http.get('https://unsplash.it/g/1920/1080/?random=true&blur=true')
+    const headers: Headers = new Headers({ 'Content-Type': 'image/jpeg'});
+    const options: RequestOptions = new RequestOptions({
+      headers,
+      responseType: ResponseContentType.Blob
+    });
+    this.http.get('https://unsplash.it/g/1920/1080/?random=true&blur=true', options)
       .take(1)
       .retry(3)
       .subscribe((res: Response) => {
-        this.imageData = this.sanitizer.bypassSecurityTrustUrl(
-          URL.createObjectURL(new Blob([res.arrayBuffer()], { type: 'image/jpeg' }))
-        );
+        const blob: Blob = new Blob([res.blob()], { type: res.headers.get("Content-Type") });
+        this.imageData = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob));
         this.bgImageAnimationState = 'show';
-      });*/
-    setTimeout(() => {
-      this.bgImageAnimationState = 'show';
-    }, 5000)
+      });
   }
 
   private load(): void {

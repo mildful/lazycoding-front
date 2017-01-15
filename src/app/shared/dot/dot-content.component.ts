@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'lc-dot-content',
+  selector: 'lazy-dot-content',
   template: `
     <span class="dot-content {{position}}"><ng-content></ng-content></span>
   `

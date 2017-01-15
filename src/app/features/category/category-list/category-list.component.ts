@@ -14,12 +14,12 @@ import { Category } from '../category-data';
     <ul class="categories">
       <li *ngFor="let category of categories$ | async" 
           (click)="onClick(category.id)">
-        <lc-dot [img]="category.custom_image" 
+        <lazy-dot [img]="category.custom_image" 
                 [alt]="category.slug"
                 [wrapperClasses]="category.slug"
                 [selected]="currentFiltersCategory.includes(category.id)">
-          <lc-dot-content [position]="'right'">{{ category.name }}</lc-dot-content>
-        </lc-dot>
+          <lazy-dot-content [position]="'right'">{{ category.name }}</lazy-dot-content>
+        </lazy-dot>
       </li>
     </ul>
   `,
