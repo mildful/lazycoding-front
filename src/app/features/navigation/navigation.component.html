@@ -1,0 +1,26 @@
+<nav>
+  <ul>
+    <li><a [routerLink]=" ['./'] " class="lc-logo">
+      <img src="assets/img/logo.svg" alt="lazycoding">
+    </a></li>
+    <li><a [routerLink]=" ['./'] ">
+      <lazy-dot [img]="'assets/img/icons/mail.svg'"
+                [alt]="'contact'"
+                [wrapperClasses]="'dot-header'"
+                [selected]="false">
+        <lazy-dot-content [position]="'bottom'">Contact</lazy-dot-content>
+      </lazy-dot>
+    </a></li>
+    <li><a [routerLink]=" ['./'] ">
+      <lazy-dot [img]="'assets/img/icons/donation.svg'"
+                [alt]="'soutient'"
+                [wrapperClasses]="'dot-header donation'"
+                [selected]="false">
+        <lazy-dot-content [position]="'bottom'">Soutenez-moi</lazy-dot-content>
+      </lazy-dot>
+    </a></li>
+    <li>
+      <i class="lc-font lc-font-search"></i>
+    </li>
+  </ul>
+</nav>

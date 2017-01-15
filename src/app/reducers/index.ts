@@ -4,31 +4,31 @@ import { storeFreeze } from 'ngrx-store-freeze';
 import { storeLogger } from 'ngrx-store-logger';
 import { routerReducer, RouterState } from '@ngrx/router-store';
 
-import { userReducer, UserState } from '../core/user/user.reducer';
 import { postReducer, PostState } from '../features/post';
 // import { litePostReducer, LitePostState } from '../features/post';
 import { categoryReducer, CategoryState } from '../features/category';
 import { overlayReducer, OverlayState } from '../shared/overlay';
-import { tagReducer, TagState } from '../features/tag/tag-data/tag.reducer';
+import { tagReducer, TagState } from '../features/tag';
+import { navigationReducer, NavigationState } from '../features/navigation';
 
 export interface AppState {
   router: RouterState;
-  user: UserState;
   post: PostState;
   // litePost: LitePostState;
   category: CategoryState;
   tag: TagState;
   overlay: OverlayState;
+  navigation: NavigationState;
 }
 
 export const reducers = {
   router: routerReducer,
-  user: userReducer,
   post: postReducer,
   // litePost: litePostReducer,
   category: categoryReducer,
   tag: tagReducer,
   overlay: overlayReducer,
+  navigation: navigationReducer,
 };
 
 // Generate a reducer to set the root state in dev mode for HMR

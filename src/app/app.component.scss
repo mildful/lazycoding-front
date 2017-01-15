@@ -39,32 +39,4 @@ header {
    @include respond-to(small, medium, large) {
       position: fixed;
    }
-
-   nav {
-      ul {
-         display: flex;
-         list-style-type: none;
-         padding: 0;
-         margin: 0;
-
-         li {
-            display: flex;
-            align-items: center;
-         }
-      }
-
-      .lc-logo {
-         img {
-            height: $lc-logo-height;
-         }
-      }
-
-      .dot-header {
-         background: black;
-
-         &.donation {
-            background: gold;
-         }
-      }
-   }
 }

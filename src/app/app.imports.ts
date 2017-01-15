@@ -10,10 +10,11 @@ import { routes } from './app.routing';
 import { rootReducer } from './reducers';
 /* Features Modules */
 import { StoreDevToolsModule } from './features/store-devtools/store-devtools.module';
-import { CoreModule } from './core/core.module';
-import { SharedModule } from './shared/shared.module';
-import { CategoryModule } from './features/category/category.module';
-import { TagModule } from './features/tag/tag.module';
+import { CoreModule } from './core';
+import { SharedModule } from './shared';
+import { CategoryModule } from './features/category';
+import { TagModule } from './features/tag';
+import { NavigationModule } from './features/navigation';
 
 const STORE_DEV_TOOLS_IMPORTS = [];
 if (ENV === 'development' && !AOT) {
@@ -45,5 +46,6 @@ export const APP_IMPORTS = [
   SharedModule,
   CategoryModule,
   TagModule,
+  NavigationModule,
 ];
 
