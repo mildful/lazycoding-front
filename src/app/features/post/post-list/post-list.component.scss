@@ -1,19 +1,26 @@
 @import '../../../_variables';
+@import '../../../_mixins';
 
-$itemsPerLine: 3;
+$items-per-line: 3;
 $offset: 15px;
+$x-small-items-per-line: 1;
+$x-small-offset: 15px;
 
 post-card { display: inline-block }
 
 .posts {
-   post-card article {
-      width: ($container / $itemsPerLine) - $offset;
-      margin-right: $offset;
-      margin-bottom: $offset;
-   }
-   post-card:nth-child(#{$itemsPerLine}n) article {
-      width: ($container / $itemsPerLine);
-      margin-right: 0;
+   post-card {
+      display: block;
+      margin: 0 $x-small-offset $x-small-offset $x-small-offset;
+      @include respond-to(small, medium, large) {
+         display: inline-block;
+         width: ($container / $items-per-line) - $offset;
+         margin: 0 $offset $offset 0;
+         &:nth-child(#{$items-per-line}n) {
+            width: ($container / $items-per-line);
+            margin-right: 0;
+         }
+      }
    }
 }
 
