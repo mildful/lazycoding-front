@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 import { AppState } from '../../../reducers/index';
-import { LitePostActions } from '../../post/post-data/lite-post';
+import { LitePostActions } from '../../../core/post-data/lite-post';
 
 import { Category } from '../category-data';
 

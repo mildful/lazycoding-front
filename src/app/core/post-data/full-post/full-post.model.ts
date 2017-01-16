@@ -8,6 +8,7 @@ export interface FullPost extends LitePost {
   readonly 'modified': string;
   readonly 'modified_gmt': string;
   readonly 'type': string;
+  readonly 'slug': string;
   readonly 'link': string;
   readonly 'content': {
     'rendered': string;

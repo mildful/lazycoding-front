@@ -7,8 +7,8 @@ import { AppState } from '../../../reducers';
 import { OverlayActions, OverlayConfig } from '../../../shared/overlay';
 import { Category } from '../../category';
 import { Tag } from '../../tag';
+import { FullPost, FullPostActions } from '../../../core';
 
-import { FullPost, FullPostActions } from '../post-data';
 import { ANIMATIONS } from './post-full.animations';
 
 @Component({

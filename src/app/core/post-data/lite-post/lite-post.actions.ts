@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
 
-import { ServerError } from '../../../../services/server-error.model';
+import { ServerError } from '../../../services/server-error.model';
 
 import { LitePostResponse } from './lite-post-response.model';
 import { LitePostFilters } from './lite-post-filters.model';

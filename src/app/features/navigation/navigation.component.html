@@ -1,4 +1,6 @@
-<nav>
+<button (click)="toggle()">Trigger</button>
+
+<nav [class.visible]="showNav$ | async">
   <ul>
     <li><a [routerLink]=" ['./'] " class="lc-logo">
       <img src="assets/img/logo.svg" alt="lazycoding">
@@ -23,4 +25,5 @@
       <i class="lc-font lc-font-search"></i>
     </li>
   </ul>
+  <category-list></category-list>
 </nav>

@@ -1,7 +1,7 @@
 /* tslint:disable: no-switch-case-fall-through */
 import { Action } from '@ngrx/store';
 
-import { ServerError } from '../../../../services/server-error.model';
+import { ServerError } from '../../../services/server-error.model';
 
 import { FullPostActions } from './full-post.actions';
 import { FullPost } from './full-post.model';

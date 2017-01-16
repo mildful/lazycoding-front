@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, ViewEncapsulation, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Http, Response, ResponseContentType, Headers, RequestOptions } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,6 +9,8 @@ import {
   transition,
   animate } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 import { AppState } from './reducers/index';
 import { CategoryActions } from './features/category';
@@ -31,7 +33,7 @@ import { MOBILE } from './services/constants';
     ])
   ]
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   // utils
   showMonitor = (ENV === 'development' && !AOT &&
     ['monitor', 'both'].includes(STORE_DEV_TOOLS) // set in constants.js file in project root
@@ -41,6 +43,9 @@ export class AppComponent implements OnInit {
   // other
   bgImageAnimationState: string = 'hidden';
   imageData: any;
+  isNavigationOpen$: Observable<boolean>;
+
+  private destroyed$: Subject<void> = new Subject<void>();
 
   constructor(
     public route: ActivatedRoute,
@@ -66,7 +71,21 @@ export class AppComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+  }
+
   ngOnInit(): void {
+    this.loadBackground();
+    this.isNavigationOpen$ = this.store.select((s: AppState) => s.navigation.isOpen).takeUntil(this.destroyed$);
+  }
+
+  private load(): void {
+    this.store.dispatch(this.categoryActions.reqAllCategories());
+    this.store.dispatch(this.tagActions.reqAllTags());
+  }
+
+  private loadBackground(): void {
     const headers: Headers = new Headers({ 'Content-Type': 'image/jpeg'});
     const options: RequestOptions = new RequestOptions({
       headers,
@@ -80,10 +99,5 @@ export class AppComponent implements OnInit {
         this.imageData = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob));
         this.bgImageAnimationState = 'show';
       });
-  }
-
-  private load(): void {
-    this.store.dispatch(this.categoryActions.reqAllCategories());
-    this.store.dispatch(this.tagActions.reqAllTags());
   }
 }

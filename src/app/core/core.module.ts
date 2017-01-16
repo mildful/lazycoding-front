@@ -1,10 +1,11 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 
+import { NavigationActions } from './navigation-data';
+
 @NgModule({
-  imports: [],
-  exports: [],
-  declarations: [],
-  providers: [],
+  providers: [
+    NavigationActions
+  ],
 })
 export class CoreModule {
 

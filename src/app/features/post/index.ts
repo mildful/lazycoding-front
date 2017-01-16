@@ -1,1 +1,1 @@
-export * from './post-data';
+export * from './post.module';

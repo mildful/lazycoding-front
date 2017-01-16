@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../reducers';
 import { Category } from '../../category';
 
-import { LitePost, LitePostActions } from '../post-data';
+import { LitePost, LitePostActions } from '../../../core';
 
 @Component({
   selector: 'post-card',

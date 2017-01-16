@@ -9,6 +9,10 @@ import { FullPostDataModule } from './full-post';
   imports: [
     LitePostDataModule,
     FullPostDataModule
+  ],
+  exports: [
+    LitePostDataModule,
+    FullPostDataModule
   ]
 })
 export class PostDataModule { }

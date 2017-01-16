@@ -6,7 +6,7 @@
 </header>
 
 <section [style.width]="contentWidth">
-  <main class="container">
+  <main class="container" [class.aside]="isNavigationOpen$ | async">
     <router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
   </main>
 </section>

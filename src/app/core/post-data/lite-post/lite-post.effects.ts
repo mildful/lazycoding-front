@@ -4,8 +4,8 @@ import { Actions, Effect, toPayload } from '@ngrx/effects';
 import { Store, Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { AppState } from '../../../../reducers';
-import { ServerError } from '../../../../services/server-error.model';
+import { AppState } from '../../../reducers';
+import { ServerError } from '../../../services/server-error.model';
 
 import { PostService } from '../post.service';
 import { LitePostActions } from './lite-post.actions';

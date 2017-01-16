@@ -6,9 +6,16 @@ import { Action } from '@ngrx/store';
 export class NavigationActions {
 
   static TOGGLE_NAVIGATION = '[Navigation] Toggle Navigation';
-  toggleNavigationn(): Action {
+  toggleNavigation(): Action {
     return {
       type: NavigationActions.TOGGLE_NAVIGATION
+    };
+  }
+
+  static CLOSE_NAVIGATION = '[Navigation] Close Navigation';
+  closeNavigation(): Action {
+    return {
+      type: NavigationActions.CLOSE_NAVIGATION
     };
   }
 }

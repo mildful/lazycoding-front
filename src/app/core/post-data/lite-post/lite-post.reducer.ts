@@ -1,7 +1,7 @@
 /* tslint:disable: no-switch-case-fall-through */
 import { Action } from '@ngrx/store';
 
-import { ServerError } from '../../../../services/server-error.model';
+import { ServerError } from '../../../services/server-error.model';
 
 import { LitePostActions } from './lite-post.actions';
 import { LitePost } from './lite-post.model';

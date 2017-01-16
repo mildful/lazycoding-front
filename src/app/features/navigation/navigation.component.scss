@@ -1,6 +1,12 @@
 @import '../../_variables';
 
 nav {
+   z-index: 5;
+   display: none;
+   
+   &.visible {
+      display: block; }
+   
    ul {
       display: flex;
       list-style-type: none;

@@ -3,8 +3,8 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
-import { API_BASE_URL } from '../../../services/constants';
-import { RequestBase } from '../../../services/request-base';
+import { API_BASE_URL } from '../../services/constants';
+import { RequestBase } from '../../services/request-base';
 
 import {
   LitePostFilters,

@@ -11,8 +11,8 @@ import {
 } from './lite-post';
 import { FullPost } from './full-post';
 
-const LITE_POSTS: LitePost[] = require('../../../../assets/mock-data/lite-posts.json');
-const FULL_POSTS: FullPost[] = require('../../../../assets/mock-data/full-posts.json');
+const LITE_POSTS: LitePost[] = require('../../../assets/mock-data/lite-posts.json');
+const FULL_POSTS: FullPost[] = require('../../../assets/mock-data/full-posts.json');
 
 @Injectable()
 export class FakePostService {

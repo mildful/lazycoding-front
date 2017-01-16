@@ -12,8 +12,7 @@ import Timer = NodeJS.Timer;
 
 import { WindowRef } from '../window-ref';
 import { AppState } from '../../../reducers';
-
-import { LitePost, LitePostActions } from '../post-data';
+import { LitePost, LitePostActions } from '../../../core';
 
 @Component({
   selector: 'post-list',
@@ -33,7 +32,6 @@ import { LitePost, LitePostActions } from '../post-data';
     ])
   ],
   template: `
-    <category-list></category-list>
     <section class="posts">
       <post-card *ngFor="let post of posts$ | async" 
         [post]="post" 

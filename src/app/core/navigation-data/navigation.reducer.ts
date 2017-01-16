@@ -8,7 +8,7 @@ export interface NavigationState {
 }
 
 const initialState: NavigationState = {
-  isOpen: true
+  isOpen: false
 };
 
 export function navigationReducer(state = initialState, action: Action): NavigationState {
@@ -20,6 +20,15 @@ export function navigationReducer(state = initialState, action: Action): Navigat
     case NavigationActions.TOGGLE_NAVIGATION: {
       return Object.assign({}, state, {
         isOpen: !state.isOpen
+      });
+    }
+
+    /**
+     * payload: undefined
+     */
+    case NavigationActions.CLOSE_NAVIGATION: {
+      return Object.assign({}, state, {
+        isOpen: false
       });
     }
 
