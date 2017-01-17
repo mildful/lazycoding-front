@@ -29,9 +29,11 @@ post-card { display: inline-block }
       }
 
       @include respond-to(medium, large) {
-         //flex-basis: 100% / $items-per-line;
          flex-basis: ($container - (($items-per-line - 1) * $offset)) / $items-per-line;
          margin: 0 $offset $offset 0;
+         &:nth-child(#{$small-items-per-line}n) {
+            margin: 0 $offset $offset 0;
+         }
          &:nth-child(#{$items-per-line}n) {
             margin-right: 0;
          }
