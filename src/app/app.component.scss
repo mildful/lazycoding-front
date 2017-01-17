@@ -21,6 +21,7 @@
 
 .container {
    width: 100%;
+   padding: 16px 0;
    transform-origin: 50% 0 0;
    transition: transform .25s ease-in-out;
    @include respond-to(small) {
