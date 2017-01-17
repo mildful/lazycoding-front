@@ -8,7 +8,7 @@
     "slug": "angular",
     "taxonomy": "category",
     "parent": 0,
-    "custom_image": "http://localhost/lazycoding-back/wp-content/uploads/2016/08/angular.svg",
+    "custom_image": "assets/mock-data/icons/angular.svg",
     "_links": {
       "self": [
         {
@@ -48,7 +48,7 @@
     "slug": "node",
     "taxonomy": "category",
     "parent": 0,
-    "custom_image": "http://localhost/lazycoding-back/wp-content/uploads/2016/08/nodejs.svg",
+    "custom_image": "assets/mock-data/icons/nodejs.svg",
     "_links": {
       "self": [
         {
@@ -88,7 +88,7 @@
     "slug": "react",
     "taxonomy": "category",
     "parent": 0,
-    "custom_image": "http://localhost/lazycoding-back/wp-content/uploads/2016/08/react.svg",
+    "custom_image": "assets/mock-data/icons/react.svg",
     "_links": {
       "self": [
         {
@@ -128,7 +128,7 @@
     "slug": "susy",
     "taxonomy": "category",
     "parent": 0,
-    "custom_image": "http://localhost/lazycoding-back/wp-content/uploads/2016/08/susy.svg",
+    "custom_image": "assets/mock-data/icons/susy.svg",
     "_links": {
       "self": [
         {
@@ -168,7 +168,7 @@
     "slug": "typescript",
     "taxonomy": "category",
     "parent": 0,
-    "custom_image": "http://localhost/lazycoding-back/wp-content/uploads/2016/08/ts.svg",
+    "custom_image": "assets/mock-data/icons/ts.svg",
     "_links": {
       "self": [
         {

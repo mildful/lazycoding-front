@@ -1,7 +1,7 @@
 <button class="trigger" (click)="toggle()">Trigger</button>
 
 <nav [class.visible]="showNav$ | async">
-  <ul>
+  <ul class="main">
     <li><a [routerLink]=" ['./'] " class="lc-logo">
       <img src="assets/img/logo.svg" alt="lazycoding">
     </a></li>

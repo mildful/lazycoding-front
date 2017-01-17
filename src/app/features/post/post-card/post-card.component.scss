@@ -5,7 +5,7 @@ $timing: .2s;
 $h: 325px;
 $hoverWidth: 15px;
 
-$fixed-categories-width: 55px;
+$fixed-categories-width: 50px;
 
 article {
    overflow: hidden;
@@ -58,9 +58,11 @@ article {
          .icon {
             display: block;
             margin: auto;
+            width: 27px;
             @include respond-to(medium, large) {
                display: none;
                margin: 0;
+               width: auto;
             }
          }
 

@@ -15,11 +15,19 @@ nav {
    &.visible {
       display: block; }
    
-   ul {
+   ul.main {
       display: flex;
       list-style-type: none;
       padding: 0;
-      margin: 0;
+
+      margin: 20px 0;
+      flex-direction: column;
+      align-items: center;
+      @include respond-to(medium, large) {
+         margin: 0;
+         flex-direction: row;
+         align-items: flex-start;
+      }
 
       li {
          display: flex;

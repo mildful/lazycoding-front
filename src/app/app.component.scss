@@ -21,18 +21,19 @@
 
 .container {
    width: 100%;
-   padding: 16px 0;
+   padding: 0;
    transform-origin: 50% 0 0;
    transition: transform .25s ease-in-out;
    @include respond-to(small) {
       width: $small-container;
       margin: 0 auto;
+      padding: $small-offset-top 0;
    }
    @include respond-to(medium, large) {
       width: $container;
       margin: 0 auto;
-      padding-top: $offsetTop;
       transition: none;
+      padding: $offset-top 0;
    }
 
    &.aside {

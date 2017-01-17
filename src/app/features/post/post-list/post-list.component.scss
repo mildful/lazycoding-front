@@ -12,9 +12,9 @@ post-card { display: inline-block }
    display: flex;
    flex-flow: row wrap;
 
-   //margin: 0 (-$offset * ($x-small-items-per-line - 1));
-   //@include respond-to(small) { margin: 0 (-$offset * ($small-items-per-line - 1)) }
-   //@include respond-to(medium, large) { margin: 0 (-$offset * ($items-per-line - 1)) }
+   padding-top: 16px;
+   @include respond-to(small) { padding-top: $small-offset-top }
+   @include respond-to(medium, large) { padding-top: $offset-top }
 
    post-card {
       flex-basis: 100% / $x-small-items-per-line;

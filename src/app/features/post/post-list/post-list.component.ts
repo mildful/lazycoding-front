@@ -97,7 +97,7 @@ export class PostListComponent implements OnDestroy {
       .subscribe((canLoad: [boolean, Event]) => canLoad ? this.load() : null);
     // used to stop requesting if all posts are loaded (complete)
     this.store.select((state: AppState) => state.post.lite.complete)
-    // we want to apply a special behavior for the initial load (see before :))
+      // we want to apply a special behavior for the initial load (see before :))
       .skip(1)
       .takeUntil(this.destroyed$)
       .subscribe((complete: boolean) => {

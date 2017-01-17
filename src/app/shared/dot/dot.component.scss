@@ -1,4 +1,5 @@
 @import '../../_variables';
+@import '../../_mixins';
 
 $rayon: 12px;
 $strokeWidth: 3px;
@@ -12,83 +13,91 @@ $hRayon: 30px + ($strokeWidth * 2);
       display: flex;
       justify-content: center;
       overflow: hidden;
-      //
       width: $hRayon;
       height: $hRayon;
       border-radius: 50%;
       box-sizing: border-box;
       margin: 3px;
+      padding: 5px;
       box-shadow: $bs-light;
-      //overflow: hidden;
-      transform: scale($rayon/$hRayon);
       border-width: 0;
       border-style: solid;
       border-color: rgba(255, 255, 255, .5);
-      transition: transform .2s, border-width .1s;
-      //
+
+      transition: border-width .1s;
+      @include respond-to(medium, large) {
+         transform: scale($rayon/$hRayon);
+         transition: transform .2s, border-width .1s;
+      }
 
       img {
          max-height: 100%;
          max-width: 100%;
-         transform: translateY(100%);
-         transition: transform .2s;
+         @include respond-to(medium, large) {
+            transform: translateY(100%);
+            transition: transform .2s;
+         }
       }
    }
 
    .dot-content {
-      z-index: -1;
       color: white;
       mix-blend-mode: difference;
       position: absolute;
-      opacity: 0;
-      transition: transform .2s, opacity .2s;
+      white-space: nowrap;
 
-      &.top {
-         bottom: 100%; left: 50%;
-         transform: translate(-50%, 100%);
-         padding-bottom: 5px;
-      }
-      &.right {
-         top: 50%; left: 100%;
-         padding-left: 10px;
-         transform: translate(-50%, -50%);
-      }
-      &.bottom {
-         top: 100%; left: 50%;
-         transform: translate(-50%, -100%);
-         padding-top: 5px;
-      }
-      &.left {
-         top: 50%; right: 100%;
-         padding-right: 10px;
-         transform: translate(50%, -50%);
-      }
-   }
+      top: 50%; left: 100%;
+      padding-left: 10px;
+      transform: translate(0, -50%);
 
-   &:hover, &.selected {
-      cursor: pointer;
+      @include respond-to(medium, large) {
+         z-index: -1;
+         opacity: 0;
+         transition: transform .2s, opacity .2s;
 
-      .wrapper {
-         //
-         transform: scale(1);
-         //2nd anim
-         //border: $strokeWidth solid rgba(255, 255, 255, .5);
-         padding: 5px;
-         //
-         img {
-            transform: translateY(0);
+         &.top {
+            bottom: 100%; left: 50%;
+            transform: translate(-50%, 100%);
+            padding-bottom: 5px;
+         }
+         &.right {
+            top: 50%; left: 100%;
+            padding-left: 10px;
+            transform: translate(-50%, -50%);
+         }
+         &.bottom {
+            top: 100%; left: 50%;
+            transform: translate(-50%, -100%);
+            padding-top: 5px;
+         }
+         &.left {
+            top: 50%; right: 100%;
+            padding-right: 10px;
+            transform: translate(50%, -50%);
          }
       }
+   }
 
-      .dot-content {
-         transform: translate(0, -50%);
-         opacity: 1;
-         transition: transform .2s .2s, opacity .2s .2s ease-out;
+   @include respond-to(medium, large) {
+      &:hover, &.selected {
+         cursor: pointer;
 
-         &.right, &.left { transform: translate(0, -50%) }
-         &.bottom, &.top { transform: translate(-50%, 0) }
+         .wrapper {
+            transform: scale(1);
+            img { transform: translateY(0) }
+         }
+
+         .dot-content {
+            transform: translate(0, -50%);
+            opacity: 1;
+            transition: transform .2s .2s, opacity .2s .2s ease-out;
+
+            &.right, &.left { transform: translate(0, -50%) }
+            &.bottom, &.top { transform: translate(-50%, 0) }
+         }
       }
    }
+
    &.selected .wrapper {
       border-width: $strokeWidth;
    }

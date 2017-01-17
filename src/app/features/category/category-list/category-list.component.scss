@@ -1,9 +1,7 @@
 @import '../../../_variables';
+@import '../../../_mixins';
 
 ul.categories {
-   position: fixed;
-   left: 15px;
-   top: $lc-logo-height + 10px;
    padding: 0;
    margin: 0;
 
@@ -14,4 +12,10 @@ ul.categories {
 
    font-family: 'Montserrat', sans-serif;
    color: rgba(255, 255, 255, 1);
+
+   @include respond-to(medium, large) {
+      position: fixed;
+      left: 15px;
+      top: $lc-logo-height + 10px;
+   }
 }
