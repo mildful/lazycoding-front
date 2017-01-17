@@ -1,9 +1,16 @@
 @import '../../_variables';
+@import '../../_mixins';
+
+.trigger {
+   @include respond-to(medium, large) { display: none }
+}
 
 nav {
    position: fixed;
    z-index: 5;
    display: none;
+
+   @include respond-to(medium, large) { display: block }
    
    &.visible {
       display: block; }

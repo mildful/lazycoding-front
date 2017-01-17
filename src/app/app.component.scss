@@ -41,6 +41,7 @@
       @include respond-to(medium, large) {
          overflow: hidden;
          transition: none;
+         transform: none;
       }
    }
 }
