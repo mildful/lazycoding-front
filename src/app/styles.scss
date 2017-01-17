@@ -62,7 +62,7 @@ h2 {
 
   font-size: 33px;
   line-height: 40px;
-  @include respond-to(small, medium, large) {
+  @include respond-to(medium, large) {
     font-size: 42px;
     line-height: 48px;
   }
@@ -110,7 +110,7 @@ p {
   margin-bottom: 26px;
 
   font-size: 16px;
-  @include respond-to(small, medium, large) {
+  @include respond-to(medium, large) {
     font-size: 18px;
   }
 }
@@ -128,7 +128,7 @@ blockquote {
   margin-bottom: 26px;
 
   font-size: 16px;
-  @include respond-to(small, medium, large) {
+  @include respond-to(medium, large) {
     font-size: 18px;
   }
 }
@@ -160,7 +160,7 @@ ul, ol {
   margin-bottom: 26px;
 
   font-size: 16px;
-  @include respond-to(small, medium, large) {
+  @include respond-to(medium, large) {
     font-size: 18px;
   }
 }

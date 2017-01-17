@@ -1,4 +1,5 @@
 @import '../../../_variables';
+@import '../../../_mixins';
 
 $timing: .2s;
 $h: 325px;
@@ -35,11 +36,21 @@ article {
          font-family: 'Montserrat', sans-serif;
          box-sizing: content-box;
          width: auto;
-         max-width: 0;
          position: relative;
          transition: max-width .3s, padding .3s;
          display: flex;
          align-items: center;
+
+         max-width: 0;
+         @include respond-to(small, medium, large) {
+            max-width: 0;
+            padding: 0;
+            cursor: pointer;
+            &:hover {
+               max-width: 100%;
+               padding: 0 20px 0 10px;
+            }
+         }
 
          .content {
             overflow: hidden;
@@ -58,11 +69,11 @@ article {
          &.susy { border-left-color: $susy; background: $susy }
          &.node { border-left-color: $node; background: $node }
 
-         &:hover{
+         /*&:hover {
             max-width: 100%;
             padding: 0 20px 0 10px;
             cursor: pointer;
-         }
+         }*/
       }
    }
 

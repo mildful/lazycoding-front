@@ -4,20 +4,35 @@
 $items-per-line: 3;
 $offset: 15px;
 $x-small-items-per-line: 1;
-$x-small-offset: 15px;
+$small-items-per-line: 2;
 
 post-card { display: inline-block }
 
 .posts {
+   display: flex;
+   flex-flow: row wrap;
+
+   //margin: 0 (-$offset * ($x-small-items-per-line - 1));
+   //@include respond-to(small) { margin: 0 (-$offset * ($small-items-per-line - 1)) }
+   //@include respond-to(medium, large) { margin: 0 (-$offset * ($items-per-line - 1)) }
+
    post-card {
-      display: block;
-      margin: 0 $x-small-offset $x-small-offset $x-small-offset;
-      @include respond-to(small, medium, large) {
-         display: inline-block;
-         width: ($container / $items-per-line) - $offset;
+      flex-basis: 100% / $x-small-items-per-line;
+      margin: 0 $offset $offset $offset;
+
+      @include respond-to(small) {
+         flex-basis: ($small-container - (($small-items-per-line - 1) * $offset)) / $small-items-per-line;
+         margin: 0 $offset $offset 0;
+         &:nth-child(#{$small-items-per-line}n) {
+            margin-right: 0;
+         }
+      }
+
+      @include respond-to(medium, large) {
+         //flex-basis: 100% / $items-per-line;
+         flex-basis: ($container - (($items-per-line - 1) * $offset)) / $items-per-line;
          margin: 0 $offset $offset 0;
          &:nth-child(#{$items-per-line}n) {
-            width: ($container / $items-per-line);
             margin-right: 0;
          }
       }

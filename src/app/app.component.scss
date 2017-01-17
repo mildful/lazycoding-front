@@ -20,50 +20,28 @@
 }
 
 .container {
-   position: fixed;
-   bottom: 0;
-   top: 50px;
-   overflow: scroll;
    width: 100%;
-   animation-name: containerTransformation-out;
-   animation-duration: .35s;
-   animation-fill-mode: none;
-   @include respond-to(small, medium, large) {
-      position: static;
-      overflow: hidden;
+   transform-origin: 50% 0 0;
+   transition: transform .25s ease-in-out;
+   @include respond-to(small) {
+      width: $small-container;
+      margin: 0 auto;
+   }
+   @include respond-to(medium, large) {
       width: $container;
       margin: 0 auto;
       padding-top: $offsetTop;
-      animation: none;
+      transition: none;
    }
 
    &.aside {
-      animation-name: containerTransformation-in;
-      animation-duration: .35s;
-      animation-fill-mode: forwards;
+      transform: translateX(76%);
       overflow: hidden;
-      @include respond-to(small, medium, large) {
+      @include respond-to(medium, large) {
          overflow: hidden;
-         animation: none;
+         transition: none;
       }
    }
-}
-
-@-webkit-keyframes containerTransformation-in {
-   0% { -webkit-transform: translateX(0) scale(1) }
-   20% { -webkit-transform: translateX(10%) scale(.9) }
-   80% { -webkit-transform: translateX(69%) scale(.9) }
-   95% { -webkit-transform: translateX(74%) scale(.9) }
-   98% { -webkit-transform: translateX(75%) scale(.9) }
-   100% { -webkit-transform: translateX(76%) scale(.9) }
-}
-@-webkit-keyframes containerTransformation-out {
-   0% { -webkit-transform: translateX(76%) scale(.9) }
-   20% { -webkit-transform: translateX(69%) scale(.89) }
-   80% { -webkit-transform: translateX(0%) scale(.96) }
-   95% { -webkit-transform: translateX(0%) scale(.98) }
-   98% { -webkit-transform: translateX(0%) scale(.99) }
-   100% { -webkit-transform: translateX(0%) scale(1) }
 }
 
 header {
@@ -73,8 +51,5 @@ header {
    font-family: 'Montserrat', sans-serif;
    font-size: .8em;
 
-   position: static;
-   @include respond-to(small, medium, large) {
-      position: fixed;
-   }
+   position: fixed;
 }
