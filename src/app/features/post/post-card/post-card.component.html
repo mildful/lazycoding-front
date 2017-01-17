@@ -1,7 +1,8 @@
 <article>
   <ul class="categories">
     <li *ngFor="let category of categories" class="{{category.slug}}" (click)="onCategoryClick(category.id)">
-      <span class="content">{{ category.name }}</span>
+      <img class="icon" [src]="category.custom_image" [alt]="category.name" />
+      <span class="text">{{ category.name }}</span>
     </li>
   </ul>
   <a [routerLink]="'/posts/' + post.slug">

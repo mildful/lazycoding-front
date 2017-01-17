@@ -5,6 +5,8 @@ $timing: .2s;
 $h: 325px;
 $hoverWidth: 15px;
 
+$fixed-categories-width: 55px;
+
 article {
    overflow: hidden;
    box-shadow: $bs-light;
@@ -31,18 +33,19 @@ article {
 
       li {
          flex: 1;
-         border-left: 3px solid grey;
          color: white;
          font-family: 'Montserrat', sans-serif;
          box-sizing: content-box;
-         width: auto;
          position: relative;
-         transition: max-width .3s, padding .3s;
          display: flex;
          align-items: center;
 
-         max-width: 0;
-         @include respond-to(small, medium, large) {
+         width: $fixed-categories-width;
+         @include respond-to(medium, large) {
+            border-left: 3px solid grey;
+            transition: max-width .3s, padding .3s;
+
+            width: auto;
             max-width: 0;
             padding: 0;
             cursor: pointer;
@@ -52,8 +55,21 @@ article {
             }
          }
 
-         .content {
-            overflow: hidden;
+         .icon {
+            display: block;
+            margin: auto;
+            @include respond-to(medium, large) {
+               display: none;
+               margin: 0;
+            }
+         }
+
+         .text {
+            display: none;
+            @include respond-to(medium, large) {
+               display: block;
+               overflow: hidden;
+            }
          }
 
          &:after {
@@ -80,10 +96,12 @@ article {
    a { text-decoration: none; }
 
    .details {
-      padding: 16px;
       height: $h;
       display: flex;
       flex-direction: column;
+
+      padding: 16px 16px 16px $fixed-categories-width+10px;
+      @include respond-to(medium, large) { padding: 16px }
 
       img {
          flex-grow: 1;
