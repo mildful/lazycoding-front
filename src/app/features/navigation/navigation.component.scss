@@ -9,7 +9,7 @@ $offset-menu: 20px;
       padding: 4px 0;
       height: $bar-height;
       background: black;
-      color: white;
+      color: $txt-light;
 
       @include respond-to(medium, large) {
          background: none;
@@ -55,7 +55,7 @@ $offset-menu: 20px;
                i { margin-right: 7px }
 
                @include respond-to(medium, large) {
-                  color: black;
+                  color: $txt-dark;
                   line-height: $lc-logo-height;
                }
             }

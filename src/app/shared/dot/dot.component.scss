@@ -42,7 +42,7 @@ $hRayon: 30px + ($strokeWidth * 2);
    }
 
    .dot-content {
-      color: white;
+      color: $txt-light;
       mix-blend-mode: difference;
       position: absolute;
       white-space: nowrap;

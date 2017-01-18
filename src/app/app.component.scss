@@ -1,6 +1,8 @@
 @import './_variables';
 @import './_mixins';
 
+$offset-top: 50px;
+
 .main-background {
    position: fixed;
    top: 0;

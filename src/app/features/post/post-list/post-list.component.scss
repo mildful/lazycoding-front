@@ -1,6 +1,8 @@
 @import '../../../_variables';
 @import '../../../_mixins';
 
+$small-offset-top: 16px;
+
 $items-per-line: 3;
 $offset: 15px;
 $x-small-items-per-line: 1;
@@ -14,7 +16,7 @@ post-card { display: inline-block }
 
    padding-top: $bar-height + $small-offset-top;
    @include respond-to(small) { padding-top: $bar-height + $small-offset-top }
-   @include respond-to(medium, large) { padding-top: $offset-top }
+   @include respond-to(medium, large) { padding-top: 0 }
 
    post-card {
       flex-basis: 100% / $x-small-items-per-line;
