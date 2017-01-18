@@ -12,8 +12,8 @@ post-card { display: inline-block }
    display: flex;
    flex-flow: row wrap;
 
-   padding-top: 16px;
-   @include respond-to(small) { padding-top: $small-offset-top }
+   padding-top: $bar-height + $small-offset-top;
+   @include respond-to(small) { padding-top: $bar-height + $small-offset-top }
    @include respond-to(medium, large) { padding-top: $offset-top }
 
    post-card {

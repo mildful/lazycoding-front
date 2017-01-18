@@ -42,6 +42,7 @@ anchor (to title), img not full size, code
    padding-bottom: 15px;
    font-family: $body-font;
 
+   margin: $bar-height 0 0 0;
    width: 100%;
    @include respond-to(small) {
       width: $small-container;

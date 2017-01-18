@@ -6,8 +6,9 @@ $strokeWidth: 3px;
 $hRayon: 30px + ($strokeWidth * 2);
 
 .dot {
-   //
    position: relative;
+   margin: 7px 0;
+   @include respond-to(medium, large) { margin: 0 }
 
    .wrapper {
       display: flex;

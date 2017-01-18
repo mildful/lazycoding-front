@@ -1,51 +1,134 @@
 @import '../../_variables';
 @import '../../_mixins';
 
-.trigger {
-   @include respond-to(medium, large) { display: none }
-}
+$offset-menu: 20px;
 
-nav {
-   position: fixed;
-   z-index: 5;
-   display: none;
+.navigation-wrapper {
+   nav.header-nav {
+      z-index: 5;
+      padding: 4px 0;
+      height: $bar-height;
+      background: black;
+      color: white;
 
-   @include respond-to(medium, large) { display: block }
-   
-   &.visible {
-      display: block; }
-   
-   ul.main {
-      display: flex;
-      list-style-type: none;
-      padding: 0;
-
-      margin: 20px 0;
-      flex-direction: column;
-      align-items: center;
       @include respond-to(medium, large) {
-         margin: 0;
-         flex-direction: row;
-         align-items: flex-start;
+         background: none;
+         margin: 10px 0 0 10px;
       }
 
-      li {
+      ul {
+         list-style-type: none;
          display: flex;
+         justify-content: space-between;
          align-items: center;
+         margin: 0;
+         padding: 0;
+         width: 100%;
+         height: 100%;
+
+         li {
+            flex: 1;
+            text-align: center;
+
+            &.burger .trigger {
+               width: 50px;
+
+               div {
+                  width: 26px;
+                  height: 0;
+                  background: none;
+                  border: 2px solid white;
+                  border-radius: 30px;
+                  transform: translateX(-50%);
+                  transition: transform .3s ease-in-out;
+
+                  &:nth-child(2) { margin: 5px 0 }
+               }
+            }
+
+            &.menu { height: 100% }
+
+            &.search {
+               text-align: right;
+               font-size: 1.3em;
+               line-height: $bar-height - 4*2px;
+               i { margin-right: 7px }
+
+               @include respond-to(medium, large) {
+                  color: black;
+                  line-height: $lc-logo-height;
+               }
+            }
+
+            img { height: 100% }
+
+            // Responsive is here :-)
+            @include respond-to(medium, large) {
+               &.burger { display: none }
+               &.menu { text-align: left }
+               .lc-logo { height: $lc-logo-height }
+            }
+         }
       }
    }
 
-   .lc-logo {
-      img {
+   nav.main-nav {
+      display: none;
+      @include respond-to(medium, large) {
+         display: flex;
+         margin-top: 10px;
+         align-items: center;
+         position: absolute;
+         top: 0;
+         left: $lc-logo-height + 28px;
          height: $lc-logo-height;
       }
+
+      ul {
+         display: flex;
+         list-style-type: none;
+         padding: 0;
+         align-items: flex-start;
+
+         margin: 20px 0 20px $offset-menu;
+         flex-direction: column;
+         @include respond-to(medium, large) {
+            margin: 0;
+            flex-direction: row;
+         }
+
+         li {
+            display: flex;
+            align-items: center;
+         }
+      }
+
+      .dot-header {
+         background: black;
+
+         &.donation {
+            background: gold;
+         }
+      }
    }
 
-   .dot-header {
-      background: black;
-
-      &.donation {
-         background: gold;
+   category-list {
+      display: none;
+      margin: 20px 0 20px $offset-menu;
+      @include respond-to(medium, large) {
+         display: block;
+         margin: 0;
       }
+   }
+
+   &.visible {
+      nav.header-nav {
+         ul li.burger .trigger div {
+            transform: translateX(10px);
+         }
+      }
+      
+      nav.main-nav,
+      category-list { display: block }
    }
 }
