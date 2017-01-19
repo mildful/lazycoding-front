@@ -27,7 +27,7 @@ import { ANIMATIONS } from './overlay.animations';
 export class OverlayComponent implements OnDestroy {
 
   closeIndex: number;
-  closeTexts: string[] = [ "j'ai vu !", "fermer", "fuyez, pauvres fous", "ok." ];
+  closeTexts: string[] = [ "j'ai vu !", "fermer", "fuyez, pauvres fous", "ok.", "cool :-)" ];
   config: OverlayConfig;
   src: string;
   private destroyed$: Subject<any> = new Subject<any>();
