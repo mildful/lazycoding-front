@@ -15,6 +15,7 @@ import { SharedModule } from './shared';
 import { CategoryModule } from './features/category';
 import { TagModule } from './features/tag';
 import { NavigationModule } from './features/navigation';
+import { ShareModule } from './features/share';
 
 const STORE_DEV_TOOLS_IMPORTS = [];
 if (ENV === 'development' && !AOT) {
@@ -47,5 +48,6 @@ export const APP_IMPORTS = [
   CategoryModule,
   TagModule,
   NavigationModule,
+  ShareModule,
 ];
 

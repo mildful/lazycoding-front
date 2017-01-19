@@ -1,7 +1,6 @@
 @import '../../../_variables';
 @import '../../../_mixins';
 
-$post-width: 820px;
 $content-width: 665px;
 $delta: ($post-width - $content-width) / 2;
 
@@ -239,6 +238,7 @@ anchor (to title), img not full size, code
 lazy-disqus {
    display: block;
    width: 100%;
+   margin-bottom: $phone-share-height;
    @include respond-to(small) {
       width: $small-container;
       margin: 0 auto 20px auto;

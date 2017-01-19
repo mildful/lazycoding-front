@@ -10,6 +10,7 @@
     <router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
   </main>
 </section>
+<lazy-share [isVisible]="isShareVisible$ | async"></lazy-share>
 <lazy-overlay></lazy-overlay>
 
 <my-store-devtools *ngIf="showMonitor"></my-store-devtools>

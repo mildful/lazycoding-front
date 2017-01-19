@@ -1,0 +1,17 @@
+<ul  *ngIf="isVisible" class="share-buttons" >
+  <li class="linkedin">
+    <a (click)="linkedin()" title="Share on Linkedin"><i class="lazy-font lazicon-linkedin"></i></a>
+  </li>
+  <li class="google">
+    <a (click)="google()" title="Share on Google+"><i class="lazy-font lazicon-google-plus"></i></a>
+  </li>
+  <li class="facebook">
+    <a (click)="facebook()" title="Share on Facebook"><i class="lazy-font lazicon-facebook"></i></a>
+  </li>
+  <li class="twitter">
+    <a (click)="twitter()" title="Share on Twitter"><i class="lazy-font lazicon-twitter"></i></a>
+  </li>
+  <li class="url">
+    <a title="Copy URL"><i class="lazy-font lazicon-link"></i></a>
+  </li>
+</ul>

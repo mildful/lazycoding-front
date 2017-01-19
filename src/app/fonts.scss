@@ -1,24 +1,24 @@
 @font-face {
-   font-family: 'lc-font';
-   src: url('../assets/fonts/lc-font.eot');
-   src: url('../assets/fonts/lc-font.eot?#iefix') format('embedded-opentype'),
-   url('../assets/fonts/lc-font.woff') format('woff'),
-   url('../assets/fonts/lc-font.ttf') format('truetype'),
-   url('../assets/fonts/lc-font.svg#lc-font') format('svg');
+   font-family: 'lazy-font';
+   src: url('../assets/fonts/lazy-font.eot');
+   src: url('../assets/fonts/lazy-font.eot?#iefix') format('embedded-opentype'),
+   url('../assets/fonts/lazy-font.woff') format('woff'),
+   url('../assets/fonts/lazy-font.ttf') format('truetype'),
+   url('../assets/fonts/lazy-font.svg#lazy-font') format('svg');
    font-weight: normal;
    font-style: normal;
 }
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
    @font-face {
-      font-family: 'lc-font';
-      src: url('../assets/fonts/lc-font.svg#lc-font') format('svg');
+      font-family: 'lazy-font';
+      src: url('../assets/fonts/lazy-font.svg#lazy-font') format('svg');
    }
 }
 
-.lc-font:before{
+.lazy-font:before{
    display: inline-block;
-   font-family: 'lc-font';
+   font-family: 'lazy-font';
    font-style: normal;
    font-weight: normal;
    font-variant: normal;
@@ -31,10 +31,9 @@
    font-smoothing: antialiased;
 }
 
-.lc-font-mail:before { content: '\f100'; }
-.lc-font-donation:before { content: '\f101'; }
-.lc-font-search:before { content: '\f102'; }
-
-$lc-font-mail: '\f100';
-$lc-font-donation: '\f101';
-$lc-font-search: '\f102';
+.lazicon-google-plus:before{content:'\0041';}
+.lazicon-facebook:before{content:'\0042';}
+.lazicon-twitter:before{content:'\0043';}
+.lazicon-link:before{content:'\0044';}
+.lazicon-search:before{content:'\0045';}
+.lazicon-linkedin:before{content:'\0046';}

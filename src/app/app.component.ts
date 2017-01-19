@@ -44,6 +44,8 @@ export class AppComponent implements OnInit, OnDestroy {
   bgImageAnimationState: string = 'hidden';
   imageData: any;
   isNavigationOpen$: Observable<boolean>;
+  isShareVisible$: Observable<boolean>;
+  routeIsPost$: Observable<boolean>;
 
   private destroyed$: Subject<void> = new Subject<void>();
 
@@ -78,6 +80,18 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadBackground();
     this.isNavigationOpen$ = this.store.select((s: AppState) => s.navigation.isOpen).takeUntil(this.destroyed$);
+    this.initShareBar();
+  }
+
+  private initShareBar(): void {
+    this.routeIsPost$ = this.store.select((s: AppState) => s.router.path)
+      .takeUntil(this.destroyed$)
+      .map((path: string) => path.split('/').length > 2 && path.split('/')[1] === 'posts');
+    this.isShareVisible$ = Observable.combineLatest(
+      this.routeIsPost$,
+      this.isNavigationOpen$,
+      ((routeIsPost: boolean, navOpen: boolean) => routeIsPost && !navOpen)
+    );
   }
 
   private load(): void {
