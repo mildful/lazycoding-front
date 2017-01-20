@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 
 import { API_BASE_URL } from '../../services/constants';
 import { RequestBase } from '../../services/request-base';
@@ -26,7 +25,7 @@ export class PostService extends RequestBase {
     return this.http.get(url)
       .map(RequestBase.toJson)
       .map((posts: FullPost[]) => posts[0])
-      .catch(this.handleError);
+      .catch(RequestBase.handleError);
   }
 
   getPosts(filters: LitePostFilters): Observable<LitePostResponse> {
@@ -37,7 +36,7 @@ export class PostService extends RequestBase {
         posts,
         complete: posts.length < filters.remaining
       }; } )
-      .catch(this.handleError);
+      .catch(RequestBase.handleError);
   }
 
   private buildUrl(url: string, filters: LitePostFilters): string {
@@ -60,15 +59,6 @@ export class PostService extends RequestBase {
       }
     }
     return url;
-  }
-
-  private handleError(res: Response): ErrorObservable<string> {
-    let msg: string;
-    let error: any = res.json();
-    if (error instanceof ProgressEvent) {
-      msg = 'Unable to connect server.';
-    }
-    return Observable.throw(msg);
   }
 
   private pagerize(url: string): string {

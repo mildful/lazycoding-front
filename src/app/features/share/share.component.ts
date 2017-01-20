@@ -1,3 +1,4 @@
+/* tslint:disable: max-line-length */
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { WindowRef } from '../../shared';

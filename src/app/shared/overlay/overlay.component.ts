@@ -1,3 +1,4 @@
+/* tslint:disable: quotemark */
 import { Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';

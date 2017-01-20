@@ -16,6 +16,7 @@ export class CategoryService extends RequestBase {
 
   getAllCategories(): Observable<Category[]> {
     return this.http.get(`${API_BASE_URL}/categories?exclude=1`)
-      .map(RequestBase.toJson);
+      .map(RequestBase.toJson)
+      .catch(RequestBase.handleError);
   }
 }

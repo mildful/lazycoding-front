@@ -85,30 +85,22 @@ export class PostFullComponent implements OnInit, OnDestroy, AfterViewChecked {
           this.postprocessed = false;
           this.post = post;
           this.postDate = new Date(post.date).toLocaleDateString('fr-FR', {
-            weekday: "long", year: "numeric", month: "long", day: "numeric" });
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
           this.html = this.updateToPrismClasses(this.post.content.rendered);
           this.getCategories();
           this.getTags();
         }
-      })
+      });
   }
 
   onCircleEnd(): void {
     this.circleAnimationEnd = true;
   }
 
-  private findTagsPos(str: string, tagName: string): number[] {
-    let indices: number[] = [];
-    for(let pos = str.indexOf(tagName); pos !== -1; pos = str.indexOf(tagName, pos + 1)) {
-      indices.push(pos);
-    }
-    return indices;
-  }
-
   private updateToPrismClasses(html: string): string {
     const langs: string[] = ['css', 'javascript', 'html'];
     langs.forEach((lang: string) => {
-      html = html.replace(new RegExp(`class="${lang}"`, 'g'), `class="language-${lang}"`);
+      html = html.replace(new RegExp(`class='${lang}'`, 'g'), `class='language-${lang}'`);
     });
     return html;
   }

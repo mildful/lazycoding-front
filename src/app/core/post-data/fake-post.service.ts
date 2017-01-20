@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import 'rxjs/add/operator/delay';
+
+import { RequestBase } from '../../services/request-base';
 
 import {
   LitePostFilters,
@@ -18,8 +18,8 @@ const FULL_POSTS: FullPost[] = require('../../../assets/mock-data/full-posts.jso
 export class FakePostService {
 
   getFullPostBySlug(slug: string): Observable<FullPost> {
-    const post: FullPost = FULL_POSTS.find((post: FullPost) => post.slug.includes(slug));
-    return Observable.of(post).delay(200);
+    const post: FullPost = FULL_POSTS.find((p: FullPost) => p.slug.includes(slug));
+    return Observable.of(post).delay(200).catch(RequestBase.handleError);
   }
 
   getPosts(filters: LitePostFilters): Observable<LitePostResponse> {
@@ -30,7 +30,7 @@ export class FakePostService {
     } else {
       complete = true;
     }
-    return Observable.of({ posts, complete }).delay(200);
+    return Observable.of({ posts, complete }).delay(200).catch(RequestBase.handleError);
   }
 
   private filterPost(post: LitePost, filters: LitePostFilters): boolean {
@@ -42,14 +42,5 @@ export class FakePostService {
       return false;
     }
     return true;
-  }
-
-  private handleError(res: Response): ErrorObservable<string> {
-    let msg: string;
-    let error: any = res.json();
-    if (error instanceof ProgressEvent) {
-      msg = 'Unable to connect server.';
-    }
-    return Observable.throw(msg);
   }
 }

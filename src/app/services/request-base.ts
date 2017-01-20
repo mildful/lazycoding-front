@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class RequestBase {
@@ -13,6 +15,15 @@ export class RequestBase {
     headers: this.noPreFlightHeaders,
     withCredentials: true
   });
+
+  static handleError(res: Response): ErrorObservable<string> {
+    let msg: string;
+    let error: any = res.json();
+    if (error instanceof ProgressEvent) {
+      msg = 'Unable to connect server.';
+    }
+    return Observable.throw(msg);
+  }
 
   static toJson(res: Response): any {
     return res.json();

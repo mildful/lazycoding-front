@@ -109,7 +109,7 @@ export class AppComponent implements OnInit, OnDestroy {
       .take(1)
       .retry(3)
       .subscribe((res: Response) => {
-        const blob: Blob = new Blob([res.blob()], { type: res.headers.get("Content-Type") });
+        const blob: Blob = new Blob([res.blob()], { type: res.headers.get('Content-Type') });
         this.imageData = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob));
         this.bgImageAnimationState = 'show';
       });

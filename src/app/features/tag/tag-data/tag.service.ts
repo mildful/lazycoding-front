@@ -16,6 +16,7 @@ export class TagService extends RequestBase {
 
   getAllTags(): Observable<Tag[]> {
     return this.http.get(`${API_BASE_URL}/tags`)
-      .map(RequestBase.toJson);
+      .map(RequestBase.toJson)
+      .catch(RequestBase.handleError);
   }
 }
