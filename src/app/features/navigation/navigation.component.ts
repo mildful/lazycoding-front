@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { AppState } from '../../reducers';
 import { NavigationActions } from '../../core';
 import { WindowRef } from '../../shared';
+import { MOBILE } from '../../services/constants';
 
 @Component({
   selector: 'lazy-navigation',
@@ -28,7 +29,9 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.showNav$ = this.store.select((s: AppState) => s.navigation.isOpen).takeUntil(this.destroyed$);
-    this.enableAutoHide();
+    if (MOBILE) {
+      this.enableAutoHide();
+    }
   }
 
   ngOnDestroy(): void {
@@ -43,17 +46,23 @@ export class NavigationComponent implements OnInit, OnDestroy {
     const headerHeight: number = this.navWrapper.nativeElement.offsetHeight;
     let previousScroll: number = 0;
 
-    Observable.fromEvent(this.windowRef.nativeWindow, 'scroll')
-      .throttleTime(100)
-      .takeUntil(this.destroyed$)
-      .subscribe(() => {
+    let scroll$: Observable<Event> = Observable.fromEvent(this.windowRef.nativeWindow, 'scroll')
+      .throttleTime(100);
+
+    // can minimize ?
+    Observable.combineLatest(this.showNav$, scroll$, (showNav: boolean, e: Event) => {
+        if (showNav) return false;
+        let res: boolean = false;
         const currentScroll: number = this.windowRef.nativeWindow.pageYOffset || document.documentElement.scrollTop;
         if (currentScroll > headerHeight) {
-          this.hideHeaderNav = currentScroll > previousScroll;
+          res = currentScroll > previousScroll;
         } else {
-            this.hideHeaderNav = false;
+          res = false;
         }
         previousScroll = currentScroll;
-      });
+        return res;
+      })
+      .takeUntil(this.destroyed$)
+      .subscribe((canMinimize: boolean) => this.hideHeaderNav = canMinimize);
   }
 }
