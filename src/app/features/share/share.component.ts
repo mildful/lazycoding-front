@@ -1,12 +1,9 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
-import { ANIMATIONS } from './share.animations';
-
 @Component({
   selector: 'lazy-share',
   templateUrl: 'share.component.html',
   styleUrls: [ './share.component.css' ],
-  //animations: ANIMATIONS,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ShareComponent {
@@ -28,8 +25,11 @@ export class ShareComponent {
     window.open(`https://www.facebook.com/sharer/sharer.php?u=${this.uri}&t=${this.title}`);
   }
 
+  facebookLike(): void {
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${this.uri}&t=${this.title}`);
+  }
+
   google(): void {
-    // window.open('https://plus.google.com/share?url=' + encodeURIComponent(document.URL)); return false;
     window.open(`https://plus.google.com/share?url=${this.uri}&title=${this.title}`);
   }
 
@@ -38,7 +38,6 @@ export class ShareComponent {
   }
 
   twitter(): void {
-    //window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(document.title) + ':%20'  + encodeURIComponent(document.URL));
     window.open(`https://twitter.com/intent/tweet?source=${this.uri}&text=${this.title}:${this.uri}&via=mildful`);
   }
 
