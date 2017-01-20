@@ -10,10 +10,15 @@ $offset-menu: 20px;
       height: $bar-height;
       background: black;
       color: $txt-light;
+      transition: transform .2s ease-in-out;
+      &.mobile-hidden { transform: translateY(-100%) }
 
       @include respond-to(medium, large) {
          background: none;
          margin: 10px 0 0 10px;
+         transform: none;
+         transition: none;
+         &.mobile-hidden { transform: none }
       }
 
       ul {

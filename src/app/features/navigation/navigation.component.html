@@ -1,5 +1,5 @@
-<div class="navigation-wrapper" [class.visible]="showNav$ | async">
-  <nav class="header-nav">
+<div #navWrapper class="navigation-wrapper" [class.visible]="showNav$ | async">
+  <nav class="header-nav" [class.mobile-hidden]="hideHeaderNav">
     <ul>
       <li class="burger">
         <div class="trigger" (click)="toggle()">

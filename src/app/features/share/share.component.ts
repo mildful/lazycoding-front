@@ -1,5 +1,7 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
+import { WindowRef } from '../../shared';
+
 @Component({
   selector: 'lazy-share',
   templateUrl: 'share.component.html',
@@ -15,7 +17,7 @@ export class ShareComponent {
   private title: string;
   private uri: string;
 
-  constructor() {
+  constructor(private windowRef: WindowRef) {
     this.origin = encodeURIComponent(document.location.origin);
     this.title = encodeURIComponent(document.title);
     this.uri = encodeURIComponent(document.URL);
@@ -40,15 +42,15 @@ export class ShareComponent {
   }
 
   private facebook(): void {
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${this.uri}&t=${this.title}`);
+    this.windowRef.nativeWindow.open(`https://www.facebook.com/sharer/sharer.php?u=${this.uri}&t=${this.title}`);
   }
 
   private facebookLike(): void {
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${this.uri}&t=${this.title}`);
+    this.windowRef.nativeWindow.open(`https://www.facebook.com/sharer/sharer.php?u=${this.uri}&t=${this.title}`);
   }
 
   private google(): void {
-    window.open(`https://plus.google.com/share?url=${this.uri}&title=${this.title}`);
+    this.windowRef.nativeWindow.open(`https://plus.google.com/share?url=${this.uri}&title=${this.title}`);
   }
 
   private link(): void {
@@ -56,7 +58,7 @@ export class ShareComponent {
   }
 
   private linkedin(): void {
-    window.open(`http://www.linkedin.com/shareArticle?mini=true&url=${this.uri}&title=${this.title}&summary=${this.description}&source=${this.origin}`);
+    this.windowRef.nativeWindow.open(`http://www.linkedin.com/shareArticle?mini=true&url=${this.uri}&title=${this.title}&summary=${this.description}&source=${this.origin}`);
   }
 
   private shareAPI(): void {
@@ -71,6 +73,6 @@ export class ShareComponent {
   }
 
   private twitter(): void {
-    window.open(`https://twitter.com/intent/tweet?source=${this.uri}&text=${this.title}:${this.uri}&via=mildful`);
+    this.windowRef.nativeWindow.open(`https://twitter.com/intent/tweet?source=${this.uri}&text=${this.title}:${this.uri}&via=mildful`);
   }
 }

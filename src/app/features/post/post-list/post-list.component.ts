@@ -10,7 +10,7 @@ import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
 import Timer = NodeJS.Timer;
 
-import { WindowRef } from '../window-ref';
+import { WindowRef } from '../../../shared';
 import { AppState } from '../../../reducers';
 import { LitePost, LitePostActions } from '../../../core';
 
