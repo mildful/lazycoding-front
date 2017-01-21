@@ -10,6 +10,17 @@ $small-items-per-line: 2;
 
 post-card { display: inline-block }
 
+.list-title {
+   display: none;
+   @include respond-to(medium, large) {
+      text-align: center;
+      display: block;
+      mix-blend-mode: difference;
+      white-space: nowrap;
+      color: white;
+   }
+}
+
 .posts {
    display: flex;
    flex-flow: row wrap;

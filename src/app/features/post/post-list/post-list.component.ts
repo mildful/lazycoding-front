@@ -13,6 +13,8 @@ import Timer = NodeJS.Timer;
 import { WindowRef } from '../../../shared';
 import { AppState } from '../../../reducers';
 import { LitePost, LitePostActions } from '../../../core';
+import { Category } from '../../category';
+import { MOBILE } from '../../../services/constants';
 
 @Component({
   selector: 'post-list',
@@ -32,6 +34,7 @@ import { LitePost, LitePostActions } from '../../../core';
     ])
   ],
   template: `
+    <h2 *ngIf="!mobile" class="list-title">{{ title }}</h2>
     <section class="posts">
       <post-card *ngFor="let post of posts$ | async" 
         [post]="post" 
@@ -42,6 +45,7 @@ import { LitePost, LitePostActions } from '../../../core';
 })
 export class PostListComponent implements OnDestroy {
 
+  mobile: boolean = MOBILE;
   /**
    * Used to pause other observables.
    * @type {Subject<boolean>}
@@ -63,6 +67,11 @@ export class PostListComponent implements OnDestroy {
    * @type {Observable<Event>}
    */
   scroll$: Observable<Event>;
+  /**
+   * Post list title dynamically updated.
+   * @type {string}
+   */
+  title: string;
   /**
    * Reference to a DOM node located at the end of the posts list.
    * It triggers the load of more posts.
@@ -110,6 +119,25 @@ export class PostListComponent implements OnDestroy {
     this.store.select((state: AppState) => state.post.lite.complete)
       .take(1)
       .subscribe((complete: boolean) => complete ? null : this.load());
+
+    // title management
+    let categoryTitles: {id: number, title: string}[] = [];
+    this.store.select((state: AppState) => state.category.categories)
+      .take(1)
+      .subscribe((cs: Category[]) => categoryTitles = cs.map((c: Category) => { return { id: c.id, title: c.name } }));
+    this.store.select((state: AppState) => state.post.lite.filters.categories)
+      .takeUntil(this.destroyed$)
+      .subscribe((cids: number[]) => {
+        if (cids.length) {
+          this.title = cids.length > 1 ? 'Categories: ' : 'Categorie: ';
+          categoryTitles.forEach((c: {id: number, title: string}) => {
+            if (cids.indexOf(c.id) > -1) {
+              this.title += c.title + ', ';
+            }
+          });
+          this.title = this.title.slice(0, -2);
+        } else this.title = 'Tous les articles';
+      });
   }
 
   ngOnDestroy(): void {
