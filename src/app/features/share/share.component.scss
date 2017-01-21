@@ -32,6 +32,8 @@ ul.share-buttons {
       li {
          transform: translateX(-100%);
          transition: transform .3s ease-in-out;
+         &:first-child { border-top-right-radius: 4px }
+         &:last-child { border-bottom-right-radius: 4px }
       }
 
       &.visible {
@@ -54,17 +56,20 @@ ul.share-buttons {
       //&.linkedin { background: #0077B5 }
       //&.url { background: #9c9c9c }
 
-      a { color: inherit }
+      a { color: inherit; transition: none }
       i:before { line-height: $phone-share-height }
 
       @include respond-to(medium, large) {
          cursor: pointer;
          margin: 0;
          padding: 0;
+         font-size: 15px;
+         transition: font-size .2s ease;
          
          &:hover {
             color: $txt-dark;
             background: white;
+            font-size: 23px;
          }
       }
    }
