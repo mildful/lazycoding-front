@@ -4,7 +4,6 @@ import { Action } from '@ngrx/store';
 
 import { ServerError } from '../../../services/server-error.model';
 
-import { LitePostResponse } from './lite-post-response.model';
 import { LitePostFilters } from './lite-post-filters.model';
 import { LitePost } from './lite-post.model';
 
@@ -13,39 +12,10 @@ export const LITE_PREFIX: string = 'Lite Post';
 @Injectable()
 export class LitePostActions {
 
-  static LOAD_POSTS = `[${LITE_PREFIX}] Load Posts`;
-  loadPosts(): Action {
-    return {
-      type: LitePostActions.LOAD_POSTS
-    };
-  }
-
-  static LOAD_POSTS_FROM_CACHE = `[${LITE_PREFIX}] Load Posts From Cache`;
-  loadPostsFromCache(): Action {
-    return {
-      type: LitePostActions.LOAD_POSTS_FROM_CACHE
-    };
-  }
-
-  static LOAD_POSTS_SUCCESS = `[${LITE_PREFIX}] Load Posts Success`;
-  loadPostsSuccess(): Action {
-    return {
-      type: LitePostActions.LOAD_POSTS_SUCCESS
-    };
-  }
-
-  static LOAD_POSTS_FAIL = `[${LITE_PREFIX}] Load Posts Fail`;
-  loadPostsFail(): Action {
-    return {
-      type: LitePostActions.LOAD_POSTS_FAIL
-    };
-  }
-
   static REQ_POSTS = `[${LITE_PREFIX}] Request Posts`;
-  reqPosts(filters: LitePostFilters = {}): Action {
+  reqPosts(): Action {
     return {
-      type: LitePostActions.REQ_POSTS,
-      payload: filters
+      type: LitePostActions.REQ_POSTS
     };
   }
 
@@ -58,17 +28,9 @@ export class LitePostActions {
   }
 
   static REQ_POSTS_SUCCESS = `[${LITE_PREFIX}] Request Posts Success`;
-  reqPostsSuccess(response: LitePostResponse): Action {
+  reqPostsSuccess(posts: LitePost[]): Action {
     return {
       type: LitePostActions.REQ_POSTS_SUCCESS,
-      payload: response
-    };
-  }
-
-  static CACHE_POSTS = `[${LITE_PREFIX}] Cache Posts`;
-  cachePosts(posts: LitePost[]): Action {
-    return {
-      type: LitePostActions.CACHE_POSTS,
       payload: posts
     };
   }

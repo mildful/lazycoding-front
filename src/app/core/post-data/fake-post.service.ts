@@ -4,11 +4,7 @@ import 'rxjs/add/operator/delay';
 
 import { RequestBase } from '../../services/request-base';
 
-import {
-  LitePostFilters,
-  LitePostResponse,
-  LitePost
-} from './lite-post';
+import { LitePost, LitePostFilters } from './lite-post';
 import { FullPost } from './full-post';
 
 const LITE_POSTS: LitePost[] = require('../../../assets/mock-data/lite-posts.json');
@@ -22,21 +18,16 @@ export class FakePostService {
     return Observable.of(post).delay(200).catch(RequestBase.handleError);
   }
 
-  getPosts(filters: LitePostFilters): Observable<LitePostResponse> {
+  getPosts(filters: LitePostFilters): Observable<LitePost[]> {
+    console.log(filters)
     let posts: LitePost[] = LITE_POSTS.filter((post: LitePost) => this.filterPost(post, filters));
-    let complete: boolean = false;
-    if (posts.length > filters.remaining) {
-      posts = posts.slice(0, filters.remaining);
-    } else {
-      complete = true;
+    if (posts.length > filters.limit) {
+      posts = posts.slice(0, filters.limit);
     }
-    return Observable.of({ posts, complete }).delay(200).catch(RequestBase.handleError);
+    return Observable.of(posts).delay(200).catch(RequestBase.handleError);
   }
 
   private filterPost(post: LitePost, filters: LitePostFilters): boolean {
-    if (filters.before && new Date(post.date) >= new Date(filters.before)) {
-      return false;
-    }
     if (filters.categories && filters.categories.length
       && !post.categories.some((cid: number) => filters.categories.includes(cid))) {
       return false;

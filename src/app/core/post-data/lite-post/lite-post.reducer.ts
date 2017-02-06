@@ -5,111 +5,25 @@ import { ServerError } from '../../../services/server-error.model';
 
 import { LitePostActions } from './lite-post.actions';
 import { LitePost } from './lite-post.model';
-import { LitePostFilters } from './lite-post-filters.model';
 import { PAGE_SIZE } from './lite-post.constant';
+import { LitePostFilters } from './lite-post-filters.model';
 
 export interface LitePostState {
-  cache: LitePost[];
   posts: LitePost[];
-  loading: boolean;
   requesting: boolean;
   error: ServerError;
-  complete: boolean;
   filters: LitePostFilters;
 }
 
 export const initialState: LitePostState = {
-  cache: [],
   posts: [],
-  loading: false,
   requesting: false,
   error: null,
-  complete: false,
-  filters: { remaining: 0, categories: [] },
+  filters: { limit: PAGE_SIZE, categories: [], page: 1, complete: false },
 };
 
 export function litePostReducer(state = initialState, action: Action): LitePostState {
   switch (action.type) {
-
-    /**
-     * payload: undefined
-     */
-    case LitePostActions.LOAD_POSTS: {
-      const lastDate: string = state.posts.length
-        ? state.posts[state.posts.length - 1].date
-        : new Date().toISOString();
-      return Object.assign({}, state, {
-        loading: true,
-        filters: Object.assign({}, state.filters, {
-          before: lastDate,
-          remaining: PAGE_SIZE
-        })
-      });
-    }
-
-    /**
-     * payload: undefined
-     */
-    case LitePostActions.LOAD_POSTS_SUCCESS:
-    case LitePostActions.LOAD_POSTS_FAIL: {
-      return Object.assign({}, state, {
-        loading: false
-      });
-    }
-
-    /**
-     * payload: undefined
-     */
-    case LitePostActions.LOAD_POSTS_FROM_CACHE: {
-      let remaining: number = state.filters.remaining;
-      let lastDate: string = state.filters.before;
-      let newPosts: LitePost[] = [];
-
-      if (state.cache.length) {
-        // date
-        if (remaining && state.filters.before) {
-          // todo: dichotomy
-          const beforeDate: Date = new Date(state.filters.before);
-          newPosts = state.cache.filter((post: LitePost) => new Date(post.date) < beforeDate);
-          // if we don't need to filter newPost again, we make sure to have 12 max new posts.
-          if (!state.filters.categories.length) {
-            // take only 12 (remaining) firsts posts
-            if (newPosts.length >= remaining) {
-              newPosts = newPosts.slice(0, remaining);
-              remaining = 0;
-            } else {
-              remaining -= newPosts.length;
-            }
-          }
-        }
-        // categories
-        if (remaining && state.filters.categories && state.filters.categories.length) {
-          let filteredPosts: LitePost[] = [];
-          for (let post of newPosts) {
-            if (remaining === 0) break;
-            const valid: boolean = post.categories.some((cid: number) => state.filters.categories.includes(cid));
-            if (valid) {
-              remaining--;
-              filteredPosts.push(post);
-            }
-          }
-          newPosts = filteredPosts;
-        }
-
-        // if some posts have been loaded from cache, update the date of the last post in filters
-        // but only if a date is already set. If lastDate is null, the we don't care about this filter.
-        if (newPosts.length) {
-          lastDate = new Date(newPosts[newPosts.length - 1].date).toISOString();
-        }
-      }
-      return Object.assign({}, state, {
-        filters: Object.assign({}, state.filters, {
-          remaining: remaining,
-          before: lastDate
-        }),
-        posts: [ ...state.posts, ...newPosts ]
-      });
-    }
 
     /**
      * payload: PostFilters
@@ -132,27 +46,18 @@ export function litePostReducer(state = initialState, action: Action): LitePostS
     }
 
     /**
-     * payload: { posts: Post[], complete: boolean }: PostResponse
+     * payload: LitePost[]
      */
     case LitePostActions.REQ_POSTS_SUCCESS: {
+      const complete: boolean = action.payload.length < state.filters.limit;
       return Object.assign({}, state, {
-        posts: [ ...state.posts, ...action.payload.posts ],
+        posts: [ ...state.posts, ...action.payload ],
         requesting: false,
         error: null,
-        complete: action.payload.complete,
-        filters: Object.assign({}, state.filters, { remaining: 0 })
-      });
-    }
-
-    /**
-     * payload: Post[]
-     */
-    case LitePostActions.CACHE_POSTS: {
-      return Object.assign({}, state, {
-        cache: [
-          ...state.cache,
-          ...action.payload
-        ]
+        filters: Object.assign({}, state.filters, {
+          page: state.filters.page + 1,
+          complete
+        })
       });
     }
 
@@ -167,10 +72,13 @@ export function litePostReducer(state = initialState, action: Action): LitePostS
         categories.push(action.payload);
       }
       return Object.assign({}, state, {
-        // We reset complete because since we have change our filters, there may be more posts to request
-        // on the server.
-        complete: false,
-        filters: Object.assign({}, state.filters, { categories }),
+        filters: Object.assign({}, state.filters, {
+          categories,
+          // We reset complete because since we have change our filters, there may be more posts to request
+          // on the server.
+          complete: false,
+          page: 1
+        }),
         posts: []
       });
     }

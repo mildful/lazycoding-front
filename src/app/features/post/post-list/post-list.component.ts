@@ -61,7 +61,7 @@ export class PostListComponent implements OnDestroy {
    * Track if posts are loading.
    * @type {Observable<boolean>}
    */
-  loading$: Observable<boolean>;
+  requesting$: Observable<boolean>;
   /**
    * Listen to scroll, used to lazyload posts.
    * @type {Observable<Event>}
@@ -94,18 +94,18 @@ export class PostListComponent implements OnDestroy {
     this.posts$ = this.store.select((state: AppState) => state.post.lite.posts)
       .do(this.animatePosts.bind(this));
     // listen scroll
-    this.loading$ = this.store.select((state: AppState) => state.post.lite.loading);
+    this.requesting$ = this.store.select((state: AppState) => state.post.lite.requesting);
     this.scroll$ = Observable.fromEvent(this.windowRef.nativeWindow, 'scroll')
       .throttleTime(300);
     // concat
     const loader$: Observable<[boolean, Event]> =
-      Observable.combineLatest(this.loading$, this.scroll$, this.canLoad.bind(this));
+      Observable.combineLatest(this.requesting$, this.scroll$, this.canLoad.bind(this));
     // delay
     this.pauser$.switchMap((paused: boolean) => paused ? Observable.never() : loader$)
       .takeUntil(this.destroyed$)
       .subscribe((canLoad: [boolean, Event]) => canLoad ? this.load() : null);
     // used to stop requesting if all posts are loaded (complete)
-    this.store.select((state: AppState) => state.post.lite.complete)
+    this.store.select((state: AppState) => state.post.lite.filters.complete)
       // we want to apply a special behavior for the initial load (see before :))
       .skip(1)
       .takeUntil(this.destroyed$)
@@ -116,7 +116,7 @@ export class PostListComponent implements OnDestroy {
         this.pauser$.next(complete);
       });
     // first load
-    this.store.select((state: AppState) => state.post.lite.complete)
+    this.store.select((state: AppState) => state.post.lite.filters.complete)
       .take(1)
       .subscribe((complete: boolean) => complete ? null : this.load());
 
@@ -188,7 +188,7 @@ export class PostListComponent implements OnDestroy {
     // the result of the first request.
     this.pause(600);
     // dispatch action
-    this.store.dispatch(this.litePostActions.loadPosts());
+    this.store.dispatch(this.litePostActions.reqPosts());
   }
 
   /**

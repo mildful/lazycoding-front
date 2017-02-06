@@ -7,7 +7,6 @@ import { RequestBase } from '../../services/request-base';
 
 import {
   LitePostFilters,
-  LitePostResponse,
   LitePost,
   PAGE_SIZE
 } from './lite-post';
@@ -28,14 +27,10 @@ export class PostService extends RequestBase {
       .catch(RequestBase.handleError);
   }
 
-  getPosts(filters: LitePostFilters): Observable<LitePostResponse> {
-    const url: string = this.buildUrl(`${API_BASE_URL}/posts?per_page=${filters.remaining}`, filters);
+  getPosts(filters: LitePostFilters): Observable<LitePost[]> {
+    const url: string = this.buildUrl(`${API_BASE_URL}/posts?per_page=${filters.limit}`, filters);
     return this.http.get(url)
       .map(RequestBase.toJson)
-      .map((posts: LitePost[]) => { return {
-        posts,
-        complete: posts.length < filters.remaining
-      }; } )
       .catch(RequestBase.handleError);
   }
 
@@ -43,10 +38,8 @@ export class PostService extends RequestBase {
     // return url if no filters
     if (!filters || !Object.keys(filters).length) return url;
 
-    if (!url.includes('per_page')) url = this.pagerize(url);
-
     for (let name in filters) {
-      if (!name.includes('remaining') && filters.hasOwnProperty(name)) {
+      if (!name.includes('limit') && filters.hasOwnProperty(name)) {
         const value: any = filters[name];
         if (value) {
           const isArray: boolean = Array.isArray(value);
@@ -59,11 +52,5 @@ export class PostService extends RequestBase {
       }
     }
     return url;
-  }
-
-  private pagerize(url: string): string {
-    return (url.includes('?'))
-      ? url + `&per_page=${PAGE_SIZE}`
-      : url + `?per_page=${PAGE_SIZE}`;
   }
 }
