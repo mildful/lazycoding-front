@@ -8,7 +8,6 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
-import Timer = NodeJS.Timer;
 
 import { WindowRef } from '../../../shared';
 import { AppState } from '../../../reducers';
@@ -83,7 +82,7 @@ export class PostListComponent implements OnDestroy {
    * @type {Subject<any>}
    */
   private destroyed$: Subject<any> = new Subject<any>();
-  private timeout: Timer = null;
+  private timeout: any = null;
 
   constructor(
     private store: Store<AppState>,
