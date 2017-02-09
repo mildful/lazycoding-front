@@ -4,12 +4,14 @@ import { Action } from '@ngrx/store';
 import {
   LitePostState,
   liteInitialState,
-  LITE_PREFIX, litePostReducer
+  LITE_PREFIX,
+  litePostReducer
 } from './lite-post';
 import {
   FullPostState,
   fullInitialState,
-  FULL_PREFIX, fullPostReducer
+  FULL_PREFIX,
+  fullPostReducer
 } from './full-post';
 
 export interface PostState {

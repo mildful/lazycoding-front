@@ -4,7 +4,7 @@ import 'rxjs/add/operator/delay';
 
 import { RequestBase } from '../../services/request-base';
 
-import { LitePost, LitePostFilters } from './lite-post';
+import { LitePost, LitePostFilters, PAGE_SIZE } from './lite-post';
 import { FullPost } from './full-post';
 
 const LITE_POSTS: LitePost[] = require('../../../assets/mock-data/lite-posts.json');
@@ -19,10 +19,9 @@ export class FakePostService {
   }
 
   getPosts(filters: LitePostFilters): Observable<LitePost[]> {
-    console.log(filters)
     let posts: LitePost[] = LITE_POSTS.filter((post: LitePost) => this.filterPost(post, filters));
-    if (posts.length > filters.limit) {
-      posts = posts.slice(0, filters.limit);
+    if (posts.length > PAGE_SIZE) {
+      posts = posts.slice(0, PAGE_SIZE);
     }
     return Observable.of(posts).delay(200).catch(RequestBase.handleError);
   }

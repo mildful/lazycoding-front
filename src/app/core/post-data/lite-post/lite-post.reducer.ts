@@ -19,7 +19,7 @@ export const initialState: LitePostState = {
   posts: [],
   requesting: false,
   error: null,
-  filters: { limit: PAGE_SIZE, categories: [], page: 1, complete: false },
+  filters: { categories: [], page: 1, complete: false },
 };
 
 export function litePostReducer(state = initialState, action: Action): LitePostState {
@@ -49,7 +49,7 @@ export function litePostReducer(state = initialState, action: Action): LitePostS
      * payload: LitePost[]
      */
     case LitePostActions.REQ_POSTS_SUCCESS: {
-      const complete: boolean = action.payload.length < state.filters.limit;
+      const complete: boolean = action.payload.length < PAGE_SIZE;
       return Object.assign({}, state, {
         posts: [ ...state.posts, ...action.payload ],
         requesting: false,

@@ -9,8 +9,8 @@ import { CategoryActions } from './category.actions';
 @NgModule({
   imports: [ EffectsModule.run(CategoryEffects) ],
   providers: [
-    CategoryService,
-    // { provide: CategoryService, useClass: FakeCategoryService },
+    // CategoryService,
+    { provide: CategoryService, useClass: FakeCategoryService },
     CategoryActions
   ]
 })

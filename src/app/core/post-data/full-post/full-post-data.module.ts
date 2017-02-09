@@ -11,8 +11,8 @@ import { FullPostActions } from './full-post.actions';
   imports: [ EffectsModule.run(FullPostEffects) ],
   providers: [
     FullPostActions,
-    PostService
-    // { provide: PostService, useClass: FakePostService }
+    // PostService
+    { provide: PostService, useClass: FakePostService }
   ]
 })
 export class FullPostDataModule { }
