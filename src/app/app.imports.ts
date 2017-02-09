@@ -1,5 +1,6 @@
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, PreloadAllModules } from '@angular/router';
+import { IdlePreload, IdlePreloadModule } from '@angularclass/idle-preload';
 
 import { RouterStoreModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
@@ -38,6 +39,7 @@ if (ENV === 'development' && !AOT) {
 
 export const APP_IMPORTS = [
   ReactiveFormsModule,
+  IdlePreloadModule.forRoot(), // forRoot ensures the providers are only created once
   RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   RouterStoreModule.connectRouter(),
   StoreModule.provideStore(rootReducer),

@@ -1,6 +1,6 @@
 /* tslint:disable: variable-name max-line-length */
 /**
- * Try to not make your own edits to this file, use the constants folder instead. 
+ * Try to not make your own edits to this file, use the constants folder instead.
  * If more constants should be added file an issue or create PR.
  */
 import 'ts-helpers';
@@ -24,6 +24,7 @@ const {
 
 const CompressionPlugin = require('compression-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { CheckerPlugin } = require('awesome-typescript-loader');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
@@ -39,6 +40,7 @@ const DLL = EVENT.includes('dll');
 const E2E = EVENT.includes('e2e');
 const HMR = hasProcessFlag('hot');
 const PROD = EVENT.includes('prod');
+const WATCH = hasProcessFlag('watch');
 const UNIVERSAL = EVENT.includes('universal');
 
 let port: number;
@@ -123,9 +125,9 @@ const commonConfig = function webpackConfig(): WebpackConfig {
         test: /\.ts$/,
         loaders: [
           '@angularclass/hmr-loader',
-          'awesome-typescript-loader',
+          'awesome-typescript-loader?{configFileName: "tsconfig.webpack.json"}',
           'angular2-template-loader',
-          'angular2-router-loader?loader=system&genDir=src/compiled/src/app&aot=' + AOT
+          'angular-router-loader?loader=system&genDir=compiled&aot=' + AOT
         ],
         exclude: [/\.(spec|e2e|d)\.ts$/]
       },
@@ -142,6 +144,7 @@ const commonConfig = function webpackConfig(): WebpackConfig {
       root('./src')
     ),
     new ProgressPlugin(),
+    new CheckerPlugin(),
     new DefinePlugin(CONSTANTS),
     new NamedModulesPlugin(),
     ...MY_CLIENT_PLUGINS
@@ -194,7 +197,7 @@ const commonConfig = function webpackConfig(): WebpackConfig {
       }),
       ...MY_CLIENT_PRODUCTION_PLUGINS,
     );
-    if (!E2E && !UNIVERSAL) {
+    if (!E2E && !WATCH && !UNIVERSAL) {
       config.plugins.push(
         new BundleAnalyzerPlugin({analyzerPort: 5000})
       );
@@ -273,11 +276,12 @@ const clientConfig = function webpackConfig(): WebpackConfig {
   }
 
   config.devServer = {
-    contentBase: AOT ? './src/compiled' : './src',
+    contentBase: AOT ? './compiled' : './src',
     port: CONSTANTS.PORT,
     historyApiFallback: {
       disableDotRule: true,
     },
+    stats: 'minimal',
     host: '0.0.0.0',
     watchOptions: DEV_SERVER_WATCH_OPTIONS
   };
@@ -287,6 +291,10 @@ const clientConfig = function webpackConfig(): WebpackConfig {
       proxy: DEV_SERVER_PROXY_CONFIG
     });
   }
+
+  config.performance = {
+    hints: false
+  };
 
   config.node = {
     global: true,
