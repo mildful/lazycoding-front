@@ -13,13 +13,15 @@ export interface LitePostState {
   requesting: boolean;
   error: ServerError;
   filters: LitePostFilters;
+  complete: boolean;
 }
 
 export const initialState: LitePostState = {
   posts: [],
   requesting: false,
   error: null,
-  filters: { categories: [], page: 1, complete: false },
+  filters: { categories: [], page: 1 },
+  complete: false,
 };
 
 export function litePostReducer(state = initialState, action: Action): LitePostState {
@@ -30,8 +32,7 @@ export function litePostReducer(state = initialState, action: Action): LitePostS
      */
     case LitePostActions.REQ_POSTS: {
       return Object.assign({}, state, {
-        requesting: true,
-        error: null
+        requesting: true
       });
     }
 
@@ -55,9 +56,9 @@ export function litePostReducer(state = initialState, action: Action): LitePostS
         requesting: false,
         error: null,
         filters: Object.assign({}, state.filters, {
-          page: state.filters.page + 1,
-          complete
-        })
+          page: state.filters.page + 1
+        }),
+        complete
       });
     }
 
@@ -72,11 +73,11 @@ export function litePostReducer(state = initialState, action: Action): LitePostS
         categories.push(action.payload);
       }
       return Object.assign({}, state, {
+        // We reset complete because since we have change our filters, there may be more posts to request
+        // on the server.
+        complete: false,
         filters: Object.assign({}, state.filters, {
           categories,
-          // We reset complete because since we have change our filters, there may be more posts to request
-          // on the server.
-          complete: false,
           page: 1
         }),
         posts: []

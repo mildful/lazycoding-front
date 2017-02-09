@@ -26,7 +26,7 @@ export class LitePostEffects {
   @Effect() reqPosts$ = this.actions$
     .ofType(LitePostActions.REQ_POSTS)
     .map(() => getState(this.store).post.lite.filters)
-    .switchMap((filters: LitePostFilters) => this.postService.getPosts(filters)
+    .switchMap((filters: LitePostFilters) => this.postService.getLitePosts(filters)
       .mergeMap((posts: LitePost[]) => Observable.of(
         this.litePostActions.reqPostsSuccess(posts)
       ))

@@ -18,7 +18,7 @@ export class FakePostService {
     return Observable.of(post).delay(200).catch(RequestBase.handleError);
   }
 
-  getPosts(filters: LitePostFilters): Observable<LitePost[]> {
+  getLitePosts(filters: LitePostFilters): Observable<LitePost[]> {
     let posts: LitePost[] = LITE_POSTS.filter((post: LitePost) => this.filterPost(post, filters));
     if (posts.length > PAGE_SIZE) {
       posts = posts.slice(0, PAGE_SIZE);

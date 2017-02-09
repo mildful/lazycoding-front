@@ -13,8 +13,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 import { AppState } from './reducers/index';
-import { CategoryActions } from './features/category';
-import { TagActions } from './features/tag';
+import { CategoryActions, TagActions } from './core';
 import { MOBILE } from './services/constants';
 
 @Component({

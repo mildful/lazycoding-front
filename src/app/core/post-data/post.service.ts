@@ -27,7 +27,7 @@ export class PostService extends RequestBase {
       .catch(RequestBase.handleError);
   }
 
-  getPosts(filters: LitePostFilters): Observable<LitePost[]> {
+  getLitePosts(filters: LitePostFilters): Observable<LitePost[]> {
     const url: string = this.buildUrl(`${API_BASE_URL}/posts?per_page=${PAGE_SIZE}`, filters);
     return this.http.get(url)
       .map(RequestBase.toJson)

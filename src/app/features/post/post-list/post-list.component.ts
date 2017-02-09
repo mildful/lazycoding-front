@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
 import {
   trigger,
   state,
@@ -9,11 +9,13 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
 
-import { WindowRef } from '../../../shared';
 import { AppState } from '../../../reducers';
-import { LitePost, LitePostActions } from '../../../core';
-import { Category } from '../../category';
+import { getState } from '../../../reducers/store-utils';
 import { MOBILE } from '../../../services/constants';
+import {
+  LitePost, LitePostActions,
+  Category
+} from '../../../core';
 
 @Component({
   selector: 'post-list',
@@ -34,38 +36,26 @@ import { MOBILE } from '../../../services/constants';
   ],
   template: `
     <h2 *ngIf="!mobile" class="list-title">{{ title }}</h2>
-    <section class="posts">
+    <section #root class="posts">
       <post-card *ngFor="let post of posts$ | async" 
         [post]="post" 
-        [@appear]="postsAnimationsState.get(post.id)"></post-card>
+        [@appear]="postsAnimationsState.get(post.id)">
+      </post-card>
       <div #trigger class="load-trigger"></div>
     </section>
   `
 })
-export class PostListComponent implements OnDestroy {
+export class PostListComponent implements OnInit, OnDestroy {
 
   mobile: boolean = MOBILE;
-  /**
-   * Used to pause other observables.
-   * @type {Subject<boolean>}
-   */
-  pauser$: Subject<boolean> = new Subject<boolean>();
   /**
    * Posts to display in the list.
    * @type {Observable<Post[]>}
    */
   posts$: Observable<LitePost[]>;
   postsAnimationsState: Map<number, string> = new Map<number, string>();
-  /**
-   * Track if posts are loading.
-   * @type {Observable<boolean>}
-   */
-  requesting$: Observable<boolean>;
-  /**
-   * Listen to scroll, used to lazyload posts.
-   * @type {Observable<Event>}
-   */
-  scroll$: Observable<Event>;
+  @ViewChild('root') root: ElementRef;
+  load$: Subject<void> = new Subject<void>();
   /**
    * Post list title dynamically updated.
    * @type {string}
@@ -82,42 +72,27 @@ export class PostListComponent implements OnDestroy {
    * @type {Subject<any>}
    */
   private destroyed$: Subject<any> = new Subject<any>();
-  private timeout: any = null;
 
   constructor(
     private store: Store<AppState>,
-    private litePostActions: LitePostActions,
-    private windowRef: WindowRef
-  ) {
-    // subscribe to post
-    this.posts$ = this.store.select((state: AppState) => state.post.lite.posts)
+    private litePostActions: LitePostActions
+  ) { }
+
+  ngOnInit(): void {
+    // trigger management
+    const io = new IntersectionObserver(() => this.load$.next(), {
+      root: this.root.nativeElement
+    });
+    io.observe(this.trigger.nativeElement);
+    this.load$
+      .takeUntil(this.destroyed$)
+      .filter(() => getState(this.store).post.lite.complete === false)
+      .subscribe( () => this.store.dispatch(this.litePostActions.reqPosts()) );
+
+    // observe posts
+    this.posts$ = this.store.select((s: AppState) => s.post.lite.posts)
+      .filter((posts: LitePost[]) => posts.length > 0)
       .do(this.animatePosts.bind(this));
-    // listen scroll
-    this.requesting$ = this.store.select((state: AppState) => state.post.lite.requesting);
-    this.scroll$ = Observable.fromEvent(this.windowRef.nativeWindow, 'scroll')
-      .throttleTime(300);
-    // concat
-    const loader$: Observable<[boolean, Event]> =
-      Observable.combineLatest(this.requesting$, this.scroll$, this.canLoad.bind(this));
-    // delay
-    this.pauser$.switchMap((paused: boolean) => paused ? Observable.never() : loader$)
-      .takeUntil(this.destroyed$)
-      .subscribe((canLoad: [boolean, Event]) => canLoad ? this.load() : null);
-    // used to stop requesting if all posts are loaded (complete)
-    this.store.select((state: AppState) => state.post.lite.filters.complete)
-      // we want to apply a special behavior for the initial load (see before :))
-      .skip(1)
-      .takeUntil(this.destroyed$)
-      .subscribe((complete: boolean) => {
-        if (this.timeout) {
-          this.clearPause();
-        }
-        this.pauser$.next(complete);
-      });
-    // first load
-    this.store.select((state: AppState) => state.post.lite.filters.complete)
-      .take(1)
-      .subscribe((complete: boolean) => complete ? null : this.load());
 
     // title management
     let categoryTitles: {id: number, title: string}[] = [];
@@ -144,8 +119,6 @@ export class PostListComponent implements OnDestroy {
   }
 
   private animatePosts(posts: LitePost[]): void {
-    // we need this because on editing filter category, posts can be blank
-    if (!posts.length) return;
     // delete removed posts from animation management
     let ids: number[] = posts.map((post: LitePost) => post.id);
     const it: IterableIterator<number> = this.postsAnimationsState.keys();
@@ -163,42 +136,5 @@ export class PostListComponent implements OnDestroy {
         setTimeout(() => this.postsAnimationsState.set(post.id, 'in'), i * 200);
       }
     });
-  }
-
-  private canLoad(loading: boolean, scroll: Event): boolean {
-    if (loading) return false;
-    const offset: number = 300;
-    const rect: ClientRect = this.trigger.nativeElement.getBoundingClientRect();
-    return (
-      rect.top >= 0 &&
-      rect.left >= 0 &&
-      rect.bottom <= (this.windowRef.nativeWindow.innerHeight || document.documentElement.clientHeight) + offset &&
-      rect.right <= (this.windowRef.nativeWindow.innerWidth || document.documentElement.clientWidth)
-    );
-  }
-
-  private clearPause(): void {
-    clearTimeout(this.timeout);
-    this.timeout = null;
-  }
-
-  private load(): void {
-    // disable loading for 600ms. Used to prevent to load the same data twice while Angular is still displaying
-    // the result of the first request.
-    this.pause(600);
-    // dispatch action
-    this.store.dispatch(this.litePostActions.reqPosts());
-  }
-
-  /**
-   * Prevent for loading data during an amount of time.
-   * @param duration
-   */
-  private pause(duration: number): void {
-    this.pauser$.next(true);
-    this.timeout = setTimeout(() => {
-      this.pauser$.next(false);
-      this.timeout = null;
-    }, duration);
   }
 }

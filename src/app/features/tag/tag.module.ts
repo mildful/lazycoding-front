@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { TagDataModule } from './tag-data/tag-data.module';
+import { TagDataModule } from '../../core/tag-data/tag-data.module';
 
 // I should create some tag components
 

@@ -4,12 +4,14 @@ import { storeFreeze } from 'ngrx-store-freeze';
 import { storeLogger } from 'ngrx-store-logger';
 import { routerReducer, RouterState } from '@ngrx/router-store';
 
-import { navigationReducer, NavigationState } from '../core/navigation-data';
-import { postReducer, PostState } from '../core/post-data';
+import {
+  navigationReducer, NavigationState,
+  postReducer, PostState,
+  categoryReducer, CategoryState,
+  tagReducer, TagState,
+} from '../core';
 // import { litePostReducer, LitePostState } from '../features/post';
-import { categoryReducer, CategoryState } from '../features/category';
 import { overlayReducer, OverlayState } from '../shared/overlay';
-import { tagReducer, TagState } from '../features/tag';
 
 export interface AppState {
   router: RouterState;

@@ -1,30 +1,30 @@
 /* tslint:disable: no-switch-case-fall-through */
 import { Action } from '@ngrx/store';
 
-import { ServerError } from '../../../services/server-error.model';
+import { ServerError } from '../../services/server-error.model';
 
-import { CategoryActions } from './category.actions';
-import { Category } from './category.model';
+import { TagActions } from './tag.actions';
+import { Tag } from './tag.model';
 
-export interface CategoryState {
-  categories: Category[];
+export interface TagState {
+  tags: Tag[];
   requesting: boolean;
   error: ServerError;
 }
 
-const initialState: CategoryState = {
-  categories: [],
+const initialState: TagState = {
+  tags: [],
   requesting: false,
   error: null,
 };
 
-export function categoryReducer(state = initialState, action: Action): CategoryState {
+export function tagReducer(state = initialState, action: Action): TagState {
   switch (action.type) {
 
     /**
      * payload: undefined
      */
-    case CategoryActions.REQ_ALL_CATEGORIES: {
+    case TagActions.REQ_ALL_TAGS: {
       return Object.assign({}, state, {
         requesting: true
       });
@@ -33,7 +33,7 @@ export function categoryReducer(state = initialState, action: Action): CategoryS
     /**
      * payload: ServerError
      */
-    case CategoryActions.REQ_CATEGORIES_FAIL: {
+    case TagActions.REQ_TAGS_FAIL: {
       return Object.assign({}, state, {
         requesting: false,
         error: action.payload
@@ -41,12 +41,12 @@ export function categoryReducer(state = initialState, action: Action): CategoryS
     }
 
     /**
-     * payload: Category[]
+     * payload: Tag[]
      */
-    case CategoryActions.REQ_CATEGORIES_SUCCESS: {
+    case TagActions.REQ_TAGS_SUCCESS: {
       return Object.assign({}, state, {
         requesting: false,
-        categories: action.payload,
+        tags: action.payload,
         error: null
       });
     }

@@ -4,8 +4,8 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
-import { AppState } from '../../../reducers';
-import { ServerError } from '../../../services/server-error.model';
+import { AppState } from '../../reducers';
+import { ServerError } from '../../services/server-error.model';
 
 import { Tag } from './tag.model';
 import { TagActions } from './tag.actions';

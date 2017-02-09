@@ -5,9 +5,10 @@ import { Subject } from 'rxjs/Subject';
 
 import { AppState } from '../../../reducers';
 import { OverlayActions, OverlayConfig } from '../../../shared/overlay';
-import { Category } from '../../category';
-import { Tag } from '../../tag';
-import { FullPost, FullPostActions } from '../../../core';
+import {
+  FullPost, FullPostActions,
+  Category, Tag
+} from '../../../core';
 
 import { ANIMATIONS } from './post-full.animations';
 

@@ -2,9 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { AppState } from '../../../reducers';
-import { Category } from '../../category';
 
-import { LitePost, LitePostActions } from '../../../core';
+import {
+  LitePost, LitePostActions,
+  Category
+} from '../../../core';
 
 @Component({
   selector: 'post-card',

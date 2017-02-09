@@ -5,8 +5,7 @@ import { Subject } from 'rxjs/Subject';
 
 import { AppState } from '../../../reducers/index';
 import { LitePostActions } from '../../../core/post-data/lite-post';
-
-import { Category } from '../category-data';
+import { Category } from '../../../core';
 
 @Component({
   selector: 'category-list',
