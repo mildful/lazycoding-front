@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { OverlayComponent } from './overlay.component';
-import { OverlayActions } from './overlay.actions';
+import { OverlayActions } from '../../core/overlay-data/overlay.actions';
 
 @NgModule({
   imports: [ CommonModule ],

@@ -6,8 +6,8 @@ import { Subject } from 'rxjs/Subject';
 import { AppState } from '../../reducers';
 
 import { OverlayConfig } from './overlay-config.model';
-import { OverlayActions } from './overlay.actions';
-import { OverlayState } from './overlay.reducer';
+import { OverlayActions } from '../../core/overlay-data/overlay.actions';
+import { OverlayState } from '../../core/overlay-data/overlay.reducer';
 import { ANIMATIONS } from './overlay.animations';
 
 @Component({

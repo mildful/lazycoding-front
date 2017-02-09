@@ -9,9 +9,9 @@ import {
   postReducer, PostState,
   categoryReducer, CategoryState,
   tagReducer, TagState,
+  overlayReducer, OverlayState,
 } from '../core';
 // import { litePostReducer, LitePostState } from '../features/post';
-import { overlayReducer, OverlayState } from '../shared/overlay';
 
 export interface AppState {
   router: RouterState;

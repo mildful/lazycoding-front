@@ -2,7 +2,7 @@
 import { Action } from '@ngrx/store';
 
 import { OverlayActions } from './overlay.actions';
-import { OverlayConfig } from './overlay-config.model';
+import { OverlayConfig } from '../../shared/overlay/overlay-config.model';
 
 export interface OverlayState {
   src: any;

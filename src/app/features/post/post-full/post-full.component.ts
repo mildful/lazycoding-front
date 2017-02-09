@@ -4,10 +4,11 @@ import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
 
 import { AppState } from '../../../reducers';
-import { OverlayActions, OverlayConfig } from '../../../shared/overlay';
+import { OverlayConfig } from '../../../shared/overlay';
 import {
   FullPost, FullPostActions,
-  Category, Tag
+  Category, Tag,
+  OverlayActions
 } from '../../../core';
 
 import { ANIMATIONS } from './post-full.animations';
