@@ -11,8 +11,8 @@ import { LitePostActions } from './lite-post.actions';
   imports: [ EffectsModule.run(LitePostEffects) ],
   providers: [
     LitePostActions,
-    // PostService
-    { provide: PostService, useClass: FakePostService }
+    PostService
+    // { provide: PostService, useClass: FakePostService }
   ]
 })
 export class LitePostDataModule { }
