@@ -4,29 +4,24 @@ import 'rxjs/add/operator/delay';
 
 import { RequestBase } from '../../services/request-base';
 
-import { LitePost, LitePostFilters, PAGE_SIZE } from './lite-post';
-import { FullPost } from './full-post';
+import { Post } from './post.model';
+import { PostFilters } from './post-filters.model';
+import { PAGE_SIZE } from './post.constants';
 
-const LITE_POSTS: LitePost[] = require('../../../assets/mock-data/lite-posts.json');
-const FULL_POSTS: FullPost[] = require('../../../assets/mock-data/full-posts.json');
+const POSTS: Post[] = require('../../../assets/mock-data/posts.json');
 
 @Injectable()
 export class FakePostService {
 
-  getFullPostBySlug(slug: string): Observable<FullPost> {
-    const post: FullPost = FULL_POSTS.find((p: FullPost) => p.slug.includes(slug));
-    return Observable.of(post).delay(200).catch(RequestBase.handleError);
-  }
-
-  getLitePosts(filters: LitePostFilters): Observable<LitePost[]> {
-    let posts: LitePost[] = LITE_POSTS.filter((post: LitePost) => this.filterPost(post, filters));
+  getPostsByFilters(filters: PostFilters): Observable<Post[]> {
+    let posts: Post[] = POSTS.filter((post: Post) => this.filterPost(post, filters));
     if (posts.length > PAGE_SIZE) {
       posts = posts.slice(0, PAGE_SIZE);
     }
     return Observable.of(posts).delay(200).catch(RequestBase.handleError);
   }
 
-  private filterPost(post: LitePost, filters: LitePostFilters): boolean {
+  private filterPost(post: Post, filters: PostFilters): boolean {
     if (filters.categories && filters.categories.length
       && !post.categories.some((cid: number) => filters.categories.includes(cid))) {
       return false;

@@ -5,12 +5,9 @@ import { Observable } from 'rxjs/Observable';
 import { API_BASE_URL } from '../../services/constants';
 import { RequestBase } from '../../services/request-base';
 
-import {
-  LitePostFilters,
-  LitePost,
-  PAGE_SIZE
-} from './lite-post';
-import { FullPost } from './full-post';
+import { PostFilters } from './post-filters.model';
+import { Post } from './post.model';
+import { PAGE_SIZE } from './post.constants';
 
 @Injectable()
 export class PostService extends RequestBase {
@@ -19,22 +16,14 @@ export class PostService extends RequestBase {
     super(http);
   }
 
-  getFullPostBySlug(slug: string): Observable<FullPost> {
-    const url: string = `${API_BASE_URL}/posts?per_page=1&slug=${slug}`;
-    return this.http.get(url)
-      .map(RequestBase.toJson)
-      .map((posts: FullPost[]) => posts[0])
-      .catch(RequestBase.handleError);
-  }
-
-  getLitePosts(filters: LitePostFilters): Observable<LitePost[]> {
+  getPostsByFilters(filters: PostFilters): Observable<Post[]> {
     const url: string = this.buildUrl(`${API_BASE_URL}/posts?per_page=${PAGE_SIZE}`, filters);
     return this.http.get(url)
       .map(RequestBase.toJson)
       .catch(RequestBase.handleError);
   }
 
-  private buildUrl(url: string, filters: LitePostFilters): string {
+  private buildUrl(url: string, filters: PostFilters): string {
     // return url if no filters
     if (!filters || !Object.keys(filters).length) return url;
 

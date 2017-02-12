@@ -6,7 +6,7 @@ import { Subject } from 'rxjs/Subject';
 import { AppState } from '../../../reducers';
 import { OverlayConfig } from '../../../shared/overlay';
 import {
-  FullPost, FullPostActions,
+  Post, PostActions,
   Category, Tag,
   OverlayActions
 } from '../../../core';
@@ -25,7 +25,7 @@ export class PostFullComponent implements OnInit, OnDestroy, AfterViewChecked {
   circleAnimationEnd: boolean = false;
   postDate: string;
   html: string = '';
-  post: FullPost;
+  post: Post;
   tags: Tag[];
   private destroyed$: Subject<any> = new Subject<any>();
   private postprocessed: boolean = false;
@@ -33,7 +33,7 @@ export class PostFullComponent implements OnInit, OnDestroy, AfterViewChecked {
   constructor(
     private route: ActivatedRoute,
     private store: Store<AppState>,
-    private fullPostActions: FullPostActions,
+    private postActions: PostActions,
     private overlayActions: OverlayActions,
     private elementRef: ElementRef
   ) { }
@@ -78,11 +78,11 @@ export class PostFullComponent implements OnInit, OnDestroy, AfterViewChecked {
   ngOnInit(): void {
     this.route.params
       .takeUntil(this.destroyed$)
-      .subscribe((params: Params) => this.store.dispatch(this.fullPostActions.loadPostBySlug(params['slug'])));
+      .subscribe((params: Params) => this.store.dispatch(this.postActions.setReadingPost(params['slug'])));
 
-    this.store.select((state: AppState) => state.post.full.currentPost)
+    this.store.select((state: AppState) => state.post.readingPost)
       .takeUntil(this.destroyed$)
-      .subscribe((post: FullPost) => {
+      .subscribe((post: Post) => {
         if (post) {
           this.postprocessed = false;
           this.post = post;

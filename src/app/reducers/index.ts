@@ -11,12 +11,10 @@ import {
   tagReducer, TagState,
   overlayReducer, OverlayState,
 } from '../core';
-// import { litePostReducer, LitePostState } from '../features/post';
 
 export interface AppState {
   router: RouterState;
   post: PostState;
-  // litePost: LitePostState;
   category: CategoryState;
   tag: TagState;
   overlay: OverlayState;
@@ -26,7 +24,6 @@ export interface AppState {
 export const reducers = {
   router: routerReducer,
   post: postReducer,
-  // litePost: litePostReducer,
   category: categoryReducer,
   tag: tagReducer,
   overlay: overlayReducer,

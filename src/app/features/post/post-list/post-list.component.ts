@@ -13,7 +13,7 @@ import { AppState } from '../../../reducers';
 import { getState } from '../../../reducers/store-utils';
 import { MOBILE } from '../../../services/constants';
 import {
-  LitePost, LitePostActions,
+  Post, PostActions,
   Category
 } from '../../../core';
 
@@ -52,7 +52,7 @@ export class PostListComponent implements OnInit, OnDestroy {
    * Posts to display in the list.
    * @type {Observable<Post[]>}
    */
-  posts$: Observable<LitePost[]>;
+  posts$: Observable<Post[]>;
   postsAnimationsState: Map<number, string> = new Map<number, string>();
   @ViewChild('root') root: ElementRef;
   load$: Subject<void> = new Subject<void>();
@@ -75,7 +75,7 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store<AppState>,
-    private litePostActions: LitePostActions
+    private postActions: PostActions
   ) { }
 
   ngOnInit(): void {
@@ -86,12 +86,12 @@ export class PostListComponent implements OnInit, OnDestroy {
     io.observe(this.trigger.nativeElement);
     this.load$
       .takeUntil(this.destroyed$)
-      .filter(() => getState(this.store).post.lite.complete === false)
-      .subscribe( () => this.store.dispatch(this.litePostActions.reqPosts()) );
+      .filter(() => getState(this.store).post.complete === false)
+      .subscribe( () => this.store.dispatch(this.postActions.reqPosts()) );
 
     // observe posts
-    this.posts$ = this.store.select((s: AppState) => s.post.lite.posts)
-      .filter((posts: LitePost[]) => posts.length > 0)
+    this.posts$ = this.store.select((s: AppState) => s.post.posts)
+      .filter((posts: Post[]) => posts.length > 0)
       .do(this.animatePosts.bind(this));
 
     // title management
@@ -99,7 +99,7 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.store.select((state: AppState) => state.category.categories)
       .take(1)
       .subscribe((cs: Category[]) => categoryTitles = cs.map((c: Category) => { return { id: c.id, title: c.name } }));
-    this.store.select((state: AppState) => state.post.lite.filters.categories)
+    this.store.select((state: AppState) => state.post.filters.categories)
       .takeUntil(this.destroyed$)
       .subscribe((cids: number[]) => {
         if (cids.length) {
@@ -118,9 +118,9 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.destroyed$.next();
   }
 
-  private animatePosts(posts: LitePost[]): void {
+  private animatePosts(posts: Post[]): void {
     // delete removed posts from animation management
-    let ids: number[] = posts.map((post: LitePost) => post.id);
+    let ids: number[] = posts.map((post: Post) => post.id);
     const it: IterableIterator<number> = this.postsAnimationsState.keys();
     let mapId: number = it.next().value;
     while (mapId) {
@@ -129,7 +129,7 @@ export class PostListComponent implements OnInit, OnDestroy {
     }
     // trigger animations
     let i: number = 0;
-    posts.forEach((post: LitePost) => {
+    posts.forEach((post: Post) => {
       if (!this.postsAnimationsState.has(post.id)) {
         i++;
         this.postsAnimationsState.set(post.id, 'out');

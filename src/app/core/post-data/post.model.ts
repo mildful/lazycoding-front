@@ -1,6 +1,14 @@
-import { LitePost } from '../lite-post';
-
-export interface FullPost extends LitePost {
+export interface Post {
+  readonly 'id': number;
+  readonly 'date': string;
+  readonly 'slug': string;
+  readonly 'custom_cover': string;
+  readonly 'title': {
+    'rendered': string;
+  };
+  readonly 'author': number;
+  readonly 'categories': number[];
+  readonly 'tags': number[];
   readonly 'date_gmt': string;
   readonly 'guid': {
     'rendered': string;
@@ -8,7 +16,6 @@ export interface FullPost extends LitePost {
   readonly 'modified': string;
   readonly 'modified_gmt': string;
   readonly 'type': string;
-  readonly 'slug': string;
   readonly 'link': string;
   readonly 'content': {
     'rendered': string;

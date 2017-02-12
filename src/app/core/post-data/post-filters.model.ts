@@ -1,4 +1,4 @@
-export interface LitePostFilters {
+export interface PostFilters {
   readonly categories: number[];
   readonly page: number;
 }
