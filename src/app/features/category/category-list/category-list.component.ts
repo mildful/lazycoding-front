@@ -1,4 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -29,7 +30,11 @@ export class CategoryListComponent implements OnDestroy {
   currentFiltersCategory: number[];
   private destroyed$: Subject<any> = new Subject<any>();
 
-  constructor(private store: Store<AppState>, private postActions: PostActions) {
+  constructor(
+    private store: Store<AppState>,
+    private postActions: PostActions,
+    private router: Router,
+  ) {
     this.categories$ = this.store.select((state: AppState) => state.category.categories);
     this.store.select((state: AppState) => state.post.filters.categories)
       .takeUntil(this.destroyed$)
@@ -41,6 +46,9 @@ export class CategoryListComponent implements OnDestroy {
   }
 
   onClick(id: number): void {
+    this.router.navigate(['posts'], {
+      queryParams: { categories: [ id, 5 ].join(',') }
+    });
     this.store.dispatch(this.postActions.filtersToggleCategory(id));
   }
 }
