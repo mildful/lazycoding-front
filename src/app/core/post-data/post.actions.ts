@@ -47,4 +47,28 @@ export class PostActions {
       payload: slug
     };
   }
+
+  static REQ_POST_BY_SLUG = `[Post] Req Post By Slug`;
+  reqPostBySlug(slug: string): Action {
+    return {
+      type: PostActions.REQ_POST_BY_SLUG,
+      payload: slug
+    };
+  }
+
+  static REQ_POST_BY_SLUG_FAIL = `[Post] Req Post By Slug Fail`;
+  reqPostBySlugFail(err: ServerError): Action {
+    return {
+      type: PostActions.REQ_POST_BY_SLUG_FAIL,
+      payload: err
+    };
+  }
+
+  static REQ_POST_BY_SLUG_SUCCESS = `[Post] Req Post By Slug Success`;
+  reqPostBySlugSuccess(post: Post): Action {
+    return {
+      type: PostActions.REQ_POST_BY_SLUG_SUCCESS,
+      payload: post
+    };
+  }
 }

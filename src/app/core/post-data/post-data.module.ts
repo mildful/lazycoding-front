@@ -10,8 +10,8 @@ import { FakePostService } from './fake-post.service';
   imports: [ EffectsModule.run(PostEffects) ],
   providers: [
     PostActions,
-    // PostService
-    { provide: PostService, useClass: FakePostService }
+    PostService
+    // { provide: PostService, useClass: FakePostService }
   ]
 })
 export class PostDataModule { }

@@ -1,6 +1,6 @@
 /* tslint:disable: member-ordering */
 import { Injectable } from '@angular/core';
-import { Actions, Effect } from '@ngrx/effects';
+import {Actions, Effect, toPayload} from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
@@ -33,6 +33,19 @@ export class PostEffects {
       .retry(2)
       .catch((err: ServerError) => Observable.of(
         this.postActions.reqPostsFail(err)
+      ))
+    );
+
+  @Effect() reqPostBySlug$ = this.actions$
+    .ofType(PostActions.REQ_POST_BY_SLUG)
+    .map(toPayload)
+    .switchMap((slug: string) => this.postService.getPostBySlug(slug)
+      .mergeMap((post: Post) => Observable.of(
+        this.postActions.reqPostBySlugSuccess(post)
+      ))
+      .retry(2)
+      .catch((err: ServerError) => Observable.of(
+        this.postActions.reqPostBySlugFail(err)
       ))
     );
 

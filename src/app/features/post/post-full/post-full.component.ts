@@ -80,8 +80,14 @@ export class PostFullComponent implements OnInit, OnDestroy, AfterViewChecked {
       .takeUntil(this.destroyed$)
       .subscribe((params: Params) => this.store.dispatch(this.postActions.setReadingPost(params['slug'])));
 
+    this.store.select((s: AppState) => s.post.missingSlug)
+      .filter((slug: string) => slug !== null)
+      .takeUntil(this.destroyed$)
+      .subscribe((slug: string) => this.store.dispatch(this.postActions.reqPostBySlug(slug)));
+
     this.store.select((state: AppState) => state.post.readingPost)
       .takeUntil(this.destroyed$)
+      .filter((post: Post) => !!post)
       .subscribe((post: Post) => {
         if (post) {
           this.postprocessed = false;

@@ -23,6 +23,13 @@ export class PostService extends RequestBase {
       .catch(RequestBase.handleError);
   }
 
+  getPostBySlug(slug: string): Observable<Post> {
+    return this.http.get(`${API_BASE_URL}/posts?filter[name]=${slug}`, this.options)
+      .map(RequestBase.toJson)
+      .map((posts: Post[]) => posts[0])
+      .catch(RequestBase.handleError);
+  }
+
   private buildUrl(url: string, filters: PostFilters): string {
     // return url if no filters
     if (!filters || !Object.keys(filters).length) return url;

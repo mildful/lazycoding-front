@@ -14,6 +14,7 @@ export interface PostState {
   requesting: boolean;
   error: ServerError;
   filters: PostFilters;
+  missingSlug: string;
   complete: boolean;
 }
 
@@ -23,6 +24,7 @@ export const initialState: PostState = {
   requesting: false,
   error: null,
   filters: { categories: [], page: 1 },
+  missingSlug: null,
   complete: false,
 };
 
@@ -32,7 +34,8 @@ export function postReducer(state = initialState, action: Action): PostState {
     /**
      * payload: PostFilters
      */
-    case PostActions.REQ_POSTS: {
+    case PostActions.REQ_POSTS:
+    case PostActions.REQ_POST_BY_SLUG: {
       return Object.assign({}, state, {
         requesting: true
       });
@@ -41,7 +44,8 @@ export function postReducer(state = initialState, action: Action): PostState {
     /**
      * payload: ServerError
      */
-    case PostActions.REQ_POSTS_FAIL: {
+    case PostActions.REQ_POSTS_FAIL:
+    case PostActions.REQ_POST_BY_SLUG_FAIL: {
       return Object.assign({}, state, {
         requesting: false,
         error: action.payload
@@ -92,7 +96,18 @@ export function postReducer(state = initialState, action: Action): PostState {
     case PostActions.SET_READING_POST: {
       const readingPost: Post = state.posts.find((p: Post) => p.slug === action.payload);
       return Object.assign({}, state, {
-        readingPost
+        readingPost: readingPost ? readingPost : null,
+        missingSlug: readingPost ? null : action.payload
+      });
+    }
+
+    /**
+     * payload: Post
+     */
+    case PostActions.REQ_POST_BY_SLUG_SUCCESS: {
+      return Object.assign({}, state, {
+        readingPost: action.payload,
+        missingSlug: null
       });
     }
 

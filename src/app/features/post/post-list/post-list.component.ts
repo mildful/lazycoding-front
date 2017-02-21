@@ -97,6 +97,7 @@ export class PostListComponent implements OnInit, OnDestroy {
     // title management
     let categoryTitles: {id: number, title: string}[] = [];
     this.store.select((state: AppState) => state.category.categories)
+      .filter((cs: Category[]) => cs.length > 0)
       .take(1)
       .subscribe((cs: Category[]) => categoryTitles = cs.map((c: Category) => { return { id: c.id, title: c.name } }));
     this.store.select((state: AppState) => state.post.filters.categories)
@@ -133,7 +134,9 @@ export class PostListComponent implements OnInit, OnDestroy {
       if (!this.postsAnimationsState.has(post.id)) {
         i++;
         this.postsAnimationsState.set(post.id, 'out');
-        setTimeout(() => this.postsAnimationsState.set(post.id, 'in'), i * 200);
+        setTimeout(() => {
+          this.postsAnimationsState.set(post.id, 'in');
+        },  i * 200);
       }
     });
   }

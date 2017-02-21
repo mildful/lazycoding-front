@@ -9,8 +9,8 @@ import { FakeTagService } from './fake-tag.service';
 @NgModule({
   imports: [ EffectsModule.run(TagEffects) ],
   providers: [
-    // TagService,
-    { provide: TagService, useClass: FakeTagService },
+    TagService,
+    // { provide: TagService, useClass: FakeTagService },
     TagActions
   ]
 })
