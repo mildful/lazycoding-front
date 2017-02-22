@@ -86,7 +86,10 @@ export class PostListComponent implements OnInit, OnDestroy {
       .takeUntil(this.destroyed$)
       .subscribe((params: Params) => {
         if (params['categories'] && params['categories'].length) {
-          this.store.dispatch(this.postActions.filtersToggleCategory(params['categories']));
+          const categories: number[] = Array.isArray(params['categories'])
+            ? params['categories']
+            : params['categories'].split(',').map((id: string) => +id);
+          this.store.dispatch(this.postActions.filtersToggleCategory(categories));
         } else {
           this.store.dispatch(this.postActions.resetCategoryFilter());
         }

@@ -73,21 +73,12 @@ export function postReducer(state = initialState, action: Action): PostState {
      * payload: number[]
      */
     case PostActions.FILTERS_TOGGLE_CATEGORY: {
-      //let categories: number[] = [ ...state.filters.categories ];
-      let categories: number[] = toggleArrayValues(state.filters.categories, action.payload);
-      /*action.payload.forEach((toggledId: number) => {
-        if (categories.includes(toggledId)) {
-          categories.splice( categories.indexOf(toggledId), 1 );
-        } else {
-          categories.push(toggledId);
-        }
-      });*/
       return Object.assign({}, state, {
         // We reset complete because since we have change our filters, there may be more posts to request
         // on the server.
         complete: false,
         filters: Object.assign({}, state.filters, {
-          categories,
+          categories: action.payload,
           page: 1
         }),
         posts: []

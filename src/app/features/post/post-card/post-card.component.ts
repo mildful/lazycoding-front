@@ -37,9 +37,13 @@ export class PostCardComponent implements OnInit {
 
   onCategoryClick(id: number): void {
     // todo: refractor, smart & dumb
-    const currentCategories: number[] = this.route.snapshot.params['categories']
+    let currentCategories: number[] | string = this.route.snapshot.params['categories']
       ? this.route.snapshot.params['categories']
       : [];
+
+    currentCategories = Array.isArray(currentCategories)
+      ? currentCategories
+      : (currentCategories as string).split(',').map((id: string) => +id);
 
     if (getState(this.store).post.requesting === false) {
       const categories: number[] = toggleArrayValues(currentCategories, [ id ]);
