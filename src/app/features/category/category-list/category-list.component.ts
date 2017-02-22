@@ -1,11 +1,13 @@
 import { Component, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 import { AppState } from '../../../reducers/index';
-import { Category, PostActions } from '../../../core';
+import { Category } from '../../../core';
 import { getState } from '../../../reducers/store-utils';
+import { toggleArrayValues } from '../../../services/utils';
 
 @Component({
   selector: 'category-list',
@@ -32,7 +34,8 @@ export class CategoryListComponent implements OnDestroy {
 
   constructor(
     private store: Store<AppState>,
-    private postActions: PostActions
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
     this.categories$ = this.store.select((state: AppState) => state.category.categories);
     this.store.select((state: AppState) => state.post.filters.categories)
@@ -45,8 +48,18 @@ export class CategoryListComponent implements OnDestroy {
   }
 
   onClick(id: number): void {
+    // todo: refractor, smart & dumb
+    const currentCategories: number[] = this.route.snapshot.params['categories']
+      ? this.route.snapshot.params['categories']
+      : [];
+
     if (getState(this.store).post.requesting === false) {
-      this.store.dispatch(this.postActions.filtersToggleCategory(id));
+      const categories: number[] = toggleArrayValues(currentCategories, [ id ]);
+      if (categories.length) {
+        this.router.navigate(['./', { categories }]);
+      } else {
+        this.router.navigate(['./']);
+      }
     }
   }
 }

@@ -1,12 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { AppState } from '../../../reducers';
 
 import {
-  Post, PostActions,
+  Post,
   Category
 } from '../../../core';
+import { getState } from '../../../reducers/store-utils';
+import { toggleArrayValues } from '../../../services/utils';
 
 @Component({
   selector: 'post-card',
@@ -20,7 +23,8 @@ export class PostCardComponent implements OnInit {
 
   constructor(
     private store: Store<AppState>,
-    private postActions: PostActions
+    private route: ActivatedRoute,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +36,18 @@ export class PostCardComponent implements OnInit {
   }
 
   onCategoryClick(id: number): void {
-    this.store.dispatch(this.postActions.filtersToggleCategory(id));
+    // todo: refractor, smart & dumb
+    const currentCategories: number[] = this.route.snapshot.params['categories']
+      ? this.route.snapshot.params['categories']
+      : [];
+
+    if (getState(this.store).post.requesting === false) {
+      const categories: number[] = toggleArrayValues(currentCategories, [ id ]);
+      if (categories.length) {
+        this.router.navigate(['./', { categories }]);
+      } else {
+        this.router.navigate(['./']);
+      }
+    }
   }
 }

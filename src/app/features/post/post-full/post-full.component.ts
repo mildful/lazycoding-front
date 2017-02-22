@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy, AfterViewChecked, ElementRef } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
 
 import { AppState } from '../../../reducers';
 import { OverlayConfig } from '../../../shared/overlay';
+import { getState } from '../../../reducers/store-utils';
 import {
   Post, PostActions,
   Category, Tag,
@@ -35,7 +36,8 @@ export class PostFullComponent implements OnInit, OnDestroy, AfterViewChecked {
     private store: Store<AppState>,
     private postActions: PostActions,
     private overlayActions: OverlayActions,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private router: Router,
   ) { }
 
   getCategories(): void {
@@ -103,6 +105,11 @@ export class PostFullComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   onCircleEnd(): void {
     this.circleAnimationEnd = true;
+  }
+
+  postsByTag(tagId: number) {
+    const filteredCatIds: number[] = getState(this.store).post.filters.categories;
+    this.router.navigate(['../', { tag: tagId, categories: filteredCatIds }]);
   }
 
   private updateToPrismClasses(html: string): string {

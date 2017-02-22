@@ -33,10 +33,10 @@ export class PostActions {
   }
 
   static FILTERS_TOGGLE_CATEGORY = `[Post] Filters Toggle Category`;
-  filtersToggleCategory(id: number): Action {
+  filtersToggleCategory(ids: number[]): Action {
     return {
       type: PostActions.FILTERS_TOGGLE_CATEGORY,
-      payload: id
+      payload: ids
     };
   }
 
@@ -69,6 +69,13 @@ export class PostActions {
     return {
       type: PostActions.REQ_POST_BY_SLUG_SUCCESS,
       payload: post
+    };
+  }
+
+  static RESET_CATEGORY_FILTER = `[Post] Reset Category Filter`;
+  resetCategoryFilter(): Action {
+    return {
+      type: PostActions.RESET_CATEGORY_FILTER
     };
   }
 }

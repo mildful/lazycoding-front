@@ -5,6 +5,7 @@ import {
   style,
   transition,
   animate } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Store } from '@ngrx/store';
@@ -35,8 +36,9 @@ import {
     ])
   ],
   template: `
+    <category-list></category-list>
     <h2 *ngIf="!mobile" class="list-title">{{ title }}</h2>
-    <section #root class="posts">
+    <section class="posts">
       <post-card *ngFor="let post of posts$ | async" 
         [post]="post" 
         [@appear]="postsAnimationsState.get(post.id)">
@@ -54,7 +56,6 @@ export class PostListComponent implements OnInit, OnDestroy {
    */
   posts$: Observable<Post[]>;
   postsAnimationsState: Map<number, string> = new Map<number, string>();
-  @ViewChild('root') root: ElementRef;
   load$: Subject<void> = new Subject<void>();
   /**
    * Post list title dynamically updated.
@@ -75,17 +76,34 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store<AppState>,
-    private postActions: PostActions
+    private postActions: PostActions,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
+    // url management
+    this.route.params
+      .takeUntil(this.destroyed$)
+      .subscribe((params: Params) => {
+        if (params['categories'] && params['categories'].length) {
+          this.store.dispatch(this.postActions.filtersToggleCategory(params['categories']));
+        } else {
+          this.store.dispatch(this.postActions.resetCategoryFilter());
+        }
+
+        //todo: multiple call
+        this.store.dispatch(this.postActions.reqPosts());
+      });
+
     // trigger management
-    const io = new IntersectionObserver(() => this.load$.next(), {
-      root: this.root.nativeElement
+    const io = new IntersectionObserver((entries: IntersectionObserverEntry[]) => {
+      if (entries[0].intersectionRatio <= 0) return;
+      this.load$.next();
     });
     io.observe(this.trigger.nativeElement);
     this.load$
       .takeUntil(this.destroyed$)
+      .filter(() => getState(this.store).post.requesting === false)
       .filter(() => getState(this.store).post.complete === false)
       .subscribe( () => this.store.dispatch(this.postActions.reqPosts()) );
 

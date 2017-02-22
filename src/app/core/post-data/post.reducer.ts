@@ -7,6 +7,7 @@ import { PostActions } from './post.actions';
 import { Post } from './post.model';
 import { PAGE_SIZE } from './post.constants';
 import { PostFilters } from './post-filters.model';
+import { toggleArrayValues } from "../../services/utils";
 
 export interface PostState {
   posts: Post[];
@@ -69,15 +70,18 @@ export function postReducer(state = initialState, action: Action): PostState {
     }
 
     /**
-     * payload: number
+     * payload: number[]
      */
     case PostActions.FILTERS_TOGGLE_CATEGORY: {
-      let categories: number[] = [ ...state.filters.categories ];
-      if (categories.includes(action.payload)) {
-        categories.splice( categories.indexOf(action.payload), 1 );
-      } else {
-        categories.push(action.payload);
-      }
+      //let categories: number[] = [ ...state.filters.categories ];
+      let categories: number[] = toggleArrayValues(state.filters.categories, action.payload);
+      /*action.payload.forEach((toggledId: number) => {
+        if (categories.includes(toggledId)) {
+          categories.splice( categories.indexOf(toggledId), 1 );
+        } else {
+          categories.push(toggledId);
+        }
+      });*/
       return Object.assign({}, state, {
         // We reset complete because since we have change our filters, there may be more posts to request
         // on the server.
@@ -108,6 +112,22 @@ export function postReducer(state = initialState, action: Action): PostState {
       return Object.assign({}, state, {
         readingPost: action.payload,
         missingSlug: null
+      });
+    }
+
+    /**
+     * payload: undefined
+     */
+    case PostActions.RESET_CATEGORY_FILTER: {
+      return Object.assign({}, state, {
+        // We reset complete because since we have change our filters, there may be more posts to request
+        // on the server.
+        complete: false,
+        filters: Object.assign({}, state.filters, {
+          categories: [],
+          page: 1
+        }),
+        posts: []
       });
     }
 

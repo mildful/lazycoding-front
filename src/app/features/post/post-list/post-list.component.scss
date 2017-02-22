@@ -15,7 +15,8 @@ post-card { display: inline-block }
    @include respond-to(medium, large) {
       text-align: center;
       display: block;
-      mix-blend-mode: difference;
+      // mix-blend-mode: difference;
+      text-shadow: 0 0 50px rgba(0, 0, 0, 1);
       white-space: nowrap;
       color: white;
    }

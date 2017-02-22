@@ -11,7 +11,7 @@
   </ul>
   <div class="data" [@content]="'in'">
     <ul class="tags">
-      <li *ngFor="let tag of tags">{{ tag.name }}</li>
+      <li *ngFor="let tag of tags" (click)="postsByTag(tag.id)">{{ tag.name }}</li>
     </ul>
     <div class="date">{{ postDate }}</div>
   </div>
