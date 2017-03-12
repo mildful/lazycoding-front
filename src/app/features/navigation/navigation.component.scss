@@ -55,13 +55,17 @@ $offset-menu: 20px;
 
             &.search {
                text-align: right;
-               font-size: 1.3em;
-               line-height: $bar-height - 4*2px;
-               i { margin-right: 7px }
 
-               @include respond-to(medium, large) {
-                  color: $txt-dark;
-                  line-height: $lc-logo-height;
+               .search-button {
+                  color: white;
+                  font-size: 1.3em;
+                  line-height: $bar-height - 4*2px;
+                  padding-right: 10px;
+
+                  @include respond-to(medium, large) {
+                     color: $txt-dark;
+                     line-height: $lc-logo-height;
+                  }
                }
             }
 

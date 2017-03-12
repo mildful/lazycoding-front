@@ -1,0 +1,12 @@
+<button class="no-style search-button" (click)="openSearch()">
+  <i class="lazy-font lazicon-search"></i>
+</button>
+<div class="search-overlay" [class.visible]="isOpen">
+  <button class="no-style" (click)="closeSearch()">
+    <i class="lazy-font lazicon-close"></i>
+  </button>
+  <form (submit)="onSubmit($event, searchInput.value)">
+    <input #searchInput type="text" placeholder="Que veux-tu savoir ?" class="searchInput">
+    <input type="submit" value="Go !" class="submitBtn">
+  </form>
+</div>

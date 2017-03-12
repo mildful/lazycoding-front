@@ -108,8 +108,8 @@ export class PostFullComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   postsByTag(tagId: number) {
-    const filteredCatIds: number[] = getState(this.store).post.filters.categories;
-    this.router.navigate(['../', { tag: tagId, categories: filteredCatIds }]);
+    this.store.dispatch(this.postActions.resetCategoryFilter());
+    this.router.navigate(['../', { tag: tagId }]);
   }
 
   private updateToPrismClasses(html: string): string {

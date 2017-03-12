@@ -1,0 +1,79 @@
+@import '../../variables';
+@import '../../mixins';
+
+button.no-style {
+   padding: 0;
+   margin: 0;
+   border: none;
+   background: none;
+   font-size: inherit;
+   cursor: pointer;
+}
+
+.search-overlay {
+   position: fixed;
+   top: 0;
+   left: 0;
+   bottom: 0;
+   right: 0;
+   background: black;
+   z-index: 100;
+
+   transition: opacity .2s, display 0s 5s;
+   display: none;
+   opacity: 0;
+
+   &.visible {
+      display: block;
+      opacity: 1;
+   }
+
+   .lazicon-close {
+      display: inline-block;
+      margin: 10px;
+      color: white;
+
+      @include respond-to(medium, large) {
+         margin-top: 20px;
+      }
+   }
+
+   form {
+      position: absolute;
+      top: 45%;
+      left: 30px;
+      right: 30px;
+      transform: translateY(-50%);
+      display: flex;
+
+      @include respond-to(medium, large) {
+         width: $post-width;
+         left: 50%;
+         transform: translate(-50%, -50%);
+      }
+
+      .searchInput {
+         width: 100%;
+         font-family: $body-font;
+         font-weight: bold;
+         color: $txt-light;
+
+         background: none;
+         padding: 20px 30px;
+         border: none;
+         border-bottom: 3px solid white;
+         @include placeholder-color($txt-grey-hover);
+      }
+      
+      .submitBtn {
+         margin: 0;
+         border: none;
+
+         background: white;
+         padding: 10px 15px;
+         border-radius: 5px 5px 5px 0;
+         font-weight: bold;
+         cursor: pointer;
+      }
+   }
+}
