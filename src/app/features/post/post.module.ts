@@ -7,6 +7,7 @@ import { CategoryModule } from "../category/category.module";
 
 import { routedComponents, PostRoutingModule } from './post.routing';
 import { PostCardComponent } from './post-card';
+import { PostListLoaderComponent } from "./post-list";
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { PostCardComponent } from './post-card';
   ],
   declarations: [
     ...routedComponents,
-    PostCardComponent
+    PostCardComponent,
+    PostListLoaderComponent
   ],
   providers: [ WindowRef ]
 })

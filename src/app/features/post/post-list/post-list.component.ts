@@ -36,6 +36,9 @@ import {
     ])
   ],
   template: `
+    <div class="loader" *ngIf="requesting$ | async">
+      <list-loader></list-loader>
+    </div>
     <category-list></category-list>
     <h2 *ngIf="!mobile" class="list-title">{{ title }}</h2>
     <section class="posts">
@@ -56,6 +59,7 @@ export class PostListComponent implements OnInit, OnDestroy {
    */
   posts$: Observable<Post[]>;
   postsAnimationsState: Map<number, string> = new Map<number, string>();
+  requesting$: Observable<boolean>;
   load$: Subject<void> = new Subject<void>();
   /**
    * Post list title dynamically updated.
@@ -81,6 +85,10 @@ export class PostListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    // loader
+    this.requesting$ = this.store.select((s: AppState) => s.post.requesting)
+      .takeUntil(this.destroyed$);
+
     // url management
     this.route.params
       .takeUntil(this.destroyed$)
