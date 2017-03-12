@@ -31,12 +31,20 @@ export class PostService extends RequestBase {
   }
 
   private buildUrl(url: string, filters: PostFilters): string {
+    // todo: http://localhost/lazycoding-back/wp-json/wp/v2/posts?filter[category__and][]=3&filter[category__and][]=5
     // return url if no filters
     if (!filters || !Object.keys(filters).length) return url;
 
-    for (let name in filters) {
-      if (!name.includes('limit') && filters.hasOwnProperty(name)) {
-        const value: any = filters[name];
+    let formattedFilters: any = Object.assign({}, filters);
+
+    if (formattedFilters.hasOwnProperty('tag')) {
+      formattedFilters.tags = formattedFilters.tag;
+      formattedFilters.tag = undefined;
+    }
+
+    for (let name in formattedFilters) {
+      if (!name.includes('limit') && formattedFilters.hasOwnProperty(name)) {
+        const value: any = formattedFilters[name];
         if (value) {
           const isArray: boolean = Array.isArray(value);
           if (isArray && value.length) {

@@ -72,10 +72,18 @@ export class PostActions {
     };
   }
 
-  static RESET_CATEGORY_FILTER = `[Post] Reset Category Filter`;
-  resetCategoryFilter(): Action {
+  static RESET_FILTERS = `[Post] Reset Filters`;
+  resetFilters(): Action {
     return {
-      type: PostActions.RESET_CATEGORY_FILTER
+      type: PostActions.RESET_FILTERS
+    };
+  }
+
+  static SET_TAG_FILTER = `[Post] Set Tag Filter`;
+  setTagFilter(tagId: number): Action {
+    return {
+      type: PostActions.SET_TAG_FILTER,
+      payload: tagId
     };
   }
 }

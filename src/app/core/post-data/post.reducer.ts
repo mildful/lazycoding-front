@@ -24,7 +24,7 @@ export const initialState: PostState = {
   readingPost: null,
   requesting: false,
   error: null,
-  filters: { categories: [], page: 1 },
+  filters: { categories: [], tag: null, page: 1 },
   missingSlug: null,
   complete: false,
 };
@@ -79,6 +79,7 @@ export function postReducer(state = initialState, action: Action): PostState {
         complete: false,
         filters: Object.assign({}, state.filters, {
           categories: action.payload,
+          tag: null,
           page: 1
         }),
         posts: []
@@ -109,13 +110,31 @@ export function postReducer(state = initialState, action: Action): PostState {
     /**
      * payload: undefined
      */
-    case PostActions.RESET_CATEGORY_FILTER: {
+    case PostActions.RESET_FILTERS: {
       return Object.assign({}, state, {
         // We reset complete because since we have change our filters, there may be more posts to request
         // on the server.
         complete: false,
         filters: Object.assign({}, state.filters, {
           categories: [],
+          tag: null,
+          page: 1
+        }),
+        posts: []
+      });
+    }
+
+    /**
+     * payload: number
+     */
+    case PostActions.SET_TAG_FILTER: {
+      return Object.assign({}, state, {
+        // We reset complete because since we have change our filters, there may be more posts to request
+        // on the server.
+        complete: false,
+        filters: Object.assign({}, state.filters, {
+          categories: [],
+          tag: action.payload,
           page: 1
         }),
         posts: []

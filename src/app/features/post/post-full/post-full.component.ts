@@ -108,7 +108,6 @@ export class PostFullComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   postsByTag(tagId: number) {
-    this.store.dispatch(this.postActions.resetCategoryFilter());
     this.router.navigate(['../', { tag: tagId }]);
   }
 
