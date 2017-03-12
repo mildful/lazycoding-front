@@ -48,11 +48,4 @@ export class PostEffects {
         this.postActions.reqPostBySlugFail(err)
       ))
     );
-
-  @Effect() autoReqPosts$ = this.actions$
-    .ofType(PostActions.FILTERS_TOGGLE_CATEGORY)
-    .throttleTime(250)
-    .mergeMap(() => Observable.of(
-      this.postActions.reqPosts()
-    ));
 }

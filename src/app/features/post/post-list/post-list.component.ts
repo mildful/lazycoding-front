@@ -102,7 +102,6 @@ export class PostListComponent implements OnInit, OnDestroy {
           this.store.dispatch(this.postActions.resetCategoryFilter());
         }
 
-        //todo: multiple call
         this.store.dispatch(this.postActions.reqPosts());
       });
 
