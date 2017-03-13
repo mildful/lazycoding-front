@@ -15,7 +15,7 @@ import { getState } from '../../../reducers/store-utils';
 import { MOBILE } from '../../../services/constants';
 import {
   Post, PostActions,
-  Category
+  Category, PostState
 } from '../../../core';
 
 @Component({
@@ -42,6 +42,7 @@ import {
     <category-list></category-list>
     <h2 *ngIf="!mobile" class="list-title">{{ title }}</h2>
     <section class="posts">
+      <div *ngIf="noPost" class="no-post">NOOOOOO POOOOOOOOOSTS</div>
       <post-card *ngFor="let post of posts$ | async" 
         [post]="post" 
         [@appear]="postsAnimationsState.get(post.id)">
@@ -53,6 +54,7 @@ import {
 export class PostListComponent implements OnInit, OnDestroy {
 
   mobile: boolean = MOBILE;
+  noPost: boolean = false;
   /**
    * Posts to display in the list.
    * @type {Observable<Post[]>}
@@ -100,6 +102,8 @@ export class PostListComponent implements OnInit, OnDestroy {
           this.store.dispatch(this.postActions.filtersToggleCategory(categories));
         } else if (params['tag']) {
           this.store.dispatch(this.postActions.setTagFilter(+params['tag']));
+        } else if (params['search']) {
+          this.store.dispatch(this.postActions.setTextFilter(params['search']));
         } else {
           this.store.dispatch(this.postActions.resetFilters());
         }
@@ -121,8 +125,19 @@ export class PostListComponent implements OnInit, OnDestroy {
 
     // observe posts
     this.posts$ = this.store.select((s: AppState) => s.post.posts)
-      .filter((posts: Post[]) => posts.length > 0)
-      .do(this.animatePosts.bind(this));
+      .filter((posts: Post[]) => {
+        const postState: PostState = getState(this.store).post;
+        return posts.length > 0
+          || (!!postState.filters.search && postState.filters.page > 1)
+      })
+      .do((posts: Post[]) => {
+        if (posts.length) {
+          this.noPost = false;
+          this.animatePosts.bind(this)
+        } else {
+          this.noPost = true;
+        }
+      });
 
     // title management
     let categoryTitles: {id: number, title: string}[] = [];

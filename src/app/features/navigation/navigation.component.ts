@@ -1,10 +1,11 @@
 import { Component, ViewEncapsulation, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
 import { AppState } from '../../reducers';
-import { NavigationActions } from '../../core';
+import { NavigationActions, Post } from '../../core';
 import { WindowRef } from '../../shared';
 import { MOBILE } from '../../services/constants';
 
@@ -24,7 +25,8 @@ export class NavigationComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private navigationActions: NavigationActions,
-    private windowRef: WindowRef
+    private windowRef: WindowRef,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -36,6 +38,10 @@ export class NavigationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.destroyed$.next();
+  }
+
+  onSearch(str: string): void {
+    this.router.navigate(['/posts', { search: str }]);
   }
 
   toggle(): void {

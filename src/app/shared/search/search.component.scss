@@ -57,12 +57,18 @@ button.no-style {
          font-family: $body-font;
          font-weight: bold;
          color: $txt-light;
+         outline: none;
+         font-size: 1.3em;
 
          background: none;
          padding: 20px 30px;
          border: none;
          border-bottom: 3px solid white;
          @include placeholder-color($txt-grey-hover);
+
+         @include respond-to(medium, large) {
+            font-size: 2em;
+         }
       }
       
       .submitBtn {
@@ -73,7 +79,12 @@ button.no-style {
          padding: 10px 15px;
          border-radius: 5px 5px 5px 0;
          font-weight: bold;
+         font-size: 1.1em;
          cursor: pointer;
+
+         @include respond-to(medium, large) {
+            font-size: 1.4em;
+         }
       }
    }
 }

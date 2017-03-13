@@ -5,8 +5,11 @@
   <button class="no-style" (click)="closeSearch()">
     <i class="lazy-font lazicon-close"></i>
   </button>
-  <form (submit)="onSubmit($event, searchInput.value)">
-    <input #searchInput type="text" placeholder="Que veux-tu savoir ?" class="searchInput">
+  <form (submit)="onSubmit($event)">
+    <input [(ngModel)]="searchStr"
+           [ngModelOptions]="{standalone: true}"
+           autofocus
+           type="text" placeholder="Que veux-tu savoir ?" class="searchInput">
     <input type="submit" value="Go !" class="submitBtn">
   </form>
 </div>

@@ -86,4 +86,12 @@ export class PostActions {
       payload: tagId
     };
   }
+
+  static SET_TEXT_FILTER = `[Post] Set Text Filter`;
+  setTextFilter(str: string): Action {
+    return {
+      type: PostActions.SET_TEXT_FILTER,
+      payload: str
+    };
+  }
 }
