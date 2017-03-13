@@ -5,7 +5,7 @@
   <button class="no-style" (click)="closeSearch()">
     <i class="lazy-font lazicon-close"></i>
   </button>
-  <form (submit)="onSubmit($event)">
+  <form (submit)="onSubmit($event)" angulartics2On="submit" angularticsEvent="Search" angularticsCategory="{{ searchStr }}">
     <input [(ngModel)]="searchStr"
            [ngModelOptions]="{standalone: true}"
            autofocus

@@ -7,6 +7,8 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { useLogMonitor } from '@ngrx/store-log-monitor';
 
+import { Angulartics2Module, Angulartics2GoogleAnalytics } from 'angulartics2';
+
 import { routes } from './app.routing';
 import { rootReducer } from './reducers';
 /* Features Modules */
@@ -45,6 +47,7 @@ export const APP_IMPORTS = [
   StoreModule.provideStore(rootReducer),
   STORE_DEV_TOOLS_IMPORTS,
   StoreDevToolsModule,
+  Angulartics2Module.forRoot([ Angulartics2GoogleAnalytics ]),
   CoreModule,
   SharedModule,
   CategoryModule,
